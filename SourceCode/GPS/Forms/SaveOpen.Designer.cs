@@ -284,17 +284,24 @@ namespace OpenGrade
                         vehicle.maxDitchCut = Properties.Vehicle.Default.setVehicle_maxDitchCut;
                         vehicle.maxTileCut = Properties.Vehicle.Default.setVehicle_maxTileCut;
                         vehicle.minTileCover = Properties.Vehicle.Default.setVehicle_minTileCover;
-                        vehicle.KpGain = Properties.Vehicle.Default.setVehicle_KpGain;
-                        vehicle.KiGain = Properties.Vehicle.Default.setVehicle_KiGain;
-                        vehicle.KdGain = Properties.Vehicle.Default.setVehicle_KdGain;
-
+                        vehicle.V_KpGain = Properties.Vehicle.Default.setVehicle_KpGain;
+                        vehicle.V_KiGain = Properties.Vehicle.Default.setVehicle_KiGain;
+                        vehicle.V_KdGain = Properties.Vehicle.Default.setVehicle_KdGain;                        
 
 
                         // Pats codes 
                         vehicle.viewDistAboveGnd = Properties.Vehicle.Default.setVehicle_viewDistAboveGnd;
                         vehicle.viewDistUnderGnd = Properties.Vehicle.Default.setVehicle_viewDistUnderGnd;
-                        
 
+                        //mc.gradeControlSettings[mc.gsKpGain] = (byte)Properties.Vehicle.Default.setVehicle_KpGain;
+                        //mc.gradeControlSettings[mc.gsKiGain] = (byte)(Properties.Vehicle.Default.setVehicle_KiGain * 10);
+                        //mc.gradeControlSettings[mc.gsKdGain] = (byte)(Properties.Vehicle.Default.setVehicle_KdGain / 100);
+
+
+                        mc.gradeControlSettings[mc.gsKpGain] = (byte)(vehicle.V_KpGain*10);
+                        mc.gradeControlSettings[mc.gsKiGain] = (byte)(vehicle.V_KiGain*10);
+                        mc.gradeControlSettings[mc.gsKdGain] = (byte)(vehicle.V_KdGain/100);
+                        //GradeControlSettingsOutToPort();
 
                         vehicle.toolWidth = Properties.Vehicle.Default.setVehicle_toolWidth;
                         vehicle.minSlope = Properties.Vehicle.Default.setVehicle_minSlope;

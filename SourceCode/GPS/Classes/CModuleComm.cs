@@ -16,18 +16,17 @@ namespace OpenGrade
         // PGN - 32762 - 127.250
         public static int numGradeControlDataItems = 6;
         public byte[] GradeControlData = new byte[numGradeControlDataItems];
-
         public int gcHeaderHi, gcHeaderLo = 1, gcDeltaDir = 2, gcCutDelta = 3, gcisAutoActive = 4;                                
 
         //info coming from Grade Control Mod
-        public int autoModeVal = 0, bladeOffset = 0;
-        public double outputPID = 0;
+        public int autoState = 0, bladeOffset = 0;
+        public double voltage = 0;
 
         // PGN - 32760 - 127.248
-        public static int numGradeControlSettingsItems = 10;
+        public static int numGradeControlSettingsItems = 5;
         public byte[] gradeControlSettings = new byte[numGradeControlSettingsItems];
-        public int rsHeaderHi, rsHeaderLo = 1, rsAccumulatedVolumeHi = 2, rsAccumulatedVolumeLo = 3,
-            rsFlowCalFactorHi = 4, rsFlowCalFactorLo = 5;
+        public int gsHeaderHi, gsHeaderLo = 1, gsKpGain = 2, gsKiGain = 3, gsKdGain = 4;
+            
 
         //AutoSteer ------------------------------------------------------------------------------------------------
         public string serialRecvAutoSteerStr;
@@ -77,6 +76,13 @@ namespace OpenGrade
             GradeControlData[gcCutDelta] = 0;
             GradeControlData[gcisAutoActive] = 0;                       
             mf.GradeControlDataOutToPort();
+
+            gradeControlSettings[gsHeaderHi] = 127; // PGN - 32762
+            gradeControlSettings[gsHeaderLo] = 248;
+            gradeControlSettings[gsKpGain] = (byte)Properties.Vehicle.Default.setVehicle_KpGain;
+            gradeControlSettings[gsKiGain] = (byte)Properties.Vehicle.Default.setVehicle_KiGain;
+            gradeControlSettings[gsKdGain] = (byte)Properties.Vehicle.Default.setVehicle_KdGain;
+            //mf.GradeControlSettingsOutToPort();
 
             autoSteerData[sdHeaderHi] = 127; // PGN - 32766
             autoSteerData[sdHeaderLo] = 254;

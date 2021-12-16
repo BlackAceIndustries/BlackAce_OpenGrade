@@ -201,7 +201,7 @@ namespace OpenGrade
             //Tell Arduino to turn section on or off accordingly
             if (spGradeControl.IsOpen)
             {
-                try { spGradeControl.Write(mc.gradeControlSettings, 0, CModuleComm.numGradeControlSettingsItems); } //try { spRelay.Write(items, 0, numItems ); }   Pat
+                try { spGradeControl.Write(mc.gradeControlSettings, 0, CModuleComm.numGradeControlSettingsItems); } 
                 catch (Exception e)
                 {
                     WriteErrorLog("Out Settings to Section relays" + e.ToString());
@@ -217,19 +217,18 @@ namespace OpenGrade
             
             mc.serialRecvGradeControlStr = sentence;
 
-            ////0 - , 1 - pwm, 2 - heading in degrees * 16, 3 - roll in degrees * 16, 4 - steerSwitch position
+            string[] words = mc.serialRecvGradeControlStr.Split(',');
+            if (words.Length == 3)
+            {
+                //first 2 used for display mainly in autosteer window chart as strings
+                //parse the values
+                
+                int.TryParse(words[0], out mc.bladeOffset);
+                int.TryParse(words[1], out mc.autoState);
+                double.TryParse(words[2], out mc.voltage);
+                //double.TryParse(words[3], out double temp);
+            }
 
-            //string[] words = mc.serialRecvGradeControlStr.Split(',');
-            
-            //if (words.Length == 3)
-            //{                
-            //    //parse the values                              
-            //    int.TryParse(words[1], out mc.bladeOffset);
-            //    int.TryParse(words[2], out mc.autoModeVal);
-            //    double.TryParse(words[3], out mc.outputPID);
-
-            //}
-            
         }
 
         //the delegate for thread

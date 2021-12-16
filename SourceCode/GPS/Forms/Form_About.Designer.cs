@@ -43,6 +43,7 @@
             this.label12 = new System.Windows.Forms.Label();
             this.label13 = new System.Windows.Forms.Label();
             this.label9 = new System.Windows.Forms.Label();
+            this.label10 = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // textBox1
@@ -64,7 +65,7 @@
             this.label6.AutoSize = true;
             this.label6.Font = new System.Drawing.Font("Tahoma", 11.25F);
             this.label6.ForeColor = System.Drawing.SystemColors.ButtonFace;
-            this.label6.Location = new System.Drawing.Point(14, 142);
+            this.label6.Location = new System.Drawing.Point(14, 175);
             this.label6.Name = "label6";
             this.label6.Size = new System.Drawing.Size(129, 18);
             this.label6.TabIndex = 16;
@@ -75,7 +76,7 @@
             this.label5.AutoSize = true;
             this.label5.Font = new System.Drawing.Font("Tahoma", 11.25F);
             this.label5.ForeColor = System.Drawing.SystemColors.ButtonFace;
-            this.label5.Location = new System.Drawing.Point(14, 102);
+            this.label5.Location = new System.Drawing.Point(12, 92);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(229, 18);
             this.label5.TabIndex = 17;
@@ -86,7 +87,7 @@
             this.label4.AutoSize = true;
             this.label4.Font = new System.Drawing.Font("Tahoma", 11.25F);
             this.label4.ForeColor = System.Drawing.SystemColors.ButtonFace;
-            this.label4.Location = new System.Drawing.Point(14, 76);
+            this.label4.Location = new System.Drawing.Point(12, 66);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(144, 18);
             this.label4.TabIndex = 18;
@@ -110,9 +111,10 @@
             this.label2.ForeColor = System.Drawing.SystemColors.ButtonFace;
             this.label2.Location = new System.Drawing.Point(167, 33);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(114, 18);
+            this.label2.Size = new System.Drawing.Size(117, 18);
             this.label2.TabIndex = 14;
-            this.label2.Text = "v3.0.1 Jan 2018";
+            this.label2.Text = "v3.0.1 Dec 2021";
+            this.label2.Click += new System.EventHandler(this.label2_Click);
             // 
             // label1
             // 
@@ -128,12 +130,12 @@
             // linkLabelGit
             // 
             this.linkLabelGit.AutoSize = true;
-            this.linkLabelGit.Location = new System.Drawing.Point(14, 165);
+            this.linkLabelGit.Location = new System.Drawing.Point(14, 198);
             this.linkLabelGit.Name = "linkLabelGit";
-            this.linkLabelGit.Size = new System.Drawing.Size(227, 13);
+            this.linkLabelGit.Size = new System.Drawing.Size(303, 13);
             this.linkLabelGit.TabIndex = 11;
             this.linkLabelGit.TabStop = true;
-            this.linkLabelGit.Text = "https://github.com/farmerbriantee/OpenGrade";
+            this.linkLabelGit.Text = "https://github.com/BlackAceIndustries/BlackAce_OpenGrade";
             this.linkLabelGit.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.linkLabelGit_LinkClicked);
             // 
             // linkLabelCombineForum
@@ -141,10 +143,10 @@
             this.linkLabelCombineForum.AutoSize = true;
             this.linkLabelCombineForum.Location = new System.Drawing.Point(14, 372);
             this.linkLabelCombineForum.Name = "linkLabelCombineForum";
-            this.linkLabelCombineForum.Size = new System.Drawing.Size(397, 13);
+            this.linkLabelCombineForum.Size = new System.Drawing.Size(271, 13);
             this.linkLabelCombineForum.TabIndex = 12;
             this.linkLabelCombineForum.TabStop = true;
-            this.linkLabelCombineForum.Text = "http://www.thecombineforum.com/forums/31-technology/316233-open-grade.html";
+            this.linkLabelCombineForum.Text = "https://discourse.agopengps.com/t/grade-control/1702";
             this.linkLabelCombineForum.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.linkLabelCombineForum_LinkClicked);
             // 
             // button1
@@ -215,12 +217,26 @@
             this.label9.Text = "If you distribute copies of this program, whether gratis or\r\nfor a fee, you must " +
     "pass on to the recipients the same\r\nfreedoms that you received.  ";
             // 
+            // label10
+            // 
+            this.label10.AutoSize = true;
+            this.label10.Font = new System.Drawing.Font("Tahoma", 11.25F);
+            this.label10.ForeColor = System.Drawing.SystemColors.ButtonFace;
+            this.label10.Location = new System.Drawing.Point(14, 127);
+            this.label10.Name = "label10";
+            this.label10.Size = new System.Drawing.Size(297, 36);
+            this.label10.TabIndex = 32;
+            this.label10.Text = "Thanks to Brian for all he has done for\r\n open Source and farmers around the worl" +
+    "d!";
+            this.label10.Click += new System.EventHandler(this.label10_Click);
+            // 
             // Form_About
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(35)))), ((int)(((byte)(35)))), ((int)(((byte)(35)))));
             this.ClientSize = new System.Drawing.Size(721, 414);
+            this.Controls.Add(this.label10);
             this.Controls.Add(this.label9);
             this.Controls.Add(this.label13);
             this.Controls.Add(this.label12);
@@ -260,5 +276,6 @@
         private System.Windows.Forms.Label label12;
         private System.Windows.Forms.Label label13;
         private System.Windows.Forms.Label label9;
+        private System.Windows.Forms.Label label10;
     }
 }

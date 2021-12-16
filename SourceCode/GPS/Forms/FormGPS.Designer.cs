@@ -34,6 +34,8 @@
             ProgBar.cFocalPoints cFocalPoints1 = new ProgBar.cFocalPoints();
             ProgBar.cBlendItems cBlendItems2 = new ProgBar.cBlendItems();
             ProgBar.cFocalPoints cFocalPoints2 = new ProgBar.cFocalPoints();
+            ProgBar.cBlendItems cBlendItems3 = new ProgBar.cBlendItems();
+            ProgBar.cFocalPoints cFocalPoints3 = new ProgBar.cFocalPoints();
             this.openGLControl = new SharpGL.OpenGLControl();
             this.contextMenuStripOpenGL = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.deleteFlagToolOpenGLContextMenu = new System.Windows.Forms.ToolStripMenuItem();
@@ -191,6 +193,10 @@
             this.btnZoomOut = new ProXoft.WinForms.RepeatButton();
             this.btnTiltUp = new ProXoft.WinForms.RepeatButton();
             this.btnManualOffOn = new System.Windows.Forms.Button();
+            this.voltageBar = new ProgBar.ProgBarPlus();
+            this.voltageLbl = new System.Windows.Forms.Label();
+            this.label13 = new System.Windows.Forms.Label();
+            this.label14 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.openGLControl)).BeginInit();
             this.contextMenuStripOpenGL.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.openGLControlBack)).BeginInit();
@@ -595,7 +601,7 @@
             // 
             // toolsToolStripMenuItem
             // 
-            this.toolsToolStripMenuItem.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(30)))), ((int)(((byte)(30)))));
+            this.toolsToolStripMenuItem.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(45)))), ((int)(((byte)(45)))), ((int)(((byte)(48)))));
             this.toolsToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.explorerToolStripMenuItem,
             this.webCamToolStripMenuItem,
@@ -670,7 +676,7 @@
             this.aboutToolStripMenuHelpAbout.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(30)))), ((int)(((byte)(30)))));
             this.aboutToolStripMenuHelpAbout.ForeColor = System.Drawing.SystemColors.ButtonFace;
             this.aboutToolStripMenuHelpAbout.Name = "aboutToolStripMenuHelpAbout";
-            this.aboutToolStripMenuHelpAbout.Size = new System.Drawing.Size(180, 40);
+            this.aboutToolStripMenuHelpAbout.Size = new System.Drawing.Size(168, 40);
             this.aboutToolStripMenuHelpAbout.Text = "About";
             this.aboutToolStripMenuHelpAbout.Click += new System.EventHandler(this.aboutToolStripMenuHelpAbout_Click);
             // 
@@ -679,7 +685,7 @@
             this.helpToolStripMenuHelpHelp.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(30)))), ((int)(((byte)(30)))));
             this.helpToolStripMenuHelpHelp.ForeColor = System.Drawing.SystemColors.ButtonFace;
             this.helpToolStripMenuHelpHelp.Name = "helpToolStripMenuHelpHelp";
-            this.helpToolStripMenuHelpHelp.Size = new System.Drawing.Size(180, 40);
+            this.helpToolStripMenuHelpHelp.Size = new System.Drawing.Size(168, 40);
             this.helpToolStripMenuHelpHelp.Text = "Help";
             this.helpToolStripMenuHelpHelp.Click += new System.EventHandler(this.helpToolStripMenuHelpHelp_Click);
             // 
@@ -792,7 +798,7 @@
             this.stripEqWidth.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
             this.stripEqWidth.Margin = new System.Windows.Forms.Padding(0);
             this.stripEqWidth.Name = "stripEqWidth";
-            this.stripEqWidth.Size = new System.Drawing.Size(486, 41);
+            this.stripEqWidth.Size = new System.Drawing.Size(455, 41);
             this.stripEqWidth.Spring = true;
             this.stripEqWidth.Text = "Width";
             // 
@@ -996,7 +1002,7 @@
             // 
             // lblSpeedUnits
             // 
-            this.lblSpeedUnits.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
+            this.lblSpeedUnits.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.lblSpeedUnits.BackColor = System.Drawing.Color.Black;
             this.lblSpeedUnits.Font = new System.Drawing.Font("Tahoma", 10F, System.Drawing.FontStyle.Bold);
             this.lblSpeedUnits.ForeColor = System.Drawing.Color.Green;
@@ -2011,7 +2017,6 @@
             // 
             // lblDiagnostics
             // 
-            this.lblDiagnostics.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.lblDiagnostics.BackColor = System.Drawing.SystemColors.InfoText;
             this.lblDiagnostics.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.lblDiagnostics.Font = new System.Drawing.Font("Tahoma", 21.75F);
@@ -2240,12 +2245,100 @@
             this.btnManualOffOn.UseVisualStyleBackColor = false;
             this.btnManualOffOn.Click += new System.EventHandler(this.btnManualOffOn_Click);
             // 
+            // voltageBar
+            // 
+            this.voltageBar.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.voltageBar.BarBackColor = System.Drawing.Color.Black;
+            cBlendItems3.iColor = new System.Drawing.Color[] {
+        System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(0)))), ((int)(((byte)(0))))),
+        System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0))))),
+        System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(255)))), ((int)(((byte)(0))))),
+        System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))))};
+            cBlendItems3.iPoint = new float[] {
+        0F,
+        0.4378882F,
+        0.5031056F,
+        1F};
+            this.voltageBar.BarColorBlend = cBlendItems3;
+            this.voltageBar.BarColorSolid = System.Drawing.Color.RoyalBlue;
+            this.voltageBar.BarColorSolidB = System.Drawing.Color.RoyalBlue;
+            this.voltageBar.BarLengthValue = ((short)(200));
+            this.voltageBar.BarPadding = new System.Windows.Forms.Padding(0);
+            this.voltageBar.BarStyleFill = ProgBar.ProgBarPlus.eBarStyle.Solid;
+            this.voltageBar.BarStyleHatch = System.Drawing.Drawing2D.HatchStyle.BackwardDiagonal;
+            this.voltageBar.BarStyleLinear = System.Drawing.Drawing2D.LinearGradientMode.Vertical;
+            this.voltageBar.BarStyleTexture = null;
+            this.voltageBar.BorderWidth = ((short)(1));
+            this.voltageBar.Corners.All = ((short)(0));
+            this.voltageBar.Corners.LowerLeft = ((short)(0));
+            this.voltageBar.Corners.LowerRight = ((short)(0));
+            this.voltageBar.Corners.UpperLeft = ((short)(0));
+            this.voltageBar.Corners.UpperRight = ((short)(0));
+            this.voltageBar.CylonInterval = ((short)(1));
+            this.voltageBar.CylonMove = 1F;
+            cFocalPoints3.CenterPoint = ((System.Drawing.PointF)(resources.GetObject("cFocalPoints3.CenterPoint")));
+            cFocalPoints3.FocusScales = ((System.Drawing.PointF)(resources.GetObject("cFocalPoints3.FocusScales")));
+            this.voltageBar.FocalPoints = cFocalPoints3;
+            this.voltageBar.Location = new System.Drawing.Point(1210, 343);
+            this.voltageBar.Max = 500;
+            this.voltageBar.Name = "voltageBar";
+            this.voltageBar.Orientation = ProgBar.ProgBarPlus.eOrientation.Vertical;
+            this.voltageBar.ShapeTextFont = new System.Drawing.Font("Arial Black", 30F);
+            this.voltageBar.Size = new System.Drawing.Size(18, 300);
+            this.voltageBar.TabIndex = 236;
+            this.voltageBar.TextFormat = "Process {1}% Done";
+            this.voltageBar.Value = 300;
+            // 
+            // voltageLbl
+            // 
+            this.voltageLbl.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.voltageLbl.AutoSize = true;
+            this.voltageLbl.BackColor = System.Drawing.Color.Black;
+            this.voltageLbl.ForeColor = System.Drawing.SystemColors.ButtonFace;
+            this.voltageLbl.Location = new System.Drawing.Point(1167, 343);
+            this.voltageLbl.Name = "voltageLbl";
+            this.voltageLbl.Size = new System.Drawing.Size(42, 19);
+            this.voltageLbl.TabIndex = 237;
+            this.voltageLbl.Text = "5.0V";
+            this.voltageLbl.Click += new System.EventHandler(this.label13_Click_3);
+            // 
+            // label13
+            // 
+            this.label13.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.label13.AutoSize = true;
+            this.label13.BackColor = System.Drawing.Color.Black;
+            this.label13.ForeColor = System.Drawing.SystemColors.ButtonFace;
+            this.label13.Location = new System.Drawing.Point(1167, 618);
+            this.label13.Name = "label13";
+            this.label13.Size = new System.Drawing.Size(42, 19);
+            this.label13.TabIndex = 238;
+            this.label13.Text = "0.0V";
+            this.label13.Click += new System.EventHandler(this.label13_Click_4);
+            // 
+            // label14
+            // 
+            this.label14.Anchor = System.Windows.Forms.AnchorStyles.Right;
+            this.label14.AutoSize = true;
+            this.label14.BackColor = System.Drawing.Color.Black;
+            this.label14.ForeColor = System.Drawing.SystemColors.ButtonFace;
+            this.label14.Location = new System.Drawing.Point(1167, 485);
+            this.label14.Name = "label14";
+            this.label14.Size = new System.Drawing.Size(42, 19);
+            this.label14.TabIndex = 239;
+            this.label14.Text = "2.5V";
+            this.label14.Click += new System.EventHandler(this.label14_Click);
+            // 
             // FormGPS
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(96F, 96F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(45)))), ((int)(((byte)(45)))), ((int)(((byte)(48)))));
             this.ClientSize = new System.Drawing.Size(1306, 684);
+            this.Controls.Add(this.label14);
+            this.Controls.Add(this.label13);
+            this.Controls.Add(this.voltageLbl);
+            this.Controls.Add(this.voltageBar);
             this.Controls.Add(this.sqrDitchCutLine);
             this.Controls.Add(this.lblDitchCutLine);
             this.Controls.Add(this.sqrCutLine1);
@@ -2479,6 +2572,10 @@
         private System.Windows.Forms.Button sqrDitchCutLine;
         private System.Windows.Forms.Label lblDitchCutLine;
         private System.Windows.Forms.Button btnAutoDrain;
+        private ProgBar.ProgBarPlus voltageBar;
+        private System.Windows.Forms.Label voltageLbl;
+        private System.Windows.Forms.Label label13;
+        private System.Windows.Forms.Label label14;
     }
 }
 

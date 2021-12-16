@@ -32,9 +32,7 @@ namespace OpenGrade
             lblFixQuality.Text = mf.FixQuality;
             lblSatsTracked.Text = mf.SatsTracked;
             lblStatus.Text = mf.Status;
-            lblHDOP.Text = mf.HDOP;
-
-            
+            lblHDOP.Text = mf.HDOP;            
 
             tboxSerialFromGradeControl.Text = mf.mc.serialRecvGradeControlStr;
             txtBoxSendGradeControl.Text = "32762, " + mf.mc.GradeControlData[mf.mc.gcDeltaDir] + ", " + mf.mc.GradeControlData[mf.mc.gcCutDelta] + ", " + mf.mc.GradeControlData[mf.mc.gcisAutoActive];  

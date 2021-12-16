@@ -1043,7 +1043,7 @@ namespace OpenGrade
 
                     lblRoll.Text = RollInDegrees;
                     lblGyroHeading.Text = GyroInDegrees;
-                    lblGPSHeading.Text = GPSHeading;
+                    lblGPSHeading.Text = GPSHeading;                     
 
                     //up in the menu a few pieces of info
                     if (isJobStarted)
@@ -1087,18 +1087,10 @@ namespace OpenGrade
                 lblHeading.Text = Heading;
                 btnABLine.Text = PassNumber;
                 sqrCutLine.Text = PureSteerAngle;
+                
+                voltageBar.Value = ((int)(mc.voltage * 100)); 
+                lblDiagnostics.Text = (mc.voltage).ToString() + "Volts";
 
-                // Perform Serial functions based on what serial read is from Grade Control
-                //if (!isGradeControlBtnOn)
-                //{
-                //    btnGradeControl.PerformClick();
-                //    //mc.serialRecvGradeControlStr = "";
-                //}
-                //if (isGradeControlBtnOn)
-                //{
-                //    btnGradeControl.PerformClick();
-                //    //mc.serialRecvGradeControlStr = "";
-                //}
 
                 if (cutDelta == 9999)
                 {
@@ -1110,8 +1102,6 @@ namespace OpenGrade
                     GradeControlDataOutToPort();
                     //Output to serial for blade control 
 
-                    //mc.GradeControlData[mc.gcCutDelta] = (byte)(199);
-                    //GradeControlDataOutToPort();
 
                 }
 
@@ -1161,9 +1151,7 @@ namespace OpenGrade
                             lblCutDelta.Text = (0.3937 * cutDelta).ToString("N2");
                             mc.GradeControlData[mc.gcDeltaDir] = 0;
                         }
-                        
-                        //}                    
-
+                       
                     }
                    
 

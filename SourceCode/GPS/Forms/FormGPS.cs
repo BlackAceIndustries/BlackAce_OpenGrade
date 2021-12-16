@@ -828,6 +828,26 @@ namespace OpenGrade
 
         }
 
+        private void progBarPlus2_Load(object sender, EventArgs e)
+        {
+
+        }
+
+        private void label13_Click_3(object sender, EventArgs e)
+        {
+
+        }
+
+        private void label13_Click_4(object sender, EventArgs e)
+        {
+
+        }
+
+        private void label14_Click(object sender, EventArgs e)
+        {
+
+        }
+
         private void btnAutoDrain_Click(object sender, EventArgs e)
         {
             

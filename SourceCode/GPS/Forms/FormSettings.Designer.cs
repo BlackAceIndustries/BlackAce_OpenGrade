@@ -390,7 +390,7 @@
             resources.ApplyResources(this.nudKi, "nudKi");
             this.nudKi.ForeColor = System.Drawing.SystemColors.ButtonFace;
             this.nudKi.Maximum = new decimal(new int[] {
-            500,
+            2000,
             0,
             0,
             0});
@@ -415,7 +415,7 @@
             resources.ApplyResources(this.nudKp, "nudKp");
             this.nudKp.ForeColor = System.Drawing.SystemColors.ButtonFace;
             this.nudKp.Maximum = new decimal(new int[] {
-            5000,
+            2000,
             0,
             0,
             0});

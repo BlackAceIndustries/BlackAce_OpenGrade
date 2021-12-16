@@ -47,14 +47,12 @@ namespace OpenGrade
 
             maxTileCut = Properties.Vehicle.Default.setVehicle_maxTileCut;  
             maxDitchCut = Properties.Vehicle.Default.setVehicle_maxDitchCut;
-            minTileCover = Properties.Vehicle.Default.setVehicle_minTileCover;
+            minTileCover = Properties.Vehicle.Default.setVehicle_minTileCover;            
+            
+
             KpGain = Properties.Vehicle.Default.setVehicle_KpGain;
             KiGain = Properties.Vehicle.Default.setVehicle_KiGain;
             KdGain = Properties.Vehicle.Default.setVehicle_KdGain;
-
-
-
-
 
             viewDistAboveGnd = Properties.Vehicle.Default.setVehicle_viewDistAboveGnd;
             viewDistUnderGnd = Properties.Vehicle.Default.setVehicle_viewDistUnderGnd;         
@@ -134,12 +132,13 @@ namespace OpenGrade
             mf.vehicle.minTileCover = minTileCover;
             Properties.Vehicle.Default.setVehicle_minTileCover = mf.vehicle.minTileCover;
 
-            mf.vehicle.KpGain = KpGain;
-            Properties.Vehicle.Default.setVehicle_KpGain = mf.vehicle.KpGain;
-            mf.vehicle.KiGain = KiGain;
-            Properties.Vehicle.Default.setVehicle_KiGain = mf.vehicle.KiGain;
-            mf.vehicle.KdGain = KdGain;
-            Properties.Vehicle.Default.setVehicle_KdGain = mf.vehicle.KdGain;
+            mf.vehicle.V_KpGain = KpGain;
+            Properties.Vehicle.Default.setVehicle_KpGain = mf.vehicle.V_KpGain;
+            mf.vehicle.V_KiGain = KiGain;
+            Properties.Vehicle.Default.setVehicle_KiGain = mf.vehicle.V_KiGain;
+            mf.vehicle.V_KdGain = KdGain;
+            Properties.Vehicle.Default.setVehicle_KdGain = mf.vehicle.V_KdGain;
+            
 
 
             mf.vehicle.viewDistAboveGnd = viewDistAboveGnd;
@@ -159,6 +158,7 @@ namespace OpenGrade
 
             Properties.Settings.Default.Save();
             Properties.Vehicle.Default.Save();
+            
             
 
             //back to FormGPS
