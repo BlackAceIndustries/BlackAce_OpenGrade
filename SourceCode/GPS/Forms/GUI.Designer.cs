@@ -1089,7 +1089,7 @@ namespace OpenGrade
                 sqrCutLine.Text = PureSteerAngle;
                 
                 voltageBar.Value = ((int)(mc.voltage * 100)); 
-                lblDiagnostics.Text = (mc.voltage).ToString() + "Volts";
+                //lblDiagnostics.Text = (mc.voltage).ToString() + "Volts";
 
 
                 if (cutDelta == 9999)
@@ -1100,9 +1100,7 @@ namespace OpenGrade
                     pbarCutBelow.Value = 0;
                     mc.GradeControlData[mc.gcDeltaDir] = 3;
                     GradeControlDataOutToPort();
-                    //Output to serial for blade control 
-
-
+                    //Output to serial for blade control
                 }
 
 

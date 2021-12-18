@@ -25,11 +25,14 @@ void SetOutput();
 #include <Button.h>
 #include <PID_v1.h>
 
-///////////////////PID constants/////////////////////////
-float Kp=12; //Mine was 8
-float Ki=0.2; //Mine was 0.2
-float Kd=3100; //Mine was 3100
-float delta_setpoint = 0;           //Should be the distance from sensor to the middle of the bar in mm
+//////////////SETTINGS////////////
+float Kp=38; //Mine was 8
+float Ki=.02; //Mine was 0.2
+float Kd=2800; //Mine was 3100
+float delta_setpoint = 0;           
+
+
+///////////////////PID/////////////////////////
 float PID_p, PID_i, PID_d, PID_total;
 //////////////////////////////////////////////////////////
 
@@ -69,7 +72,9 @@ double voltage = 0; // diagnostic Voltage
 
 //loop time variables in milliseconds
 const byte LOOP_TIME = 50; //20hz
+const byte LOOP_TIME2 = 10;
 unsigned long lastTime = LOOP_TIME;
+unsigned long lastTime2 = LOOP_TIME2; 
 unsigned long currentTime = LOOP_TIME; 
 
 //Define Variables we'll be connecting to
@@ -167,17 +172,14 @@ void loop(){  //Loop triggers every 50 msec (20hz) and sends back offsets Pid ec
   
   if (currentTime - lastTime >= LOOP_TIME)
   {    
+    lastTime = currentTime;
     
     if (autoState == 1){
       isAutoActive = true;
     }
     else {
       isAutoActive = false;
-    } 
-    lastTime = currentTime;  
-    
-        
-    //BladeOffset ************************************************  
+    }     
 
     //////BTNS    =============================================== 
     if (offsetIncBtn.pressed()){
@@ -201,18 +203,9 @@ void loop(){  //Loop triggers every 50 msec (20hz) and sends back offsets Pid ec
     Serial.print(", ");
     Serial.print(autoState);
     Serial.print(", ");
-    Serial.println(voltage);
-    
-
-    if (isAutoActive && isCutting){
-        SetOutput();
-    }
-    else{
-      analogOutput1 = VALVE_FLOAT;
-      voltage = ((double)analogOutput1/4096) * 5.0;
-
-      Dac1.setVoltage(analogOutput1, false);                      
-    }
+    Serial.println(voltage);           
+  } 
+  if (currentTime - lastTime2 >= LOOP_TIME2){
 
     if (Serial.available() > 0 && !isDataFound && !isSettingFound)
     {
@@ -231,7 +224,7 @@ void loop(){  //Loop triggers every 50 msec (20hz) and sends back offsets Pid ec
       
       isDataFound = false;      
       deltaDir = Serial.read();// Cut Delta Dir 
-      cutDelta = Serial.read();//Cut Delta      
+      cutDelta = Serial.read();// Cut Delta      
       autoState = Serial.read();// Auto State
       
       if (deltaDir == 3){
@@ -255,9 +248,22 @@ void loop(){  //Loop triggers every 50 msec (20hz) and sends back offsets Pid ec
       Kp /= 10;
       Ki /= 10;
       Kd *= 100;      
-    }    
-  } 
+    }
+    
+    if (isAutoActive && isCutting){
+      SetOutput();
+    }
+    else{
+      analogOutput1 = VALVE_FLOAT;
+      voltage = ((double)analogOutput1/4096) * 5.0;
+      Dac1.setVoltage(analogOutput1, false);                      
+    }
+  }
 }
+
+///
+/// Functions
+///
 
 void SetOutput() {
   
@@ -297,13 +303,11 @@ void SetOutput() {
   }
   
   if (analogOutput1 > 4096) analogOutput1 = 4096; // do not exceed 4096
-  if (analogOutput1 < 0) analogOutput1 = 5; // do not write negative numbers 
+  if (analogOutput1 < 0) analogOutput1 = 2; // do not write negative numbers 
 
-  voltage = ((double)analogOutput1/4096) * 5.0;
-  
-  if (cutDelta > deadband){ 
-        Dac1.setVoltage(analogOutput1, false); 
-  } 
+  voltage = ((double)analogOutput1/4096) * 5.0;   
+  Dac1.setVoltage(analogOutput1, false);
+   
 
   delta_previous_error = delta_error;  
 }
