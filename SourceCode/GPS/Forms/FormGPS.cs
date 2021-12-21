@@ -30,6 +30,9 @@ namespace OpenGrade
         //current fields and field directory
         public string fieldsDirectory, currentFieldDirectory;
 
+        // Cutlines directory
+        public string cutDirectory;                    
+
         //ABLines directory
         public string ablinesDirectory;
 
@@ -649,7 +652,7 @@ namespace OpenGrade
             string curDir;
             if (currentFieldDirectory != "")
             {
-                curDir = fieldsDirectory + currentFieldDirectory + "//";
+                curDir = fieldsDirectory + currentFieldDirectory + "\\";
                 dir = Path.GetDirectoryName(curDir);
                 if (!string.IsNullOrEmpty(dir) && !Directory.Exists(dir))
                 {
@@ -666,6 +669,12 @@ namespace OpenGrade
             ablinesDirectory = baseDirectory + "ABLines\\";
             dir = Path.GetDirectoryName(fieldsDirectory);
             if (!string.IsNullOrEmpty(dir) && !Directory.Exists(dir)) { Directory.CreateDirectory(dir); }
+
+
+            //get the cut Lines directory, if not exist, create
+            //cutDirectory = baseDirectory + fieldsDirectory + "CutLines\\";
+            //dir = Path.GetDirectoryName(fieldsDirectory);
+            //if (!string.IsNullOrEmpty(dir) && !Directory.Exists(dir)) { Directory.CreateDirectory(dir); }
 
             //set baud and port from last time run
             baudRateGPS = Settings.Default.setPort_baudRate;
@@ -848,9 +857,24 @@ namespace OpenGrade
 
         }
 
-        private void btnAutoDrain_Click(object sender, EventArgs e)
+        private void pbarCutAbove_Load(object sender, EventArgs e)
         {
-            
+
+        }
+
+        private void pbarCutBelow_Load(object sender, EventArgs e)
+        {
+
+        }
+       
+        private void btnSaveCut_Click_1(object sender, EventArgs e)
+        {
+            ct.SaveToCut();
+            btnSaveCut.Enabled = false;
+        }
+
+        private void btnAutoDrain_Click(object sender, EventArgs e)
+        {            
             AutoDrain();
         }
 
@@ -1194,7 +1218,7 @@ namespace OpenGrade
 
             //clear the flags
             flagPts.Clear();
-            btnFlag.Enabled = false;
+            btnFlag.Enabled = false;            
 
             //reset the buttons
             btnABLine.Enabled = false;
@@ -1203,7 +1227,7 @@ namespace OpenGrade
             isGradeControlBtnOn = false;
 
             ct.isContourBtnOn = false;
-            ct.isContourOn = false;
+            ct.isContourOn = false;            
             ct.ptList.Clear();
             ct.drawList.Clear();
             lblCut.Text = "*";
@@ -1256,28 +1280,35 @@ namespace OpenGrade
                         { form2.ShowDialog(); }
                     }
                 }
-
-                Text = "OpenGrade - " + currentFieldDirectory;
-            }
-
-            //close the current job and ask how to or if to save
+                Text = "OpenGrade - Press Start To Begin" ;
+            }            
             else
             {
-                int choice = SaveOrNot();
-                switch (choice)
+                using (var form = new FormJob(this))
                 {
-                    //OK
-                    case 0:
-                        Settings.Default.setF_CurrentDir = currentFieldDirectory;
-                        Settings.Default.Save();
-                        FileSaveEverythingBeforeClosingField();
-                        break;
-                    //Ignore and return
-                    case 1:
-                        break;
+                    var result = form.ShowDialog();
                 }
+                Text = "OpenGrade - " + currentFieldDirectory;
+                              
             }
         }
+
+
+
+        
+
+
+
+
+
+
+
+
+
+
+
+
+
 
         //take the distance from object and convert to camera data
         private void SetZoom()
@@ -1312,7 +1343,7 @@ namespace OpenGrade
         }
 
         //All the files that need to be saved when closing field or app
-        private void FileSaveEverythingBeforeClosingField()
+        public void FileSaveEverythingBeforeClosingField()
         {
             //turn off contour line if on
             if (ct.isContourOn) ct.StopContourLine();

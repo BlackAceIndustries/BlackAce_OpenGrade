@@ -366,13 +366,13 @@
             resources.ApplyResources(this.nudKd, "nudKd");
             this.nudKd.ForeColor = System.Drawing.SystemColors.ButtonFace;
             this.nudKd.Maximum = new decimal(new int[] {
-            5000,
+            255,
             0,
             0,
             0});
             this.nudKd.Name = "nudKd";
             this.nudKd.Value = new decimal(new int[] {
-            3100,
+            255,
             0,
             0,
             0});
@@ -386,20 +386,19 @@
             // nudKi
             // 
             this.nudKi.BackColor = System.Drawing.SystemColors.MenuText;
-            this.nudKi.DecimalPlaces = 2;
             resources.ApplyResources(this.nudKi, "nudKi");
             this.nudKi.ForeColor = System.Drawing.SystemColors.ButtonFace;
             this.nudKi.Maximum = new decimal(new int[] {
-            2000,
+            255,
             0,
             0,
             0});
             this.nudKi.Name = "nudKi";
             this.nudKi.Value = new decimal(new int[] {
-            25,
+            21,
             0,
             0,
-            131072});
+            0});
             // 
             // label5
             // 
@@ -411,11 +410,10 @@
             // nudKp
             // 
             this.nudKp.BackColor = System.Drawing.SystemColors.MenuText;
-            this.nudKp.DecimalPlaces = 2;
             resources.ApplyResources(this.nudKp, "nudKp");
             this.nudKp.ForeColor = System.Drawing.SystemColors.ButtonFace;
             this.nudKp.Maximum = new decimal(new int[] {
-            2000,
+            255,
             0,
             0,
             0});

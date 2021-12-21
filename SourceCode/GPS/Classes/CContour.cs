@@ -33,9 +33,41 @@ namespace OpenGrade
             //optional parameters            
             cutAltitude = _cutAltitude;
             currentPassAltitude = _currentPassAltitude;
-            lastPassAltitude = _lastPassAltitude;            
+            lastPassAltitude = _lastPassAltitude;
             distance = _distance;
-            
+
+        }
+    }
+
+    public class CCutPt
+    {
+        public double altitude { get; set; }
+        public double easting { get; set; }
+        public double northing { get; set; }
+        public double heading { get; set; }
+        public double cutAltitude { get; set; }
+        public double lastPassAltitude { get; set; }
+        public double currentPassAltitude { get; set; }
+        public double latitude { get; set; }
+        public double longitude { get; set; }
+        public double distance { get; set; }
+
+
+        //constructor
+        public CCutPt(double _easting, double _heading, double _northing,
+                            double _altitude, double _lat, double _long,
+                            double _cutAltitude = -1, double _currentPassAltitude = -1, double _lastPassAltitude = -1, double _distance = -1)
+        {
+            easting = _easting;
+            northing = _northing;
+            heading = _heading;
+            altitude = _altitude;
+            latitude = _lat;
+            longitude = _long;                      
+            cutAltitude = _cutAltitude;
+            currentPassAltitude = _currentPassAltitude;
+            lastPassAltitude = _lastPassAltitude;
+            distance = _distance;
         }
     }
 
@@ -51,6 +83,9 @@ namespace OpenGrade
         public double zeroAltitude = 0;
 
         public List<CContourPt> ptList = new List<CContourPt>();
+        public List<CCutPt> cutList = new List<CCutPt>();
+
+        public int cutNum = 0;
 
         //used to determine if section was off and now is on or vice versa
         public bool wasSectionOn;
@@ -81,7 +116,7 @@ namespace OpenGrade
         public bool isOnRightSideCurrentLine = true;
 
         public bool isDrawingRefLine;
-        public bool isAutoDraw; 
+        public bool isAutoDraw;
 
         //
         // Black Ace Industries
@@ -89,8 +124,7 @@ namespace OpenGrade
         public bool isOnPass;
         public bool isDoneCopy;
         public bool isAutoCutDepthActive;
-
-        public int passNum;
+        
 
 
         //pure pursuit values
@@ -135,7 +169,7 @@ namespace OpenGrade
         //
 
 
-        
+
 
         //start stop and add points to list
         public void StartContourLine()
@@ -165,28 +199,23 @@ namespace OpenGrade
             isContourOn = false;
         }
 
-        //  // Start of Pass
-        //  public void StartPassLine()
-        //  {
-        //      isContourOn = true;
-        //      //reuse ptList
-        //      ptList.Clear();
+        public void SaveToCut()        
+        {            
+            if (ptList.Count > 1)
+            {
+                int count = ptList.Count;
+                for (int h = 0; h < count; h++)
+                {
+                    CCutPt point = new CCutPt(ptList[h].easting, ptList[h].heading, ptList[h].northing, ptList[h].altitude, ptList[h].latitude,
+                        ptList[h].longitude, ptList[h].cutAltitude, ptList[h].currentPassAltitude, ptList[h].lastPassAltitude, ptList[h].distance);
+                    cutList.Add(point);                    
+                }
+                //cutNum++;                
+                mf.FileSaveCut();
+            }
+            cutList.Clear();      
 
-        //      CContourPt point = new CContourPt(mf.pn.easting, mf.fixHeading, mf.pn.northing, mf.pn.altitude, mf.pn.latitude, mf.pn.longitude);
-        //      ptList.Add(point);
-        //  }
-        
-        
-        //  //End the Pass    
-        //  public void StopPassLine()
-        //  {
-        //      CContourPt point = new CContourPt(mf.pn.easting, mf.fixHeading, mf.pn.northing, mf.pn.altitude, mf.pn.latitude, mf.pn.longitude);
-        //      ptList.Add(point);
-
-        //      //turn it off
-        //      isContourOn = false;
-        //  }
-
+        }
 
         //determine distance from contour guidance line
         public void DistanceFromContourLine()
@@ -525,5 +554,10 @@ namespace OpenGrade
         }
 
 
-    }//class
-}//namespace
+    }
+
+
+
+}
+ //class
+ //namespace

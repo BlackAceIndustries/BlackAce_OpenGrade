@@ -23,9 +23,9 @@ namespace OpenGrade
         public double maxTileCut;
         public double minTileCover;
         
-        public double V_KpGain;
-        public double V_KiGain;
-        public double V_KdGain;
+        public byte V_KpGain;
+        public byte V_KiGain;
+        public byte V_KdGain;
 
         // pat codes
         public double viewDistUnderGnd;
@@ -60,10 +60,6 @@ namespace OpenGrade
             minTileCover = Properties.Vehicle.Default.setVehicle_minTileCover;
             viewDistAboveGnd = Properties.Vehicle.Default.setVehicle_viewDistAboveGnd;
             viewDistUnderGnd = Properties.Vehicle.Default.setVehicle_viewDistUnderGnd;
-
-            V_KpGain = Properties.Vehicle.Default.setVehicle_KpGain;
-            V_KiGain = Properties.Vehicle.Default.setVehicle_KiGain;
-            V_KdGain = Properties.Vehicle.Default.setVehicle_KdGain;
 
             wheelbase = Properties.Vehicle.Default.setVehicle_wheelbase;
             goalPointLookAhead = Properties.Vehicle.Default.setVehicle_goalPointLookAhead;

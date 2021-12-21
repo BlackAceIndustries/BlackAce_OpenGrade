@@ -804,6 +804,7 @@ namespace OpenGrade
         
         public void AutoDrain()
         {
+
             vec2 temp = new vec2();
                         
             double distFromLastPlot = 0;

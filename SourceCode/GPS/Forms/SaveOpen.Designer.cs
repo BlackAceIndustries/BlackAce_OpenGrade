@@ -51,13 +51,9 @@ namespace OpenGrade
                     writer.WriteLine("MaxTileCut," + Properties.Vehicle.Default.setVehicle_maxTileCut.ToString(CultureInfo.InvariantCulture));
                     writer.WriteLine("MinTileCover," + Properties.Vehicle.Default.setVehicle_minTileCover.ToString(CultureInfo.InvariantCulture));
 
-                    writer.WriteLine("KpGain," + Properties.Vehicle.Default.setVehicle_KpGain.ToString(CultureInfo.InvariantCulture));
-                    writer.WriteLine("KiGain," + Properties.Vehicle.Default.setVehicle_KiGain.ToString(CultureInfo.InvariantCulture));
-                    writer.WriteLine("KdGain," + Properties.Vehicle.Default.setVehicle_KdGain.ToString(CultureInfo.InvariantCulture));
-
-
-
-
+                    writer.WriteLine("KpGain," + Properties.Settings.Default.set_KpGain.ToString(CultureInfo.InvariantCulture));
+                    writer.WriteLine("KiGain," + Properties.Settings.Default.set_KiGain.ToString(CultureInfo.InvariantCulture));
+                    writer.WriteLine("KdGain," + Properties.Settings.Default.set_KdGain.ToString(CultureInfo.InvariantCulture));
 
                     writer.WriteLine("ViewDistUnderGnd," + Properties.Vehicle.Default.setVehicle_viewDistUnderGnd.ToString(CultureInfo.InvariantCulture));
                     writer.WriteLine("ViewDistAboveGnd," + Properties.Vehicle.Default.setVehicle_viewDistAboveGnd.ToString(CultureInfo.InvariantCulture));
@@ -182,11 +178,11 @@ namespace OpenGrade
                         Properties.Vehicle.Default.setVehicle_minTileCover = double.Parse(words[1], CultureInfo.InvariantCulture);
 
                         line = reader.ReadLine(); words = line.Split(',');
-                        Properties.Vehicle.Default.setVehicle_KpGain = double.Parse(words[1], CultureInfo.InvariantCulture);
+                        Properties.Settings.Default.set_KpGain = byte.Parse(words[1], CultureInfo.InvariantCulture);
                         line = reader.ReadLine(); words = line.Split(',');
-                        Properties.Vehicle.Default.setVehicle_KiGain = double.Parse(words[1], CultureInfo.InvariantCulture);
+                        Properties.Settings.Default.set_KiGain = byte.Parse(words[1], CultureInfo.InvariantCulture);
                         line = reader.ReadLine(); words = line.Split(',');
-                        Properties.Vehicle.Default.setVehicle_KdGain = double.Parse(words[1], CultureInfo.InvariantCulture);
+                        Properties.Settings.Default.set_KdGain = byte.Parse(words[1], CultureInfo.InvariantCulture);
 
                         // Pat Codes
                         line = reader.ReadLine(); words = line.Split(',');
@@ -284,24 +280,22 @@ namespace OpenGrade
                         vehicle.maxDitchCut = Properties.Vehicle.Default.setVehicle_maxDitchCut;
                         vehicle.maxTileCut = Properties.Vehicle.Default.setVehicle_maxTileCut;
                         vehicle.minTileCover = Properties.Vehicle.Default.setVehicle_minTileCover;
-                        vehicle.V_KpGain = Properties.Vehicle.Default.setVehicle_KpGain;
-                        vehicle.V_KiGain = Properties.Vehicle.Default.setVehicle_KiGain;
-                        vehicle.V_KdGain = Properties.Vehicle.Default.setVehicle_KdGain;                        
+                        
+                        
+                        vehicle.V_KpGain = Properties.Settings.Default.set_KpGain;
+                        vehicle.V_KiGain = Properties.Settings.Default.set_KiGain;  
+                        vehicle.V_KdGain = Properties.Settings.Default.set_KdGain;                        
 
 
                         // Pats codes 
                         vehicle.viewDistAboveGnd = Properties.Vehicle.Default.setVehicle_viewDistAboveGnd;
                         vehicle.viewDistUnderGnd = Properties.Vehicle.Default.setVehicle_viewDistUnderGnd;
 
-                        //mc.gradeControlSettings[mc.gsKpGain] = (byte)Properties.Vehicle.Default.setVehicle_KpGain;
-                        //mc.gradeControlSettings[mc.gsKiGain] = (byte)(Properties.Vehicle.Default.setVehicle_KiGain * 10);
-                        //mc.gradeControlSettings[mc.gsKdGain] = (byte)(Properties.Vehicle.Default.setVehicle_KdGain / 100);
 
+                        mc.gradeControlSettings[mc.gsKpGain] = Properties.Settings.Default.set_KpGain;
+                        mc.gradeControlSettings[mc.gsKiGain] = Properties.Settings.Default.set_KiGain;
+                        mc.gradeControlSettings[mc.gsKdGain] = Properties.Settings.Default.set_KdGain;                        
 
-                        mc.gradeControlSettings[mc.gsKpGain] = (byte)(vehicle.V_KpGain*10);
-                        mc.gradeControlSettings[mc.gsKiGain] = (byte)(vehicle.V_KiGain*10);
-                        mc.gradeControlSettings[mc.gsKdGain] = (byte)(vehicle.V_KdGain/100);
-                        //GradeControlSettingsOutToPort();
 
                         vehicle.toolWidth = Properties.Vehicle.Default.setVehicle_toolWidth;
                         vehicle.minSlope = Properties.Vehicle.Default.setVehicle_minSlope;
@@ -457,7 +451,7 @@ namespace OpenGrade
 
             // Contour points ----------------------------------------------------------------------------
 
-            fileAndDirectory = fieldsDirectory + currentFieldDirectory + "\\Contour.txt";
+            fileAndDirectory = fieldsDirectory + currentFieldDirectory + "\\CurrentCut.txt";
             if (!File.Exists(fileAndDirectory))
             {
                 var form = new FormTimedMessage(4000, "Missing Contour File", "But Field is Loaded");
@@ -667,6 +661,122 @@ namespace OpenGrade
             }
         }//end of open file
 
+        public void FileLoadCut(string _openType)
+        {
+            string fileAndDirectory;
+            //get the directory where the fields are stored
+            //string directoryName = System.IO.Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location)+ "\\fields\\";
+
+            if (_openType == "Resume")
+            {
+                //Either exit or update running save
+                fileAndDirectory = fieldsDirectory + currentFieldDirectory + "\\CutPaths\\Cut_0.txt";
+                if (!File.Exists(fileAndDirectory)) return;
+            }
+
+            //open file dialog instead
+            else
+            {
+                //create the dialog instance
+                OpenFileDialog ofd = new OpenFileDialog();
+
+                //the initial directory, fields, for the open dialog
+                ofd.InitialDirectory = fieldsDirectory + currentFieldDirectory + "\\CutPaths\\" ;
+
+                //When leaving dialog put windows back where it was
+                ofd.RestoreDirectory = true;
+
+                //set the filter to text files only
+                //ofd.Filter = "Cut files (.txt)|.txt";
+
+                //was a file selected
+                if (ofd.ShowDialog() == DialogResult.Cancel) return;
+                else fileAndDirectory = ofd.FileName;
+            }
+
+            
+
+            //Saturday, February 11, 2017  -->  7:26:52 AM
+            //$FieldDir
+            //Bob_Feb11
+            //$Offsets
+            //533172,5927719,12 - offset easting, northing, zone
+            //$Sections
+            //10 - points in this patch
+            //10.1728031317344,0.723157039771303 -easting, northing
+
+            //start to read the file
+            string line;
+            
+
+            // Cut points ----------------------------------------------------------------------------
+
+            //fileAndDirectory = fieldsDirectory + currentFieldDirectory + "\\CurrentCut.txt";
+            if (!File.Exists(fileAndDirectory))
+            {
+                var form = new FormTimedMessage(4000, "Missing Cut File", "But Field is Loaded");
+                form.Show();
+                //return;
+            }   
+            else
+            {
+                ct.ptList.Clear();
+                using (StreamReader reader = new StreamReader(fileAndDirectory))
+                {
+                    try
+                    {
+                        //read the lines and skip them
+                        line = reader.ReadLine();
+                        line = reader.ReadLine();
+                        line = reader.ReadLine();
+                        line = reader.ReadLine();
+                        line = reader.ReadLine();
+                        line = reader.ReadLine();
+
+                        while (!reader.EndOfStream)
+                        {
+                            //read how many vertices in the following patch
+                            line = reader.ReadLine();
+                            int verts = int.Parse(line);
+                            //CContourPt vecFix = new vec4(0, 0, 0, 0);
+
+                            for (int v = 0; v < verts; v++)
+                            {
+                                line = reader.ReadLine();
+                                string[] words = line.Split(',');
+
+                                CContourPt point = new CContourPt(
+                                    double.Parse(words[0], CultureInfo.InvariantCulture),
+                                    double.Parse(words[1], CultureInfo.InvariantCulture),
+                                    double.Parse(words[2], CultureInfo.InvariantCulture),
+                                    double.Parse(words[3], CultureInfo.InvariantCulture),
+                                    double.Parse(words[4], CultureInfo.InvariantCulture),
+                                    double.Parse(words[5], CultureInfo.InvariantCulture),
+                                    double.Parse(words[6], CultureInfo.InvariantCulture),
+                                    double.Parse(words[7], CultureInfo.InvariantCulture),
+                                    double.Parse(words[8], CultureInfo.InvariantCulture),
+                                    double.Parse(words[9], CultureInfo.InvariantCulture));
+
+                                ct.ptList.Add(point);
+                            }
+                        }
+                    }
+                    catch (Exception e)
+                    {
+                        WriteErrorLog("Loading Cut file" + e.ToString());
+
+                        var form = new FormTimedMessage(4000, "Cut File is Corrupt", "But Field is Loaded");
+                        form.Show();
+                    }
+
+                    //calc mins maxes
+                    CalculateMinMaxZoom();
+                    CalculateTotalCutFillLabels();
+                }
+            }
+
+        }
+
         //creates the field file when starting new field
         public void FileCreateField()
         {
@@ -757,8 +867,8 @@ namespace OpenGrade
             if ((directoryName.Length > 0) && (!Directory.Exists(directoryName)))
             { Directory.CreateDirectory(directoryName); }
 
-            string myFileName = "Contour.txt";
-            string myFileName2 = "Contour.csv";
+            string myFileName = "CurrentCut.txt";
+            string myFileName2 = "CurrentCut.csv";
 
             //write out the file
             using (StreamWriter writer = new StreamWriter(dirField + myFileName))
@@ -815,8 +925,8 @@ namespace OpenGrade
             if ((directoryName.Length > 0) && (!Directory.Exists(directoryName)))
             { Directory.CreateDirectory(directoryName); }
 
-            string myFileName = "Contour.txt";
-            string myFileName2 = "Contour.csv";
+            string myFileName = "CurrentCut.txt";
+            string myFileName2 = "CurrentCut.csv";
 
             //write out the file
             using (StreamWriter writer = new StreamWriter(dirField + myFileName))
@@ -905,6 +1015,131 @@ namespace OpenGrade
             //set saving flag off
             isSavingFile = false;
         }
+
+        public void FileSaveCut()
+        {
+            //1  - points in patch
+            //64.697,0.168,-21.654,0 - east, heading, north, altitude
+            //Saturday, February 11, 2017  -->  7:26:52 AM
+            //12  - points in patch
+            //64.697,0.168,-21.654,0 - east, heading, north, altitude
+            //$ContourDir
+            //Bob_Feb11
+            //$Offsets
+            //533172,5927719,12
+
+            //get the directory and make sure it exists, create if not
+            string dirCut = fieldsDirectory + currentFieldDirectory + "\\CutPaths\\";
+            string csvCut = dirCut + "\\CSV\\";
+            
+            string directoryName = Path.GetDirectoryName(dirCut);
+            if ((directoryName.Length > 0) && (!Directory.Exists(directoryName)))
+            { Directory.CreateDirectory(directoryName); }
+
+            string directoryName2 = Path.GetDirectoryName(csvCut);
+            if ((directoryName2.Length > 0) && (!Directory.Exists(directoryName2)))
+            { Directory.CreateDirectory(directoryName2); }
+            
+            string myFileName = "Cut_" + ct.cutNum + ".txt";
+            string myFileName2 = "Cut_" + ct.cutNum + ".csv";
+
+            while (File.Exists(dirCut + myFileName)){
+                ct.cutNum++;
+                myFileName = "Cut_" + ct.cutNum + ".txt";
+                myFileName2 = "Cut_" + ct.cutNum + ".csv";
+            }
+            
+
+            //write out txt the file
+                        
+            using (StreamWriter writer = new StreamWriter(dirCut + myFileName))
+            {
+                //Write out the date
+                writer.WriteLine(DateTime.Now.ToString("yyyy-MMMM-dd hh:mm:ss tt", CultureInfo.InvariantCulture));
+                writer.WriteLine("Points in Patch followed by easting, heading, northing, altitude");
+
+                //which field directory
+                writer.WriteLine("$ContourDir");
+                writer.WriteLine(currentFieldDirectory);
+
+                //write out the easting and northing Offsets
+                writer.WriteLine("$Offsets");
+                writer.WriteLine(pn.utmEast.ToString(CultureInfo.InvariantCulture) +
+                    "," + pn.utmNorth.ToString(CultureInfo.InvariantCulture) + "," + pn.zone.ToString(CultureInfo.InvariantCulture));
+
+
+                //make sure there is something to save
+                if (ct.cutList.Count() > 0)
+                {
+                    int count2 = ct.cutList.Count;
+
+                    writer.WriteLine(count2.ToString(CultureInfo.InvariantCulture));
+
+                    
+                    for (int i = 0; i < count2; i++)
+                    {
+                        writer.WriteLine(Math.Round((ct.cutList[i].easting), 3).ToString(CultureInfo.InvariantCulture) + "," +
+                            Math.Round(ct.cutList[i].heading, 3).ToString(CultureInfo.InvariantCulture) + "," +
+                            Math.Round(ct.cutList[i].northing, 3).ToString(CultureInfo.InvariantCulture) + "," +
+                            Math.Round(ct.cutList[i].altitude, 3).ToString(CultureInfo.InvariantCulture) + "," +
+                            Math.Round(ct.cutList[i].latitude, 7).ToString(CultureInfo.InvariantCulture) + "," +
+                            Math.Round(ct.cutList[i].longitude, 7).ToString(CultureInfo.InvariantCulture) + "," +
+                            Math.Round(ct.cutList[i].cutAltitude, 7).ToString(CultureInfo.InvariantCulture) + "," +
+                            Math.Round(ct.cutList[i].lastPassAltitude, 3).ToString(CultureInfo.InvariantCulture) + "," +
+                            Math.Round(ct.cutList[i].currentPassAltitude, 3).ToString(CultureInfo.InvariantCulture) + "," +
+                            Math.Round(ct.cutList[i].distance, 3).ToString(CultureInfo.InvariantCulture));
+                    }
+                    
+                }
+            }
+
+            //write out the csv file
+            using (StreamWriter writer = new StreamWriter(csvCut + myFileName2))
+            {
+                //Write out the date
+                writer.WriteLine(DateTime.Now.ToString("yyyy-MMMM-dd hh:mm:ss tt", CultureInfo.InvariantCulture));
+                writer.WriteLine("Points in Patch followed by easting, heading, northing, altitude");
+
+                //which field directory
+                writer.WriteLine("$ContourDir");
+                writer.WriteLine(currentFieldDirectory);
+
+                //write out the easting and northing Offsets
+                writer.WriteLine("$Offsets");
+                writer.WriteLine(pn.utmEast.ToString(CultureInfo.InvariantCulture) +
+                    "," + pn.utmNorth.ToString(CultureInfo.InvariantCulture) + "," + pn.zone.ToString(CultureInfo.InvariantCulture));
+
+
+                //make sure there is something to save
+                if (ct.cutList.Count() > 0)
+                {
+                    int count2 = ct.cutList.Count;
+
+                    //for every new chunk of patch in the whole section
+
+                    writer.WriteLine(count2.ToString(CultureInfo.InvariantCulture));
+                    writer.WriteLine("easting, heading, northing, altitude, latitude, longitude, cutAltitude, currentPassAltitude, lastPassAltitude, distance");
+
+                    for (int i = 0; i < count2; i++)
+                    {
+                        writer.WriteLine(Math.Round((ct.cutList[i].easting), 3).ToString(CultureInfo.InvariantCulture) + "," +
+                            Math.Round(ct.cutList[i].heading, 3).ToString(CultureInfo.InvariantCulture) + "," +
+                            Math.Round(ct.cutList[i].northing, 3).ToString(CultureInfo.InvariantCulture) + "," +
+                            Math.Round(ct.cutList[i].altitude, 3).ToString(CultureInfo.InvariantCulture) + "," +
+                            Math.Round(ct.cutList[i].latitude, 7).ToString(CultureInfo.InvariantCulture) + "," +
+                            Math.Round(ct.cutList[i].longitude, 7).ToString(CultureInfo.InvariantCulture) + "," +
+                            Math.Round(ct.cutList[i].cutAltitude, 7).ToString(CultureInfo.InvariantCulture) + "," +
+                            Math.Round(ct.cutList[i].lastPassAltitude, 3).ToString(CultureInfo.InvariantCulture) + "," +
+                            Math.Round(ct.cutList[i].currentPassAltitude, 3).ToString(CultureInfo.InvariantCulture) + "," +
+                            Math.Round(ct.cutList[i].distance, 3).ToString(CultureInfo.InvariantCulture));
+                    }
+                }
+            }
+            //set saving flag off
+            isSavingFile = false;
+            
+        }
+
 
         //save all the flag markers
         public void FileSaveFlags()

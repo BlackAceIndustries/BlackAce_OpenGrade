@@ -2,7 +2,6 @@ C:\Users\auzzy\Documents\7.Software Development\OpenGrade\OpenGrade_V3.0.1\Black
 C:\Users\auzzy\Documents\7.Software Development\OpenGrade\OpenGrade_V3.0.1\BlackAce_OpenGrade\Application\OpenGrade.exe.config
 C:\Users\auzzy\Documents\7.Software Development\OpenGrade\OpenGrade_V3.0.1\BlackAce_OpenGrade\Application\OpenGrade.exe
 C:\Users\auzzy\Documents\7.Software Development\OpenGrade\OpenGrade_V3.0.1\BlackAce_OpenGrade\Application\OpenGrade.pdb
-C:\Users\auzzy\Documents\7.Software Development\OpenGrade\OpenGrade_V3.0.1\BlackAce_OpenGrade\SourceCode\GPS\obj\x86\Release\OpenGrade.csprojAssemblyReference.cache
 C:\Users\auzzy\Documents\7.Software Development\OpenGrade\OpenGrade_V3.0.1\BlackAce_OpenGrade\SourceCode\GPS\obj\x86\Release\OpenGrade.FormFieldDir.resources
 C:\Users\auzzy\Documents\7.Software Development\OpenGrade\OpenGrade_V3.0.1\BlackAce_OpenGrade\SourceCode\GPS\obj\x86\Release\OpenGrade.FormABLine.resources
 C:\Users\auzzy\Documents\7.Software Development\OpenGrade\OpenGrade_V3.0.1\BlackAce_OpenGrade\SourceCode\GPS\obj\x86\Release\OpenGrade.FormCommSet.resources

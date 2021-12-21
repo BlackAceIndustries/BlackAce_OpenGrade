@@ -26,10 +26,12 @@ void SetOutput();
 #include <PID_v1.h>
 
 //////////////SETTINGS////////////
-float Kp=38; //Mine was 8
-float Ki=.02; //Mine was 0.2
-float Kd=2800; //Mine was 3100
-float delta_setpoint = 0;           
+float Kp=38; //Mine was 38
+float Ki=.02; //Mine was 0.02
+float Kd=2800; //Mine was 2800
+float delta_setpoint = 0;  
+
+byte b_Ki, b_Kp, b_Kd;
 
 
 ///////////////////PID/////////////////////////
@@ -72,7 +74,7 @@ double voltage = 0; // diagnostic Voltage
 
 //loop time variables in milliseconds
 const byte LOOP_TIME = 50; //20hz
-const byte LOOP_TIME2 = 10;
+const byte LOOP_TIME2 = 5;
 unsigned long lastTime = LOOP_TIME;
 unsigned long lastTime2 = LOOP_TIME2; 
 unsigned long currentTime = LOOP_TIME; 
@@ -101,9 +103,9 @@ int header = 0, tempHeader = 0, temp;
 // Bools 
 bool isAutoActive = false;
 bool isCutting = false;
-byte autoState = 0;
-byte deltaDir = 0;
-byte cutDelta = 0;
+byte b_autoState = 0;
+byte b_deltaDir = 0;
+byte b_cutDelta = 0;
 int cut1 = -1;
 
 /////////////////////////////////////////////////////////
@@ -128,30 +130,13 @@ int bladeOffsetOut = 0;
 void setup()
 {
   //set the baud rate
-  Serial.begin(38400);
-  //Serial.print("setup");
-  
-  // if (danfoss) {
-  //   Dac1.begin(0x60);
-  // }  
-
-  //
-  
-  Serial1.begin(38400, SERIAL_8N1, RXD2, TXD2);
+  Serial.begin(38400);  
   
   pinMode(2, OUTPUT);
-  digitalWrite(2, HIGH);
-  delay(500);
-  digitalWrite(2, LOW);
-  delay(500);
-  digitalWrite(2, HIGH);
-  delay(500);
-  digitalWrite(2, LOW);
-  delay(500);
-  digitalWrite(2, HIGH);
-  delay(500);
-  digitalWrite(2, LOW);
-  delay(500);
+  
+  digitalWrite(2, HIGH); delay(500); digitalWrite(2, LOW); delay(500); digitalWrite(2, HIGH); delay(500);
+  digitalWrite(2, LOW); delay(500); digitalWrite(2, HIGH); delay(500); digitalWrite(2, LOW); delay(500);
+  
 
   offsetIncBtn.begin(); 
   offsetDecBtn.begin();
@@ -168,13 +153,12 @@ void setup()
 void loop(){  //Loop triggers every 50 msec (20hz) and sends back offsets Pid ect
 
   currentTime = millis();
-  //unsigned int time = currentTime;
   
   if (currentTime - lastTime >= LOOP_TIME)
   {    
     lastTime = currentTime;
     
-    if (autoState == 1){
+    if (b_autoState == 1){
       isAutoActive = true;
     }
     else {
@@ -191,20 +175,24 @@ void loop(){  //Loop triggers every 50 msec (20hz) and sends back offsets Pid ec
     if (autoEngageBtn.pressed()){
       if (isAutoActive){
         isAutoActive = false;
-        autoState = 0;
+        b_autoState = 0;
       }
       else {
         isAutoActive = true;
-        autoState = 1;
+        b_autoState = 1;
       }
     } 
 
     Serial.print(bladeOffsetOut);
     Serial.print(", ");
-    Serial.print(autoState);
+    Serial.print(b_autoState);
     Serial.print(", ");
     Serial.println(voltage);           
-  } 
+  }
+  
+  ///
+  ///Serial Loop
+  ///
   if (currentTime - lastTime2 >= LOOP_TIME2){
 
     if (Serial.available() > 0 && !isDataFound && !isSettingFound)
@@ -223,11 +211,11 @@ void loop(){  //Loop triggers every 50 msec (20hz) and sends back offsets Pid ec
     {     
       
       isDataFound = false;      
-      deltaDir = Serial.read();// Cut Delta Dir 
-      cutDelta = Serial.read();// Cut Delta      
-      autoState = Serial.read();// Auto State
+      b_deltaDir = Serial.read();// Cut Delta Dir 
+      b_cutDelta = Serial.read();// Cut Delta      
+      b_autoState = Serial.read();// Auto State
       
-      if (deltaDir == 3){
+      if (b_deltaDir == 3){
         isCutting = false;
       }
       else{
@@ -240,14 +228,13 @@ void loop(){  //Loop triggers every 50 msec (20hz) and sends back offsets Pid ec
     {
       digitalWrite(LED_BUILTIN, HIGH);
       isSettingFound = false;
-      Kp = Serial.read();
-      Ki = Serial.read();
-      Kd = Serial.read();
-
-
-      Kp /= 10;
-      Ki /= 10;
-      Kd *= 100;      
+      b_Kp = Serial.read();
+      b_Ki = Serial.read();
+      b_Kd = Serial.read();
+      
+      Kp = double(b_Kp);
+      Ki = double(b_Ki / 100);
+      Kd = double(b_Kp * 100);
     }
     
     if (isAutoActive && isCutting){
@@ -265,15 +252,16 @@ void loop(){  //Loop triggers every 50 msec (20hz) and sends back offsets Pid ec
 /// Functions
 ///
 
-void SetOutput() {
+void SetOutput()
+{
   
   analogOutput1 = 2048;  
   
-  if (deltaDir == 0){
-    cut1 = -(int)cutDelta;
+  if (b_deltaDir == 0){
+    cut1 = -(int)b_cutDelta;
   }  
   else {
-    cut1 = (int)cutDelta;
+    cut1 = (int)b_cutDelta;
   }
 
   delta_error = (delta_setpoint) - cut1;
@@ -294,20 +282,19 @@ void SetOutput() {
   if (PID_total >  2300) PID_total = 2300;      
   if (PID_total <  -2300) PID_total = -2300;
 
-  if (deltaDir == 1){ // Delta is Positive need to lower IMP
+  if (b_deltaDir == 1){ // Delta is Positive need to lower IMP
     analogOutput1 = map(PID_total, 0.0, -2300, 2048, 0);
   }
 
-  else if (deltaDir == 0){// Delta is Negative need to raise IMP
+  else if (b_deltaDir == 0){// Delta is Negative need to raise IMP
     analogOutput1 = map(PID_total,  0.0, 2300, 2048, 4096);
   }
   
-  if (analogOutput1 > 4096) analogOutput1 = 4096; // do not exceed 4096
+  if (analogOutput1 >= 4090) analogOutput1 = 4090; // do not exceed 4096
   if (analogOutput1 < 0) analogOutput1 = 2; // do not write negative numbers 
 
   voltage = ((double)analogOutput1/4096) * 5.0;   
   Dac1.setVoltage(analogOutput1, false);
-   
 
   delta_previous_error = delta_error;  
 }

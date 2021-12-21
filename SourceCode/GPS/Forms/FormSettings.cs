@@ -12,7 +12,7 @@ namespace OpenGrade
         private readonly FormGPS mf = null;
 
         private double antennaHeight, plowHeight, minSlope, toolWidth, maxTileCut, maxDitchCut, minTileCover, viewDistAboveGnd, viewDistUnderGnd;
-        private double KpGain, KiGain, KdGain;
+        private byte KpGain, KiGain, KdGain;
         private readonly double metImp2m, m2MetImp;
 
         //constructor
@@ -50,9 +50,9 @@ namespace OpenGrade
             minTileCover = Properties.Vehicle.Default.setVehicle_minTileCover;            
             
 
-            KpGain = Properties.Vehicle.Default.setVehicle_KpGain;
-            KiGain = Properties.Vehicle.Default.setVehicle_KiGain;
-            KdGain = Properties.Vehicle.Default.setVehicle_KdGain;
+            KpGain = Properties.Settings.Default.set_KpGain;
+            KiGain = Properties.Settings.Default.set_KiGain; /// 10
+            KdGain = Properties.Settings.Default.set_KdGain ;//* 100
 
             viewDistAboveGnd = Properties.Vehicle.Default.setVehicle_viewDistAboveGnd;
             viewDistUnderGnd = Properties.Vehicle.Default.setVehicle_viewDistUnderGnd;         
@@ -83,18 +83,16 @@ namespace OpenGrade
             nudMaxDitchCut.ValueChanged += nudMaxDitchCut_ValueChanged;
 
             nudKp.ValueChanged -= nudKp_ValueChanged;
-            nudKp.Value = (decimal)(KpGain * m2MetImp);
+            nudKp.Value = KpGain;
             nudKp.ValueChanged += nudKp_ValueChanged;
 
             nudKi.ValueChanged -= nudKi_ValueChanged;
-            nudKi.Value = (decimal)(KiGain * m2MetImp);
+            nudKi.Value = KiGain;
             nudKi.ValueChanged += nudKi_ValueChanged;
 
             nudKd.ValueChanged -= nudKd_ValueChanged;
-            nudKd.Value = (decimal)(KdGain * m2MetImp);
+            nudKd.Value = KdGain;
             nudKd.ValueChanged += nudKd_ValueChanged;
-
-
 
 
             // Pat Code
@@ -133,12 +131,16 @@ namespace OpenGrade
             Properties.Vehicle.Default.setVehicle_minTileCover = mf.vehicle.minTileCover;
 
             mf.vehicle.V_KpGain = KpGain;
-            Properties.Vehicle.Default.setVehicle_KpGain = mf.vehicle.V_KpGain;
+            Properties.Settings.Default.set_KpGain = mf.vehicle.V_KpGain;
             mf.vehicle.V_KiGain = KiGain;
-            Properties.Vehicle.Default.setVehicle_KiGain = mf.vehicle.V_KiGain;
+            Properties.Settings.Default.set_KiGain = mf.vehicle.V_KiGain;
             mf.vehicle.V_KdGain = KdGain;
-            Properties.Vehicle.Default.setVehicle_KdGain = mf.vehicle.V_KdGain;
-            
+            Properties.Settings.Default.set_KdGain = mf.vehicle.V_KdGain;
+
+            mf.mc.gradeControlSettings[mf.mc.gsKpGain] = Properties.Settings.Default.set_KpGain;
+            mf.mc.gradeControlSettings[mf.mc.gsKiGain] = Properties.Settings.Default.set_KiGain;
+            mf.mc.gradeControlSettings[mf.mc.gsKdGain] = Properties.Settings.Default.set_KdGain;
+
 
 
             mf.vehicle.viewDistAboveGnd = viewDistAboveGnd;
@@ -158,7 +160,8 @@ namespace OpenGrade
 
             Properties.Settings.Default.Save();
             Properties.Vehicle.Default.Save();
-            
+
+            mf.GradeControlSettingsOutToPort();           
             
 
             //back to FormGPS
@@ -228,15 +231,15 @@ namespace OpenGrade
 
         private void nudKp_ValueChanged(object sender, EventArgs e)
         {
-            KpGain = (double)nudKp.Value * metImp2m;
+            KpGain = (byte)nudKp.Value;
         }
         private void nudKi_ValueChanged(object sender, EventArgs e)
         {
-            KiGain = (double)nudKi.Value * metImp2m;
+            KiGain = (byte)nudKi.Value;
         }
         private void nudKd_ValueChanged(object sender, EventArgs e)
         {
-            KdGain = (double)nudKd.Value * metImp2m;
+            KdGain = (byte)nudKd.Value;
         }
 
 

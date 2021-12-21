@@ -79,9 +79,9 @@ namespace OpenGrade
 
             gradeControlSettings[gsHeaderHi] = 127; // PGN - 32762
             gradeControlSettings[gsHeaderLo] = 248;
-            gradeControlSettings[gsKpGain] = (byte)Properties.Vehicle.Default.setVehicle_KpGain;
-            gradeControlSettings[gsKiGain] = (byte)Properties.Vehicle.Default.setVehicle_KiGain;
-            gradeControlSettings[gsKdGain] = (byte)Properties.Vehicle.Default.setVehicle_KdGain;
+            gradeControlSettings[gsKpGain] = Properties.Settings.Default.set_KpGain;
+            gradeControlSettings[gsKiGain] = Properties.Settings.Default.set_KiGain;
+            gradeControlSettings[gsKdGain] = Properties.Settings.Default.set_KdGain;
             //mf.GradeControlSettingsOutToPort();
 
             autoSteerData[sdHeaderHi] = 127; // PGN - 32766

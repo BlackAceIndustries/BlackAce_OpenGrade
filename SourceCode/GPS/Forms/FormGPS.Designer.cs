@@ -135,8 +135,8 @@
             this.pbarCutBelow = new ProgBar.ProgBarPlus();
             this.pbarCutAbove = new ProgBar.ProgBarPlus();
             this.lblBarGraphMax = new System.Windows.Forms.Label();
-            this.label5 = new System.Windows.Forms.Label();
             this.OpenGradePage = new System.Windows.Forms.TabPage();
+            this.btnSaveCut = new System.Windows.Forms.Button();
             this.btnAutoDrain = new System.Windows.Forms.Button();
             this.lblDistanceToCut = new System.Windows.Forms.Label();
             this.label6 = new System.Windows.Forms.Label();
@@ -738,6 +738,7 @@
             this.btnHideTabs.Name = "btnHideTabs";
             this.btnHideTabs.ShowDropDownArrow = false;
             this.btnHideTabs.Size = new System.Drawing.Size(64, 39);
+            this.btnHideTabs.Visible = false;
             this.btnHideTabs.Click += new System.EventHandler(this.btnHideTabs_Click);
             // 
             // toolStripDropDownBtnFuncs
@@ -798,7 +799,7 @@
             this.stripEqWidth.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
             this.stripEqWidth.Margin = new System.Windows.Forms.Padding(0);
             this.stripEqWidth.Name = "stripEqWidth";
-            this.stripEqWidth.Size = new System.Drawing.Size(455, 41);
+            this.stripEqWidth.Size = new System.Drawing.Size(550, 41);
             this.stripEqWidth.Spring = true;
             this.stripEqWidth.Text = "Width";
             // 
@@ -1370,6 +1371,7 @@
             this.pbarCutBelow.Size = new System.Drawing.Size(72, 150);
             this.pbarCutBelow.TabIndex = 223;
             this.pbarCutBelow.TextFormat = "Process {1}% Done";
+            this.pbarCutBelow.Load += new System.EventHandler(this.pbarCutBelow_Load);
             this.pbarCutBelow.Click += new System.EventHandler(this.pbarCutBelow_Click);
             // 
             // pbarCutAbove
@@ -1409,6 +1411,7 @@
             this.pbarCutAbove.Size = new System.Drawing.Size(72, 150);
             this.pbarCutAbove.TabIndex = 224;
             this.pbarCutAbove.TextFormat = "Process {1}% Done";
+            this.pbarCutAbove.Load += new System.EventHandler(this.pbarCutAbove_Load);
             this.pbarCutAbove.Click += new System.EventHandler(this.pbarCutAbove_Click);
             // 
             // lblBarGraphMax
@@ -1419,31 +1422,17 @@
             this.lblBarGraphMax.Cursor = System.Windows.Forms.Cursors.Default;
             this.lblBarGraphMax.Font = new System.Drawing.Font("Tahoma", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblBarGraphMax.ForeColor = System.Drawing.Color.Yellow;
-            this.lblBarGraphMax.Location = new System.Drawing.Point(1261, 308);
+            this.lblBarGraphMax.Location = new System.Drawing.Point(1248, 308);
             this.lblBarGraphMax.Name = "lblBarGraphMax";
             this.lblBarGraphMax.Size = new System.Drawing.Size(23, 29);
             this.lblBarGraphMax.TabIndex = 225;
             this.lblBarGraphMax.Text = "-";
             this.lblBarGraphMax.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
-            // label5
-            // 
-            this.label5.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.label5.AutoSize = true;
-            this.label5.BackColor = System.Drawing.SystemColors.ControlText;
-            this.label5.Cursor = System.Windows.Forms.Cursors.Default;
-            this.label5.Font = new System.Drawing.Font("Tahoma", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label5.ForeColor = System.Drawing.Color.Yellow;
-            this.label5.Location = new System.Drawing.Point(1241, 308);
-            this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(28, 29);
-            this.label5.TabIndex = 226;
-            this.label5.Text = "x";
-            this.label5.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
             // OpenGradePage
             // 
             this.OpenGradePage.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(30)))), ((int)(((byte)(30)))));
+            this.OpenGradePage.Controls.Add(this.btnSaveCut);
             this.OpenGradePage.Controls.Add(this.btnAutoDrain);
             this.OpenGradePage.Controls.Add(this.lblDistanceToCut);
             this.OpenGradePage.Controls.Add(this.label6);
@@ -1461,12 +1450,27 @@
             this.OpenGradePage.Size = new System.Drawing.Size(601, 255);
             this.OpenGradePage.TabIndex = 4;
             // 
+            // btnSaveCut
+            // 
+            this.btnSaveCut.BackColor = System.Drawing.Color.Black;
+            this.btnSaveCut.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
+            this.btnSaveCut.Enabled = false;
+            this.btnSaveCut.Font = new System.Drawing.Font("Tahoma", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnSaveCut.Image = global::OpenGrade.Properties.Resources.FileSave;
+            this.btnSaveCut.Location = new System.Drawing.Point(13, 170);
+            this.btnSaveCut.Margin = new System.Windows.Forms.Padding(6, 5, 6, 5);
+            this.btnSaveCut.Name = "btnSaveCut";
+            this.btnSaveCut.Size = new System.Drawing.Size(84, 84);
+            this.btnSaveCut.TabIndex = 235;
+            this.btnSaveCut.UseVisualStyleBackColor = false;
+            this.btnSaveCut.Click += new System.EventHandler(this.btnSaveCut_Click_1);
+            // 
             // btnAutoDrain
             // 
-            this.btnAutoDrain.BackColor = System.Drawing.Color.DarkRed;
+            this.btnAutoDrain.BackColor = System.Drawing.Color.Lime;
             this.btnAutoDrain.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
             this.btnAutoDrain.Font = new System.Drawing.Font("Tahoma", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnAutoDrain.Location = new System.Drawing.Point(420, 86);
+            this.btnAutoDrain.Location = new System.Drawing.Point(505, 3);
             this.btnAutoDrain.Margin = new System.Windows.Forms.Padding(6, 5, 6, 5);
             this.btnAutoDrain.Name = "btnAutoDrain";
             this.btnAutoDrain.Size = new System.Drawing.Size(84, 84);
@@ -1483,7 +1487,7 @@
             this.lblDistanceToCut.BackColor = System.Drawing.Color.Transparent;
             this.lblDistanceToCut.Font = new System.Drawing.Font("Tahoma", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblDistanceToCut.ForeColor = System.Drawing.SystemColors.ControlLightLight;
-            this.lblDistanceToCut.Location = new System.Drawing.Point(216, 233);
+            this.lblDistanceToCut.Location = new System.Drawing.Point(241, 233);
             this.lblDistanceToCut.Name = "lblDistanceToCut";
             this.lblDistanceToCut.Size = new System.Drawing.Size(115, 19);
             this.lblDistanceToCut.TabIndex = 232;
@@ -1497,7 +1501,7 @@
             this.label6.BackColor = System.Drawing.Color.Transparent;
             this.label6.Font = new System.Drawing.Font("Tahoma", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label6.ForeColor = System.Drawing.SystemColors.ControlLightLight;
-            this.label6.Location = new System.Drawing.Point(216, 99);
+            this.label6.Location = new System.Drawing.Point(251, 103);
             this.label6.Name = "label6";
             this.label6.Size = new System.Drawing.Size(99, 19);
             this.label6.TabIndex = 227;
@@ -1508,11 +1512,11 @@
             // 
             this.lblCutDelta.BackColor = System.Drawing.Color.Black;
             this.lblCutDelta.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.lblCutDelta.Font = new System.Drawing.Font("Tahoma", 48F);
+            this.lblCutDelta.Font = new System.Drawing.Font("Microsoft Sans Serif", 60F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblCutDelta.ForeColor = System.Drawing.Color.Yellow;
-            this.lblCutDelta.Location = new System.Drawing.Point(127, 140);
+            this.lblCutDelta.Location = new System.Drawing.Point(117, 140);
             this.lblCutDelta.Name = "lblCutDelta";
-            this.lblCutDelta.Size = new System.Drawing.Size(279, 92);
+            this.lblCutDelta.Size = new System.Drawing.Size(369, 92);
             this.lblCutDelta.TabIndex = 220;
             this.lblCutDelta.Text = "93";
             this.lblCutDelta.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -1523,13 +1527,13 @@
             this.btnZeroAltitude.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.btnZeroAltitude.BackColor = System.Drawing.Color.Black;
             this.btnZeroAltitude.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
-            this.btnZeroAltitude.Font = new System.Drawing.Font("Tahoma", 48F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnZeroAltitude.Font = new System.Drawing.Font("Microsoft Sans Serif", 60F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnZeroAltitude.ForeColor = System.Drawing.Color.Turquoise;
             this.btnZeroAltitude.ImageAlign = System.Drawing.ContentAlignment.TopCenter;
-            this.btnZeroAltitude.Location = new System.Drawing.Point(127, 6);
+            this.btnZeroAltitude.Location = new System.Drawing.Point(117, 6);
             this.btnZeroAltitude.Margin = new System.Windows.Forms.Padding(6, 5, 6, 5);
             this.btnZeroAltitude.Name = "btnZeroAltitude";
-            this.btnZeroAltitude.Size = new System.Drawing.Size(281, 92);
+            this.btnZeroAltitude.Size = new System.Drawing.Size(366, 92);
             this.btnZeroAltitude.TabIndex = 221;
             this.btnZeroAltitude.Text = "0.55";
             this.btnZeroAltitude.UseVisualStyleBackColor = false;
@@ -1541,9 +1545,9 @@
             this.btnLevel.ContextMenuStrip = this.contextMenuStripFlag;
             this.btnLevel.Font = new System.Drawing.Font("Tahoma", 14.25F);
             this.btnLevel.Image = global::OpenGrade.Properties.Resources.levelOffBtn;
-            this.btnLevel.Location = new System.Drawing.Point(13, 142);
+            this.btnLevel.Location = new System.Drawing.Point(13, 86);
             this.btnLevel.Name = "btnLevel";
-            this.btnLevel.Size = new System.Drawing.Size(90, 91);
+            this.btnLevel.Size = new System.Drawing.Size(84, 84);
             this.btnLevel.TabIndex = 233;
             this.btnLevel.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
             this.btnLevel.UseVisualStyleBackColor = false;
@@ -1555,9 +1559,9 @@
             this.btnSurface.ContextMenuStrip = this.contextMenuStripFlag;
             this.btnSurface.Font = new System.Drawing.Font("Tahoma", 14.25F);
             this.btnSurface.Image = global::OpenGrade.Properties.Resources.surfaceBtn;
-            this.btnSurface.Location = new System.Drawing.Point(13, 27);
+            this.btnSurface.Location = new System.Drawing.Point(13, 3);
             this.btnSurface.Name = "btnSurface";
-            this.btnSurface.Size = new System.Drawing.Size(90, 91);
+            this.btnSurface.Size = new System.Drawing.Size(84, 84);
             this.btnSurface.TabIndex = 231;
             this.btnSurface.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
             this.btnSurface.UseVisualStyleBackColor = false;
@@ -2017,6 +2021,7 @@
             // 
             // lblDiagnostics
             // 
+            this.lblDiagnostics.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.lblDiagnostics.BackColor = System.Drawing.SystemColors.InfoText;
             this.lblDiagnostics.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.lblDiagnostics.Font = new System.Drawing.Font("Tahoma", 21.75F);
@@ -2349,7 +2354,6 @@
             this.Controls.Add(this.lblMaxDepth);
             this.Controls.Add(this.lblDiagnostics);
             this.Controls.Add(this.lblBarGraphMax);
-            this.Controls.Add(this.label5);
             this.Controls.Add(this.pbarCutAbove);
             this.Controls.Add(this.btnContour);
             this.Controls.Add(this.pbarCutBelow);
@@ -2522,7 +2526,6 @@
         private ProgBar.ProgBarPlus pbarCutBelow;
         private ProgBar.ProgBarPlus pbarCutAbove;
         private System.Windows.Forms.Label lblBarGraphMax;
-        private System.Windows.Forms.Label label5;
         private System.Windows.Forms.TabPage OpenGradePage;
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.Label lblCutDelta;
@@ -2576,6 +2579,7 @@
         private System.Windows.Forms.Label voltageLbl;
         private System.Windows.Forms.Label label13;
         private System.Windows.Forms.Label label14;
+        private System.Windows.Forms.Button btnSaveCut;
     }
 }
 

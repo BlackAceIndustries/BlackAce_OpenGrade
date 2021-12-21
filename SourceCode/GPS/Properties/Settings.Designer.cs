@@ -610,5 +610,41 @@ namespace OpenGrade.Properties {
                 this["setF_minFixStep"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("20")]
+        public byte set_KpGain {
+            get {
+                return ((byte)(this["set_KpGain"]));
+            }
+            set {
+                this["set_KpGain"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("20")]
+        public byte set_KiGain {
+            get {
+                return ((byte)(this["set_KiGain"]));
+            }
+            set {
+                this["set_KiGain"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("28")]
+        public byte set_KdGain {
+            get {
+                return ((byte)(this["set_KdGain"]));
+            }
+            set {
+                this["set_KdGain"] = value;
+            }
+        }
     }
 }

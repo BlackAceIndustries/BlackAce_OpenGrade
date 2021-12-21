@@ -20,6 +20,8 @@
             base.Dispose(disposing);
         }
 
+        public bool isAuto = true, isResume = true, isOpen = true, isCut = true;
+
         #region Windows Form Designer generated code
 
         /// <summary>
@@ -35,6 +37,8 @@
             this.btnJobResume = new System.Windows.Forms.Button();
             this.lblResumeDirectory = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
+            this.btnJobCutOpen = new System.Windows.Forms.Button();
+            this.btnJobCloseField = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // btnJobOpen
@@ -66,6 +70,7 @@
             this.btnDeleteAB.Image = global::OpenGrade.Properties.Resources.back_button;
             this.btnDeleteAB.Name = "btnDeleteAB";
             this.btnDeleteAB.UseVisualStyleBackColor = false;
+            this.btnDeleteAB.Click += new System.EventHandler(this.btnDeleteAB_Click);
             // 
             // btnJobResume
             // 
@@ -89,12 +94,35 @@
             this.label1.ForeColor = System.Drawing.SystemColors.ControlLightLight;
             this.label1.Name = "label1";
             // 
+            // btnJobCutOpen
+            // 
+            this.btnJobCutOpen.BackColor = System.Drawing.Color.Black;
+            resources.ApplyResources(this.btnJobCutOpen, "btnJobCutOpen");
+            this.btnJobCutOpen.ForeColor = System.Drawing.SystemColors.ButtonFace;
+            this.btnJobCutOpen.Image = global::OpenGrade.Properties.Resources.FileOpen;
+            this.btnJobCutOpen.Name = "btnJobCutOpen";
+            this.btnJobCutOpen.UseVisualStyleBackColor = false;
+            this.btnJobCutOpen.Click += new System.EventHandler(this.btnCutOpen_Click);
+            // 
+            // btnJobCloseField
+            // 
+            this.btnJobCloseField.BackColor = System.Drawing.Color.Black;
+            this.btnJobCloseField.DialogResult = System.Windows.Forms.DialogResult.Cancel;
+            resources.ApplyResources(this.btnJobCloseField, "btnJobCloseField");
+            this.btnJobCloseField.ForeColor = System.Drawing.SystemColors.ButtonFace;
+            this.btnJobCloseField.Image = global::OpenGrade.Properties.Resources.Cancel64;
+            this.btnJobCloseField.Name = "btnJobCloseField";
+            this.btnJobCloseField.UseVisualStyleBackColor = false;
+            this.btnJobCloseField.Click += new System.EventHandler(this.button1_Click);
+            // 
             // FormJob
             // 
             resources.ApplyResources(this, "$this");
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(35)))), ((int)(((byte)(35)))), ((int)(((byte)(35)))));
             this.ControlBox = false;
+            this.Controls.Add(this.btnJobCloseField);
+            this.Controls.Add(this.btnJobCutOpen);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.lblResumeDirectory);
             this.Controls.Add(this.btnDeleteAB);
@@ -120,5 +148,7 @@
         private System.Windows.Forms.Button btnDeleteAB;
         private System.Windows.Forms.Label lblResumeDirectory;
         private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Button btnJobCutOpen;
+        private System.Windows.Forms.Button btnJobCloseField;
     }
 }

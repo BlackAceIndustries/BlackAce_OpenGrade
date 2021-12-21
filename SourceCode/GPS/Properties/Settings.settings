@@ -149,5 +149,14 @@
     <Setting Name="setF_minFixStep" Type="System.Double" Scope="User">
       <Value Profile="(Default)">0.5</Value>
     </Setting>
+    <Setting Name="set_KpGain" Type="System.Byte" Scope="User">
+      <Value Profile="(Default)">20</Value>
+    </Setting>
+    <Setting Name="set_KiGain" Type="System.Byte" Scope="User">
+      <Value Profile="(Default)">20</Value>
+    </Setting>
+    <Setting Name="set_KdGain" Type="System.Byte" Scope="User">
+      <Value Profile="(Default)">28</Value>
+    </Setting>
   </Settings>
 </SettingsFile>

@@ -78,7 +78,7 @@ namespace OpenGrade
             btnDoneDraw.Enabled = false;
             btnDeleteLastPoint.Enabled = false;
             btnStartDraw.Enabled = true;
-            lblBarGraphMax.Text = barGraphMax.ToString();
+            lblBarGraphMax.Text = (barGraphMax/10).ToString();
         }
 
         //hide the left panel
@@ -200,12 +200,13 @@ namespace OpenGrade
                     lblCut.Text = "*";
                     lblFill.Text = "*";
                     lblCutFillRatio.Text = "*";
-                    lblDrawSlope.Text = "*";
+                    lblDrawSlope.Text = "*";                    
 
                     btnDoneDraw.Enabled = false;
                     btnDeleteLastPoint.Enabled = false;
                     btnStartDraw.Enabled = false;
-
+                    
+                    
 
                     break;
 
@@ -217,6 +218,10 @@ namespace OpenGrade
                     btnDoneDraw.Enabled = false;
                     btnDeleteLastPoint.Enabled = false;
                     btnStartDraw.Enabled = true;
+                    
+                    btnSaveCut.Enabled = true;
+
+
 
                     break;
             }
@@ -345,7 +350,8 @@ namespace OpenGrade
             ct.zeroAltitude = pn.altitude;
         }
         private void btnStartDraw_Click(object sender, EventArgs e)
-        {
+        {   
+            
             if (ct.ptList.Count > 5)
             {
                 btnAutoDrain.Visible = true;
@@ -360,10 +366,11 @@ namespace OpenGrade
                 btnStartDraw.Enabled = false;
             }
             else TimedMessageBox(1500, "No Surveyed Points", "Survey a Contour First");
-            //AutoDrain();
+            
         }
         private void btnDoneDraw_Click(object sender, EventArgs e)
         {
+            btnSaveCut.Enabled = true;
             btnAutoDrain.Visible = false;
             btnDoneDraw.Enabled = false;
             btnDeleteLastPoint.Enabled = false;
@@ -469,15 +476,15 @@ namespace OpenGrade
         //progress bar "buttons" for gain
         private void pbarCutAbove_Click(object sender, EventArgs e)
         {
-            barGraphMax++;
-            lblBarGraphMax.Text = barGraphMax.ToString();
+            barGraphMax += 10;
+            lblBarGraphMax.Text = (barGraphMax/10).ToString();
 
         }
 
         private void pbarCutBelow_Click(object sender, EventArgs e)
         {
-            if (barGraphMax-- < 1.99) barGraphMax = 1;
-            lblBarGraphMax.Text = barGraphMax.ToString();
+            if ((barGraphMax -= 10) < 10) barGraphMax = 10;
+            lblBarGraphMax.Text = ( barGraphMax /10).ToString();
         }
 
         // Menu Items ------------------------------------------------------------------
