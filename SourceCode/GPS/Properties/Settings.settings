@@ -158,5 +158,17 @@
     <Setting Name="set_KdGain" Type="System.Byte" Scope="User">
       <Value Profile="(Default)">28</Value>
     </Setting>
+    <Setting Name="set_RetDeadband" Type="System.Byte" Scope="User">
+      <Value Profile="(Default)">25</Value>
+    </Setting>
+    <Setting Name="set_ExtDeadband" Type="System.Byte" Scope="User">
+      <Value Profile="(Default)">75</Value>
+    </Setting>
+    <Setting Name="set_ValveType" Type="System.Byte" Scope="User">
+      <Value Profile="(Default)">0</Value>
+    </Setting>
+    <Setting Name="set_ValveName" Type="System.String" Scope="User">
+      <Value Profile="(Default)">CNH</Value>
+    </Setting>
   </Settings>
 </SettingsFile>

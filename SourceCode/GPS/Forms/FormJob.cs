@@ -64,8 +64,7 @@ namespace OpenGrade
 
         private void FormJob_Load(object sender, EventArgs e)
         {
-            //check if directory and file exists, maybe was deleted etc
-            
+            //check if directory and file exists, maybe was deleted etc            
             string directoryName = mf.fieldsDirectory + mf.currentFieldDirectory + "\\";
             
 
@@ -81,7 +80,8 @@ namespace OpenGrade
             {
                 btnJobOpen.Enabled = true;
                 btnJobNew.Enabled = true;
-                btnJobResume.Enabled = true;
+                if (String.IsNullOrEmpty(mf.currentFieldDirectory)) btnJobResume.Enabled = false;
+                else btnJobResume.Enabled = true;                
                 btnJobCloseField.Enabled = false;
                 btnJobCutOpen.Enabled = false;
             }
@@ -118,6 +118,7 @@ namespace OpenGrade
                 //OK
                 case 0:
                     Properties.Settings.Default.setF_CurrentDir = mf.currentFieldDirectory;
+                    //Text = "OpenGrade - Press Start To Begin";
                     Properties.Settings.Default.Save();
                     mf.FileSaveEverythingBeforeClosingField();
                     break;

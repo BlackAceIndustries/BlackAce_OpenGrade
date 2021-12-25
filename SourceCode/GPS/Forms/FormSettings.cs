@@ -12,7 +12,8 @@ namespace OpenGrade
         private readonly FormGPS mf = null;
 
         private double antennaHeight, plowHeight, minSlope, toolWidth, maxTileCut, maxDitchCut, minTileCover, viewDistAboveGnd, viewDistUnderGnd;
-        private byte KpGain, KiGain, KdGain;
+        private byte KpGain, KiGain, KdGain, retDeadband, extDeadband, valveType;
+      
         private readonly double metImp2m, m2MetImp;
 
         //constructor
@@ -47,15 +48,19 @@ namespace OpenGrade
 
             maxTileCut = Properties.Vehicle.Default.setVehicle_maxTileCut;  
             maxDitchCut = Properties.Vehicle.Default.setVehicle_maxDitchCut;
-            minTileCover = Properties.Vehicle.Default.setVehicle_minTileCover;            
+            minTileCover = Properties.Vehicle.Default.setVehicle_minTileCover;      
             
 
             KpGain = Properties.Settings.Default.set_KpGain;
             KiGain = Properties.Settings.Default.set_KiGain; /// 10
-            KdGain = Properties.Settings.Default.set_KdGain ;//* 100
+            KdGain = Properties.Settings.Default.set_KdGain;//* 100
 
-            viewDistAboveGnd = Properties.Vehicle.Default.setVehicle_viewDistAboveGnd;
-            viewDistUnderGnd = Properties.Vehicle.Default.setVehicle_viewDistUnderGnd;         
+            retDeadband = Properties.Settings.Default.set_RetDeadband;
+            extDeadband = Properties.Settings.Default.set_ExtDeadband;
+            valveType = Properties.Settings.Default.set_ValveType;
+
+            valveSelectChoice.Text = Properties.Settings.Default.set_ValveName;
+
             toolWidth = Properties.Vehicle.Default.setVehicle_toolWidth;
             minSlope = Properties.Vehicle.Default.setVehicle_minSlope * 100;
             
@@ -94,15 +99,15 @@ namespace OpenGrade
             nudKd.Value = KdGain;
             nudKd.ValueChanged += nudKd_ValueChanged;
 
+            nudExtDeadband.ValueChanged -= nudExtDeadband_ValueChanged;
+            nudExtDeadband.Value = extDeadband;
+            nudExtDeadband.ValueChanged += nudExtDeadband_ValueChanged;
 
-            // Pat Code
-            nudViewDistAboveGnd.ValueChanged -= nudViewDistAboveGnd_ValueChanged;
-            nudViewDistAboveGnd.Value = (decimal)(viewDistAboveGnd * m2MetImp);
-            nudViewDistAboveGnd.ValueChanged += nudViewDistAboveGnd_ValueChanged;
+            nudRetDeadband.ValueChanged -= nudRetDeadband_ValueChanged;
+            nudRetDeadband.Value = retDeadband;
+            nudRetDeadband.ValueChanged += nudRetDeadband_ValueChanged;
 
-            nudViewDistUnderGnd.ValueChanged -= nudViewDistUnderGnd_ValueChanged;
-            nudViewDistUnderGnd.Value = (decimal)(viewDistUnderGnd * m2MetImp);
-            nudViewDistUnderGnd.ValueChanged += nudViewDistUnderGnd_ValueChanged;        
+            ///
 
             nudToolWidth.ValueChanged -= nudToolWidth_ValueChanged;
             nudToolWidth.Value = (decimal)(toolWidth * m2MetImp);
@@ -122,7 +127,9 @@ namespace OpenGrade
             mf.vehicle.plowHeight = plowHeight;
             Properties.Vehicle.Default.setVehicle_plowHeight = mf.vehicle.plowHeight;
             
+            //
             // Black Ace Industries
+            //
             mf.vehicle.maxTileCut = maxTileCut;
             Properties.Vehicle.Default.setVehicle_maxTileCut = mf.vehicle.maxTileCut;
             mf.vehicle.maxDitchCut = maxDitchCut;
@@ -130,25 +137,31 @@ namespace OpenGrade
             mf.vehicle.minTileCover = minTileCover;
             Properties.Vehicle.Default.setVehicle_minTileCover = mf.vehicle.minTileCover;
 
-            mf.vehicle.V_KpGain = KpGain;
-            Properties.Settings.Default.set_KpGain = mf.vehicle.V_KpGain;
-            mf.vehicle.V_KiGain = KiGain;
-            Properties.Settings.Default.set_KiGain = mf.vehicle.V_KiGain;
-            mf.vehicle.V_KdGain = KdGain;
-            Properties.Settings.Default.set_KdGain = mf.vehicle.V_KdGain;
+            mf.vehicle.KpGain = KpGain;
+            Properties.Settings.Default.set_KpGain = mf.vehicle.KpGain;
+            mf.vehicle.KiGain = KiGain;
+            Properties.Settings.Default.set_KiGain = mf.vehicle.KiGain;
+            mf.vehicle.KdGain = KdGain;
+            Properties.Settings.Default.set_KdGain = mf.vehicle.KdGain;
+
+            mf.vehicle.retDeadband = retDeadband;
+            Properties.Settings.Default.set_RetDeadband = mf.vehicle.retDeadband;
+            mf.vehicle.extDeadband = extDeadband;
+            Properties.Settings.Default.set_ExtDeadband = mf.vehicle.extDeadband;
+
+            mf.vehicle.valveType = valveType;
+            Properties.Settings.Default.set_ValveType = mf.vehicle.valveType;
 
             mf.mc.gradeControlSettings[mf.mc.gsKpGain] = Properties.Settings.Default.set_KpGain;
             mf.mc.gradeControlSettings[mf.mc.gsKiGain] = Properties.Settings.Default.set_KiGain;
             mf.mc.gradeControlSettings[mf.mc.gsKdGain] = Properties.Settings.Default.set_KdGain;
-
-
-
-            mf.vehicle.viewDistAboveGnd = viewDistAboveGnd;
-            Properties.Vehicle.Default.setVehicle_viewDistAboveGnd = mf.vehicle.viewDistAboveGnd;
-            mf.vehicle.viewDistUnderGnd = viewDistUnderGnd;
-            Properties.Vehicle.Default.setVehicle_viewDistUnderGnd = mf.vehicle.viewDistUnderGnd;
-
-
+            mf.mc.gradeControlSettings[mf.mc.gsRetDeadband] = Properties.Settings.Default.set_RetDeadband;
+            mf.mc.gradeControlSettings[mf.mc.gsExtDeadband] = Properties.Settings.Default.set_ExtDeadband;
+            mf.mc.gradeControlSettings[mf.mc.gsValveType] = Properties.Settings.Default.set_ValveType;
+            
+            ////
+            ////
+            ///
 
             mf.vehicle.antennaHeight = antennaHeight;
             Properties.Vehicle.Default.setVehicle_antennaHeight = mf.vehicle.antennaHeight;
@@ -159,13 +172,12 @@ namespace OpenGrade
             //Sections ------------------------------------------------------------------------------------------
 
             Properties.Settings.Default.Save();
-            Properties.Vehicle.Default.Save();
-
-            mf.GradeControlSettingsOutToPort();           
-            
+            Properties.Vehicle.Default.Save();                     
+           
 
             //back to FormGPS
             DialogResult = DialogResult.OK;
+            
             Close();
         }
 
@@ -210,6 +222,74 @@ namespace OpenGrade
             antennaHeight = (double)nudAntennaHeight.Value * metImp2m;
         }
 
+        private void valveSelectChoice_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (valveSelectChoice.Text == "CNH")
+            {
+                mf.mc.gradeControlSettings[mf.mc.gsValveType] = 0;
+                Properties.Settings.Default.set_ValveType = 0;
+                mf.vehicle.valveType = 0;
+                Properties.Settings.Default.set_ValveName = valveSelectChoice.Text;
+                mf.GradeControlSettingsOutToPort();
+                Properties.Settings.Default.Save();
+
+            }
+            if (valveSelectChoice.Text == "DEERE")
+            {
+                mf.mc.gradeControlSettings[mf.mc.gsValveType] = 1;
+                Properties.Settings.Default.set_ValveType = 1;
+                mf.vehicle.valveType = 1;
+                Properties.Settings.Default.set_ValveName = valveSelectChoice.Text;
+                mf.GradeControlSettingsOutToPort();
+                Properties.Settings.Default.Save();
+            }
+            if (valveSelectChoice.Text == "DANFOSS")
+            {
+                mf.mc.gradeControlSettings[mf.mc.gsValveType] = 2;
+                Properties.Settings.Default.set_ValveType = 2;
+                mf.vehicle.valveType = 2;
+                Properties.Settings.Default.set_ValveName = valveSelectChoice.Text;
+                mf.GradeControlSettingsOutToPort();
+                Properties.Settings.Default.Save();
+            }
+            else 
+            {
+                mf.mc.gradeControlSettings[mf.mc.gsValveType] = 0;
+                Properties.Settings.Default.set_ValveType = 0;
+                mf.vehicle.valveType = 0;
+                Properties.Settings.Default.set_ValveName = valveSelectChoice.Text;
+                mf.GradeControlSettingsOutToPort();
+                Properties.Settings.Default.Save();
+            }
+            
+            
+        }
+
+        private void label8_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void label9_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void numericUpDown2_ValueChanged(object sender, EventArgs e)
+        {
+            extDeadband = (byte)nudExtDeadband.Value;
+            mf.mc.gradeControlSettings[mf.mc.gsExtDeadband] = extDeadband;
+            mf.GradeControlSettingsOutToPort();
+
+        }
+
+        private void numericUpDown1_ValueChanged(object sender, EventArgs e)
+        {
+            retDeadband = (byte)nudRetDeadband.Value;
+            mf.mc.gradeControlSettings[mf.mc.gsRetDeadband] = retDeadband;
+            mf.GradeControlSettingsOutToPort();
+        }
+
 
         // Black Ace Industries
         private void nudPlowHeight_ValueChanged(object sender, EventArgs e)
@@ -232,35 +312,35 @@ namespace OpenGrade
         private void nudKp_ValueChanged(object sender, EventArgs e)
         {
             KpGain = (byte)nudKp.Value;
+            mf.GradeControlSettingsOutToPort();
         }
         private void nudKi_ValueChanged(object sender, EventArgs e)
         {
             KiGain = (byte)nudKi.Value;
+            mf.GradeControlSettingsOutToPort();
         }
         private void nudKd_ValueChanged(object sender, EventArgs e)
         {
             KdGain = (byte)nudKd.Value;
+            mf.GradeControlSettingsOutToPort();
         }
 
-
-
-
-        private void nudViewDistAboveGnd_ValueChanged(object sender, EventArgs e)
+        private void nudRetDeadband_ValueChanged(object sender, EventArgs e)
         {
-            viewDistAboveGnd = (double)nudViewDistAboveGnd.Value * metImp2m;
+            retDeadband = (byte)nudRetDeadband.Value;
+            mf.GradeControlSettingsOutToPort();
+        }
+      
+        private void nudExtDeadband_ValueChanged(object sender, EventArgs e)
+        {
+            extDeadband = (byte)nudExtDeadband.Value;
+            mf.GradeControlSettingsOutToPort();
         }
         
-        private void nudViewDistUnderGnd_ValueChanged(object sender, EventArgs e)
-        {
-            viewDistUnderGnd = (double)nudViewDistUnderGnd.Value * metImp2m;     
-        }
-
-
         private void nudMinSlope_ValueChanged(object sender, EventArgs e)
         {
             minSlope = (double)nudMinSlope.Value;
         }
-
         private void nudToolWidth_ValueChanged(object sender, EventArgs e)
         {
             toolWidth = (double)nudToolWidth.Value * metImp2m;

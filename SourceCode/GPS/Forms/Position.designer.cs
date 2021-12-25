@@ -62,7 +62,7 @@ namespace OpenGrade
         //IMU 
         double rollCorrectionDistance = 0;
         public double rollZero = 0, pitchZero = 0;
-        double gyroDelta, gyroCorrection, gyroRaw, gyroCorrected, turnDelta;
+        public double gyroDelta, gyroCorrection, gyroRaw, gyroCorrected, turnDelta, turnDelta2;
 
         //step position - slow speed spinner killer
         private int totalFixSteps = 10, currentStepFix = 0;
@@ -352,6 +352,7 @@ namespace OpenGrade
                 prevPrevGPSHeading = prevGPSHeading;
                 prevGPSHeading = gpsHeading;
                 turnDelta = Math.Abs(Math.Atan2(Math.Sin(fixHeading - prevPrevGPSHeading), Math.Cos(fixHeading - prevPrevGPSHeading)));
+                
 
                 //Only adjust gyro if going in a straight line 
                 if (turnDelta < 0.01 && pn.speed > 1)
@@ -377,7 +378,7 @@ namespace OpenGrade
                 if (gyroCorrected > glm.twoPI) gyroCorrected -= glm.twoPI;
                 if (gyroCorrected < 0) gyroCorrected += glm.twoPI;
 
-                fixHeading = gyroCorrected;
+                //fixHeading = gyroCorrected;
             }
 
             //check to make sure the grid is big enough

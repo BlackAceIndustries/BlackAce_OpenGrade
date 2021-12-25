@@ -23,9 +23,9 @@ namespace OpenGrade
         public double voltage = 0;
 
         // PGN - 32760 - 127.248
-        public static int numGradeControlSettingsItems = 5;
+        public static int numGradeControlSettingsItems = 8;
         public byte[] gradeControlSettings = new byte[numGradeControlSettingsItems];
-        public int gsHeaderHi, gsHeaderLo = 1, gsKpGain = 2, gsKiGain = 3, gsKdGain = 4;
+        public int gsHeaderHi, gsHeaderLo = 1, gsKpGain = 2, gsKiGain = 3, gsKdGain = 4, gsRetDeadband = 5, gsExtDeadband = 6, gsValveType = 7;
             
 
         //AutoSteer ------------------------------------------------------------------------------------------------
@@ -82,7 +82,10 @@ namespace OpenGrade
             gradeControlSettings[gsKpGain] = Properties.Settings.Default.set_KpGain;
             gradeControlSettings[gsKiGain] = Properties.Settings.Default.set_KiGain;
             gradeControlSettings[gsKdGain] = Properties.Settings.Default.set_KdGain;
-            //mf.GradeControlSettingsOutToPort();
+            gradeControlSettings[gsRetDeadband] = Properties.Settings.Default.set_RetDeadband;
+            gradeControlSettings[gsExtDeadband] = Properties.Settings.Default.set_ExtDeadband;
+            gradeControlSettings[gsValveType] = Properties.Settings.Default.set_ValveType;
+            mf.GradeControlSettingsOutToPort();
 
             autoSteerData[sdHeaderHi] = 127; // PGN - 32766
             autoSteerData[sdHeaderLo] = 254;

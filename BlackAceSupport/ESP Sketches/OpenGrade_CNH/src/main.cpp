@@ -1,4 +1,3 @@
-
 /*
   OG GradeControl
 */
@@ -14,31 +13,15 @@
 
 // Function STUBS for Platform IO
 void SetOutput();
-
-
-
+void SetValveLimits();
 // configured to Run on Esp 32
 #include "EEPROM.h"
 #include <SPI.h>
 #include <Adafruit_MCP4725.h>
 #include <Wire.h>
 #include <Button.h>
-#include <PID_v1.h>
 
-//////////////SETTINGS////////////
-float Kp=38; //Mine was 38
-float Ki=.02; //Mine was 0.02
-float Kd=2800; //Mine was 2800
-float delta_setpoint = 0;  
-
-byte b_Ki, b_Kp, b_Kd;
-
-
-///////////////////PID/////////////////////////
-float PID_p, PID_i, PID_d, PID_total;
-//////////////////////////////////////////////////////////
-
-///////////////////////Inputs/outputs///////////////////////
+///////////////////////PINS///////////////////////
 //#define Analog_in = A0;
 #define DAC1_ENABLE 4      // DAC 1 enable/
 #define DAC2_ENABLE 5     //  DAC 2 enable/
@@ -53,24 +36,51 @@ float PID_p, PID_i, PID_d, PID_total;
 #define RXD2 16
 #define TXD2 17
 //
-#define VALVE_FLOAT 2048
 
-// LED's
-//#define LED_DW 2      //DO2 led down (if used)
-//#define LED_UP 5       //DO5 led up (if used)
-//#define LED_AUTO 9      //DO9 led auto
-//#define LED_ON A0       //A0 on led
-////////////////////////////////////////////////////////////
+ #define VALVE_FLOAT 2048
+#define CNH 0
+#define DEERE 1
+#define DANFOSS 2
+
+//////////////SETTINGS////////////
+float Kp=35; //Mine was 38
+float Ki=.02; //Mine was 0.02
+float Kd=3100; //Mine was 2800
+float delta_setpoint = 0;  
 
 
-////////////////////////Variables/////////////////////////
+///////////// Com Bytes///////////////////////
+byte b_Ki, b_Kp, b_Kd;
+byte b_autoState = 0, b_deltaDir = 0, b_cutDelta = 0;
+byte b_bladeOffsetOut = 0;
+byte b_retDeadband = 25;
+byte b_extDeadband = 75;
+byte b_valveType = 255;   // 0= CNH    1= Deere     2= Danfoss
+byte b_deadband = 2;
+
+///////////////////PID/////////////////////////
+float PID_p, PID_i, PID_d, PID_total;
 float delta_previous_error, delta_error;
+//////////////////////////////////////////////////////////
+
+
+
+
+
+
 
 /// CNH Valve 
-bool danfoss = true; //set true for danfoss
-int analogOutput1 = 2048; //send to MCP4725
-int analogOutput2 = 2048; //send to MCP4725
+int analogOutput1 = VALVE_FLOAT; //send to MCP4725
+int analogOutput2 = VALVE_FLOAT; //send to MCP4725
+int cut1 = -1;
 double voltage = 0; // diagnostic Voltage
+int retDeadband = 1845;
+int extDeadband = 2250;
+int retMin = (0.11 * 4096);   //450.56  CNH 
+int extMax = (0.89 * 4096);   //3645
+
+bool isAutoActive = false;
+bool isCutting = false;
 
 //loop time variables in milliseconds
 const byte LOOP_TIME = 50; //20hz
@@ -79,37 +89,14 @@ unsigned long lastTime = LOOP_TIME;
 unsigned long lastTime2 = LOOP_TIME2; 
 unsigned long currentTime = LOOP_TIME; 
 
-//Define Variables we'll be connecting to
-//double Setpoint, Input, Output;  // FOR pid Library
-
 //Comm checks
 byte watchdogTimer = 0;      //make sure we are talking to OpenGrade
 byte serialResetTimer = 0;   //if serial buffer is getting full, empty it
 bool settingsRecieved = false;
 
-//EEPROM identifier
-byte EEP_Ident = 138;
-
-//Deadband setting
-byte deadband = 2;
-
 //Communication with OpenGrade
 bool isDataFound = false, isSettingFound = false;
 int header = 0, tempHeader = 0, temp;
-
-// Cut Delta
-
-
-// Bools 
-bool isAutoActive = false;
-bool isCutting = false;
-byte b_autoState = 0;
-byte b_deltaDir = 0;
-byte b_cutDelta = 0;
-int cut1 = -1;
-
-/////////////////////////////////////////////////////////
-
 
 ///////////////////////Initalize Objects///////////////////////
 // DAC's
@@ -119,13 +106,6 @@ Adafruit_MCP4725 Dac2;
 Button offsetIncBtn(OFF_INC_BTN); 
 Button offsetDecBtn(OFF_DEC_BTN);
 Button autoEngageBtn (AUTO_BTN);
-
-// PID Controller
-//PID myPID(&Input, &Output, &Setpoint, Kp, Ki, Kd, DIRECT);
-
-//BladeOffset stuff ************************************************************
-int bladeOffsetOut = 0;
-
 
 void setup()
 {
@@ -142,11 +122,8 @@ void setup()
   offsetDecBtn.begin();
   autoEngageBtn.begin();
 
-  digitalWrite(2, HIGH);
-  delay(2000);
-  digitalWrite(2, LOW);
-  
   Dac1.begin(0x62);
+  Dac2.begin(0x63);
   
 }
 
@@ -156,21 +133,28 @@ void loop(){  //Loop triggers every 50 msec (20hz) and sends back offsets Pid ec
   
   if (currentTime - lastTime >= LOOP_TIME)
   {    
-    lastTime = currentTime;
-    
-    if (b_autoState == 1){
-      isAutoActive = true;
-    }
-    else {
-      isAutoActive = false;
-    }     
+    lastTime = currentTime;    
+
+    Serial.print(b_bladeOffsetOut);
+    Serial.print(", ");
+    Serial.print(b_autoState);
+    Serial.print(", ");
+    Serial.println(voltage);
+      
+  }
+  
+  ///
+  ///Serial Loop  ESP is too fast to run serial avail outside of a tiemd loop and causes issues quickly
+  ///
+  if (currentTime - lastTime2 >= LOOP_TIME2){
+    lastTime2 = currentTime;
 
     //////BTNS    =============================================== 
     if (offsetIncBtn.pressed()){
-      bladeOffsetOut ++; 
+      b_bladeOffsetOut ++; 
     } 
     if (offsetDecBtn.pressed()){ 
-      bladeOffsetOut --;
+      b_bladeOffsetOut --;
     }
     if (autoEngageBtn.pressed()){
       if (isAutoActive){
@@ -183,18 +167,6 @@ void loop(){  //Loop triggers every 50 msec (20hz) and sends back offsets Pid ec
       }
     } 
 
-    Serial.print(bladeOffsetOut);
-    Serial.print(", ");
-    Serial.print(b_autoState);
-    Serial.print(", ");
-    Serial.println(voltage);           
-  }
-  
-  ///
-  ///Serial Loop
-  ///
-  if (currentTime - lastTime2 >= LOOP_TIME2){
-
     if (Serial.available() > 0 && !isDataFound && !isSettingFound)
     {
       //Serial1.println("Serial Available Data and settings not found!");
@@ -206,41 +178,60 @@ void loop(){  //Loop triggers every 50 msec (20hz) and sends back offsets Pid ec
       if (header == 32760) isSettingFound = true;        //Do we have a match?
     }
 
-    //Data Header has been found, so the next 6 bytes are the data
+    //Data Header has been found, so the next x bytes are the data
     if (Serial.available() > 3 && isDataFound)   //
     {     
       
       isDataFound = false;      
       b_deltaDir = Serial.read();// Cut Delta Dir 
       b_cutDelta = Serial.read();// Cut Delta      
-      b_autoState = Serial.read();// Auto State
+      b_autoState = Serial.read();// Auto State     
       
+    
       if (b_deltaDir == 3){
         isCutting = false;
       }
       else{
         isCutting = true;
-      }           
+      }
+      
+      if (b_autoState == 1){
+        isAutoActive = true;
+      }
+      else {
+        isAutoActive = false;
+        
+      }
+
+
     }
     
     //Setting Header has been found, so the next 8 bytes are the data
-    if (Serial.available() > 7 && isSettingFound)
+    if (Serial.available() > 9 && isSettingFound)
     {
       digitalWrite(LED_BUILTIN, HIGH);
       isSettingFound = false;
       b_Kp = Serial.read();
       b_Ki = Serial.read();
       b_Kd = Serial.read();
+      b_retDeadband = Serial.read();
+      b_extDeadband = Serial.read();
+      b_valveType = Serial.read();
       
       Kp = double(b_Kp);
       Ki = double(b_Ki / 100);
       Kd = double(b_Kp * 100);
+      
+      SetValveLimits();      
+
     }
     
     if (isAutoActive && isCutting){
+      digitalWrite(2, HIGH);
       SetOutput();
     }
     else{
+      digitalWrite(2, LOW);
       analogOutput1 = VALVE_FLOAT;
       voltage = ((double)analogOutput1/4096) * 5.0;
       Dac1.setVoltage(analogOutput1, false);                      
@@ -270,7 +261,7 @@ void SetOutput()
   
   PID_d = Kd*((delta_error - delta_previous_error)/LOOP_TIME);// calculate the d error
   
-  if(-3 < delta_error && delta_error < 3){  // 3 cm deadband for i
+  if(-b_deadband < delta_error && delta_error < b_deadband){  // 3 cm deadband for i
     PID_i = PID_i + (Ki * delta_error);//calculate the i error
   }
   else{
@@ -282,20 +273,63 @@ void SetOutput()
   if (PID_total >  2300) PID_total = 2300;      
   if (PID_total <  -2300) PID_total = -2300;
 
-  if (b_deltaDir == 1){ // Delta is Positive need to lower IMP
-    analogOutput1 = map(PID_total, 0.0, -2300, 2048, 0);
+  if (b_deltaDir == 1){ // Delta is Positive need to lower IMP RETRACT
+    analogOutput1 = map(PID_total, 0.0, -2300, retDeadband , retMin);
   }
-
   else if (b_deltaDir == 0){// Delta is Negative need to raise IMP
-    analogOutput1 = map(PID_total,  0.0, 2300, 2048, 4096);
+    analogOutput1 = map(PID_total,  0.0, 2300, extDeadband, extMax);
   }
   
-  if (analogOutput1 >= 4090) analogOutput1 = 4090; // do not exceed 4096
-  if (analogOutput1 < 0) analogOutput1 = 2; // do not write negative numbers 
-
-  voltage = ((double)analogOutput1/4096) * 5.0;   
-  Dac1.setVoltage(analogOutput1, false);
+  if (analogOutput1 >= extMax) analogOutput1 = extMax; // do not exceed 4096
+  if (analogOutput1 <= retMin) analogOutput1 = retMin; // do not write negative numbers 
+   
+  
+  if (b_cutDelta > b_deadband){
+    Dac1.setVoltage(analogOutput1, false);
+  }
+  else {
+    analogOutput1 = VALVE_FLOAT;
+    Dac1.setVoltage(analogOutput1, false);
+  }
+  
+  voltage = ((double)analogOutput1/4096) * 5.0;
 
   delta_previous_error = delta_error;  
 }
 
+void SetValveLimits(){
+
+  switch(b_valveType) {
+  
+    case CNH:
+      retDeadband = VALVE_FLOAT - ((b_retDeadband/200.0)*4096);
+      extDeadband = VALVE_FLOAT + ((b_extDeadband/200.0)*4096);    
+      retMin = (.11 * 4096);
+      extMax = (.89 * 4096);
+      break;
+      
+    case DEERE:
+      retDeadband = VALVE_FLOAT - ((b_retDeadband/200.0)*4096);
+      extDeadband = VALVE_FLOAT + ((b_extDeadband/200.0)*4096);
+      retMin = (.11 * 4096);
+      extMax = (.89 * 4096);
+      break;
+      
+    case DANFOSS:
+      retDeadband = VALVE_FLOAT - ((b_retDeadband/200.0)*4096);
+      extDeadband = VALVE_FLOAT + ((b_extDeadband/200.0)*4096);
+      retMin = (.26 * 4096);
+      extMax = (.74 * 4096);
+      break;
+
+    default:
+      retDeadband = VALVE_FLOAT - ((b_retDeadband/200.0)*4096);
+      extDeadband = VALVE_FLOAT + ((b_extDeadband/200.0)*4096);    
+      retMin = (.11 * 4096);
+      extMax = (.89 * 4096);
+      
+  }
+
+  
+  
+}

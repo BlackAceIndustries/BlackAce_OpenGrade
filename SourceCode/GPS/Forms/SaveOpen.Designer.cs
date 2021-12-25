@@ -282,19 +282,22 @@ namespace OpenGrade
                         vehicle.minTileCover = Properties.Vehicle.Default.setVehicle_minTileCover;
                         
                         
-                        vehicle.V_KpGain = Properties.Settings.Default.set_KpGain;
-                        vehicle.V_KiGain = Properties.Settings.Default.set_KiGain;  
-                        vehicle.V_KdGain = Properties.Settings.Default.set_KdGain;                        
+                        vehicle.KpGain = Properties.Settings.Default.set_KpGain;
+                        vehicle.KiGain = Properties.Settings.Default.set_KiGain;  
+                        vehicle.KdGain = Properties.Settings.Default.set_KdGain;
 
-
-                        // Pats codes 
-                        vehicle.viewDistAboveGnd = Properties.Vehicle.Default.setVehicle_viewDistAboveGnd;
-                        vehicle.viewDistUnderGnd = Properties.Vehicle.Default.setVehicle_viewDistUnderGnd;
+                        vehicle.retDeadband = Properties.Settings.Default.set_RetDeadband;
+                        vehicle.extDeadband = Properties.Settings.Default.set_ExtDeadband;
+                        vehicle.valveType = Properties.Settings.Default.set_ValveType;
 
 
                         mc.gradeControlSettings[mc.gsKpGain] = Properties.Settings.Default.set_KpGain;
                         mc.gradeControlSettings[mc.gsKiGain] = Properties.Settings.Default.set_KiGain;
-                        mc.gradeControlSettings[mc.gsKdGain] = Properties.Settings.Default.set_KdGain;                        
+                        mc.gradeControlSettings[mc.gsKdGain] = Properties.Settings.Default.set_KdGain;
+                        mc.gradeControlSettings[mc.gsRetDeadband] = Properties.Settings.Default.set_RetDeadband;
+                        mc.gradeControlSettings[mc.gsExtDeadband] = Properties.Settings.Default.set_ExtDeadband;
+                        mc.gradeControlSettings[mc.gsValveType] = Properties.Settings.Default.set_ValveType;
+
 
 
                         vehicle.toolWidth = Properties.Vehicle.Default.setVehicle_toolWidth;
@@ -341,7 +344,7 @@ namespace OpenGrade
                         rollZero = Properties.Settings.Default.setIMU_rollZero;
                         isLogNMEA = Properties.Settings.Default.setMenu_isLogNMEA;
                         minFixStepDist = Properties.Settings.Default.setF_minFixStep;
-
+                        
                         //Application.Exit();
                     }
                     catch (Exception e) //FormatException e || IndexOutOfRangeException e2)
@@ -1139,7 +1142,6 @@ namespace OpenGrade
             isSavingFile = false;
             
         }
-
 
         //save all the flag markers
         public void FileSaveFlags()

@@ -1054,17 +1054,17 @@ namespace OpenGrade
                 // Black Ace Industries
                 if (isSurfaceModeOn)
                 {
-                    maxFieldY = (maxFieldY + vehicle.viewDistAboveGnd); // vehicle.viewDistAboveGnd
-                    minFieldY = (minFieldY - vehicle.viewDistUnderGnd);    //  vehicle.viewDistUnderGnd
+                    maxFieldY = (maxFieldY + 1); // vehicle.viewDistAboveGnd
+                    minFieldY = (minFieldY - 1);    //  vehicle.viewDistUnderGnd
                 }
                 else if (isDitchModeOn)
                 {
-                    maxFieldY = (maxFieldY + vehicle.viewDistAboveGnd);   
+                    maxFieldY = (maxFieldY + 1);   
                     minFieldY = (minFieldY - vehicle.maxDitchCut);   
                 }
                 else if (isPipeModeOn)
                 {
-                    maxFieldY = (maxFieldY + vehicle.viewDistAboveGnd);   
+                    maxFieldY = (maxFieldY + 1);   
                     minFieldY = (minFieldY - vehicle.maxTileCut);
                 }
 

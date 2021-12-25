@@ -646,5 +646,53 @@ namespace OpenGrade.Properties {
                 this["set_KdGain"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("25")]
+        public byte set_RetDeadband {
+            get {
+                return ((byte)(this["set_RetDeadband"]));
+            }
+            set {
+                this["set_RetDeadband"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("75")]
+        public byte set_ExtDeadband {
+            get {
+                return ((byte)(this["set_ExtDeadband"]));
+            }
+            set {
+                this["set_ExtDeadband"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("0")]
+        public byte set_ValveType {
+            get {
+                return ((byte)(this["set_ValveType"]));
+            }
+            set {
+                this["set_ValveType"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("CNH")]
+        public string set_ValveName {
+            get {
+                return ((string)(this["set_ValveName"]));
+            }
+            set {
+                this["set_ValveName"] = value;
+            }
+        }
     }
 }

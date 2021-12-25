@@ -100,7 +100,7 @@ namespace OpenGrade
         //used in altitude window for gain
         private double altitudeWindowGain = 10.0;
 
-        private double barGraphMax = 10;
+        private double barGraphMax = 50;
 
         /// <summary>
         /// The NMEA class that decodes it
@@ -869,6 +869,11 @@ namespace OpenGrade
        
         private void btnSaveCut_Click_1(object sender, EventArgs e)
         {
+
+            //ask for a directory name
+            //using (var form2 = new FormCutDir(this))
+            //form2.ShowDialog();
+
             ct.SaveToCut();
             btnSaveCut.Enabled = false;
         }
@@ -1234,7 +1239,7 @@ namespace OpenGrade
             lblFill.Text = "*";
             lblCutFillRatio.Text = "*";
             lblDrawSlope.Text = "*";
-
+            Text = "OpenGrade - Press Start To Begin";
             
 
             //change images to reflect on off
@@ -1258,9 +1263,7 @@ namespace OpenGrade
 
         //bring up field dialog for new/open/resume
         private void JobNewOpenResume()
-        {
-            //bring up dialog if no job active, close job if one is
-
+        {        
             if (!isJobStarted)
             {
                 if (stripOnlineGPS.Value == 1)
@@ -1280,7 +1283,8 @@ namespace OpenGrade
                         { form2.ShowDialog(); }
                     }
                 }
-                Text = "OpenGrade - Press Start To Begin" ;
+                Text = "OpenGrade - " + currentFieldDirectory;
+
             }            
             else
             {
@@ -1288,28 +1292,12 @@ namespace OpenGrade
                 {
                     var result = form.ShowDialog();
                 }
-                Text = "OpenGrade - " + currentFieldDirectory;
+                
                               
             }
         }
 
-
-
         
-
-
-
-
-
-
-
-
-
-
-
-
-
-
         //take the distance from object and convert to camera data
         private void SetZoom()
         {

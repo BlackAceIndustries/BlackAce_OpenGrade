@@ -1095,8 +1095,8 @@ namespace OpenGrade
                 btnABLine.Text = PassNumber;
                 sqrCutLine.Text = PureSteerAngle;
                 
-                voltageBar.Value = ((int)(mc.voltage * 100)); 
-                //lblDiagnostics.Text = (mc.voltage).ToString() + "Volts";
+                voltageBar.Value = ((int)(mc.voltage * 100)) + 12; 
+                lblDiagnostics.Text = (mc.voltage).ToString() + "Volts";
 
 
                 if (cutDelta == 9999)

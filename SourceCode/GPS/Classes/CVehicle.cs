@@ -23,13 +23,16 @@ namespace OpenGrade
         public double maxTileCut;
         public double minTileCover;
         
-        public byte V_KpGain;
-        public byte V_KiGain;
-        public byte V_KdGain;
+        public byte KpGain;
+        public byte KiGain;
+        public byte KdGain;
+        public byte retDeadband;
+        public byte extDeadband;
+        public byte valveType;
 
-        // pat codes
-        public double viewDistUnderGnd;
-        public double viewDistAboveGnd;
+        public double temp = 1;
+
+
 
 
 
@@ -58,8 +61,7 @@ namespace OpenGrade
             maxDitchCut = Properties.Vehicle.Default.setVehicle_maxDitchCut;
             maxTileCut = Properties.Vehicle.Default.setVehicle_maxTileCut;
             minTileCover = Properties.Vehicle.Default.setVehicle_minTileCover;
-            viewDistAboveGnd = Properties.Vehicle.Default.setVehicle_viewDistAboveGnd;
-            viewDistUnderGnd = Properties.Vehicle.Default.setVehicle_viewDistUnderGnd;
+            
 
             wheelbase = Properties.Vehicle.Default.setVehicle_wheelbase;
             goalPointLookAhead = Properties.Vehicle.Default.setVehicle_goalPointLookAhead;
@@ -68,34 +70,145 @@ namespace OpenGrade
             maxSteerAngle = Properties.Vehicle.Default.setVehicle_maxSteerAngle;
             minSlope = Properties.Vehicle.Default.setVehicle_minSlope;
         }
-
-        public void DrawVehicle()
-        {
+        
+        public void DrawVehicle()        {
+                 
             //translate and rotate at pivot axle
             gl.Translate(mf.pn.easting, mf.pn.northing, 0);
             gl.Rotate(glm.toDegrees(-mf.fixHeading), 0.0, 0.0, 1.0);
 
-            ////draw the vehicle Body
-            //gl.Color(0.9, 0.5, 0.530);
-            //gl.Begin(OpenGL.GL_TRIANGLE_FAN);
-            //gl.Vertex(0, 0, -0.2);
-            //gl.Vertex(2.0, -antennaPivot, 0.0);
-            //gl.Vertex(0, -antennaPivot + 2, 0.0);
-            //gl.Color(0.520, 0.0, 0.9);
-            //gl.Vertex(-2.0, -antennaPivot, 0.0);
-            //gl.Vertex(2.0, -antennaPivot, 0.0);
-            //gl.End();
-
-            //tool
-            gl.Color(0.95f, 0.90f, 0.0f);
-            gl.LineWidth(8.0f);
-            gl.Begin(OpenGL.GL_LINES);
-            gl.Vertex(-toolWidth/2, 0, 0);
-            gl.Vertex(toolWidth/2, 0, 0);
+            //draw the vehicle Body
+            gl.Color(0.12, 0.6, 0.9);
+            gl.Begin(OpenGL.GL_TRIANGLE_FAN);
+            gl.Vertex(0, 0, -0.2);
+            gl.Vertex(1.0, -antennaPivot, 0.0);
+            gl.Vertex(0, -antennaPivot + 3, 0.0);
+            gl.Color(0.33, 0.8, 0.9);
+            gl.Vertex(-1.0, -antennaPivot, 0.0);
+            gl.Vertex(1.0, -antennaPivot, 0.0);
             gl.End();
 
-            gl.LineWidth(1);
+            //temp = mf.fixHeading;
+            //gl.Rotate(glm.toDegrees(temp), 0.0, 0.0, 1.0);
+
+            //Only adjust gyro if going in a straight line 
+
+
+            //if (mf.gpsHeading > mf.prevGPSHeading)
+            //{
+
+            //    temp = mf.fixHeading;
+            //    gl.Rotate(glm.toDegrees(temp), 0.0, 0.0, 1.0);
+            //    //gl.Rotate(glm.toDegrees(temp), 0.0, 0.0, 1.0);
+            //}
+            
+            //if (mf.fixHeading == mf.gpsHeading )
+            //{
+
+            //    //temp = mf.fixHeading;
+            //    temp *= 1.25;
+            //    gl.Rotate(180, 0.0, 0.0, 1.0);
+            //    //gl.Rotate(glm.toDegrees(temp), 0.0, 0.0, 1.0);
+            //}
+
+
+
+
+
+
+            //Hitch
+            gl.Color(0.95f, 0.95f, 0.02f);            
+            gl.Begin(OpenGL.GL_POLYGON);
+            gl.Vertex(antennaPivot - .25, 0, 0);
+            gl.Vertex(antennaPivot + .25, 0, 0);
+            gl.Vertex(antennaPivot + .5, -4.25, 0);
+            gl.Vertex(antennaPivot - .5, -4.25, 0);
+            gl.End();
+
+
+
+            //Scraper front 
+            gl.Color(0.95f, 0.95f, 0.02f);
+            gl.LineWidth(10);
+            gl.Begin(OpenGL.GL_LINES);
+            gl.Vertex(-toolWidth /1.5, -4.25, 0);
+            gl.Vertex(toolWidth /1.5, -4.25, 0);
+            gl.End();
+
+            //Scraper left edge 
+            gl.Color(0.95f, 0.95f, 0.02f);
+            gl.LineWidth(3);
+            gl.Begin(OpenGL.GL_LINES);
+            gl.Vertex(-toolWidth / 1.5, -4, 0);
+            gl.Vertex(-toolWidth / 1.5, -9.25, 0);
+            gl.End();
+
+            //Scraper right edge 
+            gl.Color(0.95f, 0.95f, 0.02f);
+            gl.LineWidth(3);
+            gl.Begin(OpenGL.GL_LINES);
+            gl.Vertex(toolWidth / 1.5, -4, 0);
+            gl.Vertex(toolWidth / 1.5, -9.25, 0);
+            gl.End();
+
+            //Scraper bowl 
+            gl.Color(0.60f, 0.45f, 0.15f);
+            //gl.LineWidth(3);
+            gl.Begin(OpenGL.GL_POLYGON);
+            gl.Vertex(-toolWidth / 1.6, -5, 0);                 
+            gl.Vertex(toolWidth / 1.6, -5, 0);             
+            gl.Vertex(toolWidth / 1.6, -8.25, 0);
+            gl.Vertex(-toolWidth / 1.6, -8.25, 0);
+            gl.End();
+
+            //Scraper rear 
+            gl.Color(0.95f, 0.95f, 0.02f);            
+            gl.Begin(OpenGL.GL_POLYGON); 
+            gl.Vertex(-toolWidth / 1.5, -8.25, 0);
+            gl.Vertex(toolWidth / 1.5, -8.25, 0);
+            gl.Vertex(toolWidth / 1.5, -9.25, 0);  
+            gl.Vertex(-toolWidth / 1.5, -9.25, 0);            
+            gl.End();
+            gl.Begin(OpenGL.GL_POLYGON);
+            gl.Vertex(-toolWidth / 4, -9.25, 0);
+            gl.Vertex(toolWidth / 4, -9.25, 0);        
+            gl.Vertex(toolWidth / 4, -13, 0);
+            gl.Vertex(-toolWidth / 4, -13, 0);
+            gl.End();
+
+            //Left Scraper Tire
+            gl.Color(0.01f, 0.01f, 0.01f);
+            gl.Begin(OpenGL.GL_POLYGON);
+            gl.Vertex(-toolWidth / 1.5, -9.5, 0);
+            gl.Vertex(-toolWidth / 3.25, -9.5, 0);
+            gl.Vertex(-toolWidth / 3.25, -12.75, 0);
+            gl.Vertex(-toolWidth / 1.5, -12.75, 0);
+            gl.End();
+
+            //Right Scraper Tire
+            gl.Color(0.01f, 0.01f, 0.01f);
+            gl.Begin(OpenGL.GL_POLYGON);
+            gl.Vertex(toolWidth / 1.5, -9.5, 0);
+            gl.Vertex(toolWidth / 3.25, -9.5, 0);
+            gl.Vertex(toolWidth / 3.25, -12.75, 0);
+            gl.Vertex(toolWidth / 1.5, -12.75, 0);
+            gl.End();
+
+
+
+            //Cutting Edge
+            gl.Color(0.95f, 0.1f, 0.2f);
+            gl.LineWidth(5);
+            gl.Begin(OpenGL.GL_LINES);
+            gl.Vertex(-toolWidth/2, -5, 0);
+            gl.Vertex(toolWidth/2, -5, 0);
+            gl.End();
+
+
+            gl.LineWidth(1);           
+
         }
+
     }
 }
 
