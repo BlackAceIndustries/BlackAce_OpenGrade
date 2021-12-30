@@ -35,6 +35,8 @@ namespace OpenGrade
 
         //headings
         public double fixHeading = 0.0, camHeading = 0.0, gpsHeading = 0.0, prevGPSHeading = 0.0, prevPrevGPSHeading = 0.0;
+        public bool isTurningRight = false;
+        public bool isTurning = false;
 
         //a distance between previous and current fix
         private double distance = 0.0, userDistance = 0;
@@ -328,6 +330,30 @@ namespace OpenGrade
             if (camHeading < 0) camHeading += glm.twoPI;
             camHeading = glm.toDegrees(camHeading);
 
+            prevPrevGPSHeading = prevGPSHeading;
+            prevGPSHeading = gpsHeading;
+            turnDelta = Math.Abs(Math.Atan2(Math.Sin(fixHeading - prevPrevGPSHeading), Math.Cos(fixHeading - prevPrevGPSHeading)));
+            turnDelta2 = Math.Atan2(Math.Sin(fixHeading - prevPrevGPSHeading), Math.Cos(fixHeading - prevPrevGPSHeading));
+
+            //lblDiagnostics.Text = turnDelta2.ToString();
+            //lblDiagnostics.Text = turnDelta.ToString();
+
+            if (turnDelta2 > 0.005)
+            {
+                isTurning = true;
+                isTurningRight = true;
+            }
+            else if (turnDelta2 < -0.005 )
+            {
+                isTurning = true;
+                isTurningRight = false;
+            }
+            else
+            {
+                isTurningRight = false;
+                isTurning = false;
+            }
+            /*
             //make sure there is a gyro otherwise 9999 are sent from autosteer
             if (mc.gyroHeading != 9999)
             {
@@ -380,10 +406,11 @@ namespace OpenGrade
 
                 //fixHeading = gyroCorrected;
             }
-
+            */
             //check to make sure the grid is big enough
             worldGrid.checkZoomWorldGrid(pn.northing, pn.easting);
         }
+        
 
         //add the points for section, contour line points, Area Calc feature
         private void AddSectionContourPathPoints()

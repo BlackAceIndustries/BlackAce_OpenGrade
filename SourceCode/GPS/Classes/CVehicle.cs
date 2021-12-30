@@ -88,32 +88,51 @@ namespace OpenGrade
             gl.Vertex(1.0, -antennaPivot, 0.0);
             gl.End();
 
-            //temp = mf.fixHeading;
-            //gl.Rotate(glm.toDegrees(temp), 0.0, 0.0, 1.0);
-
-            //Only adjust gyro if going in a straight line 
-
-
-            //if (mf.gpsHeading > mf.prevGPSHeading)
+           
+            if (mf.isTurningRight && mf.isTurning)
+            {
+                //gl.Rotate(glm.toDegrees(-mf.fixHeading), 0.0, 0.0, 1.0);
+                temp =  mf.gpsHeading;
+                //gl.Rotate(glm.toDegrees(temp), 0.0, 0.0, 1.0);
+                //gl.Rotate(mf.camHeading, 0.0, 0.0, 1.0);
+            }
+            if (!mf.isTurningRight && mf.isTurning)
+            {
+                temp = mf.gpsHeading;
+                //gl.Rotate(glm.toDegrees(temp), 0.0, 0.0, 1.0);
+                //gl.Rotate(mf.camHeading, 0.0, 0.0, 1.0);
+            }
+            //else if (!mf.isTurning)
             //{
+            //    gl.Rotate(glm.toDegrees(temp + 25), 0.0, 0.0, 1.0);
 
-            //    temp = mf.fixHeading;
+            //    //gl.Rotate(90, 0.0, 0.0, 1.0);
+            //}
+            if (!mf.isTurning)
+            {
+                //gl.Rotate(glm.toDegrees(mf.prevPrevGPSHeading), 0.0, 0.0, 1.0);
+                //gl.Rotate(mf.camHeading, 0.0, 0.0, 1.0);
+            }
+
+
+
+
+
+
+
+
+            //if (mf.gpsHeading - mf.prevGPSHeading > 0)
+            //{
+            //    //gl.Rotate(glm.toDegrees(-mf.fixHeading), 0.0, 0.0, 1.0);
+            //    temp = mf.fixHeading / 2;
             //    gl.Rotate(glm.toDegrees(temp), 0.0, 0.0, 1.0);
-            //    //gl.Rotate(glm.toDegrees(temp), 0.0, 0.0, 1.0);
+
             //}
-            
-            //if (mf.fixHeading == mf.gpsHeading )
+            //if (mf.gpsHeading - mf.prevGPSHeading <= 0)
             //{
-
-            //    //temp = mf.fixHeading;
-            //    temp *= 1.25;
-            //    gl.Rotate(180, 0.0, 0.0, 1.0);
-            //    //gl.Rotate(glm.toDegrees(temp), 0.0, 0.0, 1.0);
+            //    gl.Rotate(glm.toDegrees(-temp*.25), 0.0, 0.0, 1.0);
+            //    //gl.Rotate(90, 0.0, 0.0, 1.0);
             //}
-
-
-
-
 
 
             //Hitch

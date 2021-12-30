@@ -894,7 +894,7 @@ namespace OpenGrade
                         {
                             distFromLastPlot += ct.ptList[h].distance;  // add distance all distances from lastPt to hPt 
                         }
-                        lblDiagnostics.Text = (distFromLastPlot.ToString());
+                        //lblDiagnostics.Text = (distFromLastPlot.ToString());
                     }
                     else
                     {
@@ -936,7 +936,7 @@ namespace OpenGrade
                         {
                             distFromLastPlot += ct.ptList[h].distance;  // add distance all distances from lastPt to hPt 
                         }
-                        lblDiagnostics.Text = (distFromLastPlot.ToString());
+                        //lblDiagnostics.Text = (distFromLastPlot.ToString());
                     }
                     else
                     {
@@ -962,7 +962,7 @@ namespace OpenGrade
                 }
             }
 
-            lblDiagnostics.Text = endPt.ToString();
+            //lblDiagnostics.Text = endPt.ToString();
         }
 
         private bool CheckMaxCut()
