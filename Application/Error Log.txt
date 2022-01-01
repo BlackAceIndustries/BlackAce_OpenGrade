@@ -13757,3 +13757,286 @@ Open GPS Port System.IO.IOException: The port 'COM GPS...' does not exist.
    at System.IO.Ports.SerialPort.Open()
    at OpenGrade.FormGPS.SerialPortOpenGPS() in C:\Users\auzzy\Documents\7.Software Development\OpenGrade\OpenGrade_V3.0.1\BlackAce_OpenGrade\SourceCode\GPS\Forms\SerialComm.Designer.cs:line 364 - 12/30/2021 12:44:44 PM
 
+Open GPS Port System.IO.IOException: The port 'COM GPS...' does not exist.
+   at System.IO.Ports.InternalResources.WinIOError(Int32 errorCode, String str)
+   at System.IO.Ports.SerialStream..ctor(String portName, Int32 baudRate, Parity parity, Int32 dataBits, StopBits stopBits, Int32 readTimeout, Int32 writeTimeout, Handshake handshake, Boolean dtrEnable, Boolean rtsEnable, Boolean discardNull, Byte parityReplace)
+   at System.IO.Ports.SerialPort.Open()
+   at OpenGrade.FormGPS.SerialPortOpenGPS() in C:\Users\auzzy\Documents\7.Software Development\OpenGrade\OpenGrade_V3.0.1\BlackAce_OpenGrade\SourceCode\GPS\Forms\SerialComm.Designer.cs:line 364 - 12/31/2021 7:33:46 PM
+
+Open GPS Port System.IO.IOException: The port 'COM GPS...' does not exist.
+   at System.IO.Ports.InternalResources.WinIOError(Int32 errorCode, String str)
+   at System.IO.Ports.SerialStream..ctor(String portName, Int32 baudRate, Parity parity, Int32 dataBits, StopBits stopBits, Int32 readTimeout, Int32 writeTimeout, Handshake handshake, Boolean dtrEnable, Boolean rtsEnable, Boolean discardNull, Byte parityReplace)
+   at System.IO.Ports.SerialPort.Open()
+   at OpenGrade.FormGPS.SerialPortOpenGPS() in C:\Users\auzzy\Documents\7.Software Development\OpenGrade\OpenGrade_V3.0.1\BlackAce_OpenGrade\SourceCode\GPS\Forms\SerialComm.Designer.cs:line 364 - 12/31/2021 7:37:31 PM
+
+GradeControl Data Recvd System.InvalidOperationException: Invoke or BeginInvoke cannot be called on a control until the window handle has been created.
+   at System.Windows.Forms.Control.MarshaledInvoke(Control caller, Delegate method, Object[] args, Boolean synchronous)
+   at System.Windows.Forms.Control.BeginInvoke(Delegate method, Object[] args)
+   at OpenGrade.FormGPS.sp_DataReceivedGradeControl(Object sender, SerialDataReceivedEventArgs e) in C:\Users\auzzy\Documents\7.Software Development\OpenGrade\OpenGrade_V3.0.1\BlackAce_OpenGrade\SourceCode\GPS\Forms\SerialComm.Designer.cs:line 248 - 12/31/2021 7:39:55 PM
+
+Open GPS Port System.IO.IOException: The port 'COM GPS...' does not exist.
+   at System.IO.Ports.InternalResources.WinIOError(Int32 errorCode, String str)
+   at System.IO.Ports.SerialStream..ctor(String portName, Int32 baudRate, Parity parity, Int32 dataBits, StopBits stopBits, Int32 readTimeout, Int32 writeTimeout, Handshake handshake, Boolean dtrEnable, Boolean rtsEnable, Boolean discardNull, Byte parityReplace)
+   at System.IO.Ports.SerialPort.Open()
+   at OpenGrade.FormGPS.SerialPortOpenGPS() in C:\Users\auzzy\Documents\7.Software Development\OpenGrade\OpenGrade_V3.0.1\BlackAce_OpenGrade\SourceCode\GPS\Forms\SerialComm.Designer.cs:line 364 - 12/31/2021 7:43:09 PM
+
+Open GPS Port System.IO.IOException: The port 'COM GPS...' does not exist.
+   at System.IO.Ports.InternalResources.WinIOError(Int32 errorCode, String str)
+   at System.IO.Ports.SerialStream..ctor(String portName, Int32 baudRate, Parity parity, Int32 dataBits, StopBits stopBits, Int32 readTimeout, Int32 writeTimeout, Handshake handshake, Boolean dtrEnable, Boolean rtsEnable, Boolean discardNull, Byte parityReplace)
+   at System.IO.Ports.SerialPort.Open()
+   at OpenGrade.FormGPS.SerialPortOpenGPS() in C:\Users\auzzy\Documents\7.Software Development\OpenGrade\OpenGrade_V3.0.1\BlackAce_OpenGrade\SourceCode\GPS\Forms\SerialComm.Designer.cs:line 364 - 12/31/2021 7:46:49 PM
+
+Open GPS Port System.IO.IOException: The port 'COM GPS...' does not exist.
+   at System.IO.Ports.InternalResources.WinIOError(Int32 errorCode, String str)
+   at System.IO.Ports.SerialStream..ctor(String portName, Int32 baudRate, Parity parity, Int32 dataBits, StopBits stopBits, Int32 readTimeout, Int32 writeTimeout, Handshake handshake, Boolean dtrEnable, Boolean rtsEnable, Boolean discardNull, Byte parityReplace)
+   at System.IO.Ports.SerialPort.Open()
+   at OpenGrade.FormGPS.SerialPortOpenGPS() in C:\Users\auzzy\Documents\7.Software Development\OpenGrade\OpenGrade_V3.0.1\BlackAce_OpenGrade\SourceCode\GPS\Forms\SerialComm.Designer.cs:line 364 - 12/31/2021 7:48:48 PM
+
+Open GPS Port System.IO.IOException: The port 'COM GPS...' does not exist.
+   at System.IO.Ports.InternalResources.WinIOError(Int32 errorCode, String str)
+   at System.IO.Ports.SerialStream..ctor(String portName, Int32 baudRate, Parity parity, Int32 dataBits, StopBits stopBits, Int32 readTimeout, Int32 writeTimeout, Handshake handshake, Boolean dtrEnable, Boolean rtsEnable, Boolean discardNull, Byte parityReplace)
+   at System.IO.Ports.SerialPort.Open()
+   at OpenGrade.FormGPS.SerialPortOpenGPS() in C:\Users\auzzy\Documents\7.Software Development\OpenGrade\OpenGrade_V3.0.1\BlackAce_OpenGrade\SourceCode\GPS\Forms\SerialComm.Designer.cs:line 364 - 12/31/2021 7:49:23 PM
+
+Open GPS Port System.IO.IOException: The port 'COM GPS...' does not exist.
+   at System.IO.Ports.InternalResources.WinIOError(Int32 errorCode, String str)
+   at System.IO.Ports.SerialStream..ctor(String portName, Int32 baudRate, Parity parity, Int32 dataBits, StopBits stopBits, Int32 readTimeout, Int32 writeTimeout, Handshake handshake, Boolean dtrEnable, Boolean rtsEnable, Boolean discardNull, Byte parityReplace)
+   at System.IO.Ports.SerialPort.Open()
+   at OpenGrade.FormGPS.SerialPortOpenGPS() in C:\Users\auzzy\Documents\7.Software Development\OpenGrade\OpenGrade_V3.0.1\BlackAce_OpenGrade\SourceCode\GPS\Forms\SerialComm.Designer.cs:line 364 - 12/31/2021 7:49:56 PM
+
+Open GPS Port System.IO.IOException: The port 'COM GPS...' does not exist.
+   at System.IO.Ports.InternalResources.WinIOError(Int32 errorCode, String str)
+   at System.IO.Ports.SerialStream..ctor(String portName, Int32 baudRate, Parity parity, Int32 dataBits, StopBits stopBits, Int32 readTimeout, Int32 writeTimeout, Handshake handshake, Boolean dtrEnable, Boolean rtsEnable, Boolean discardNull, Byte parityReplace)
+   at System.IO.Ports.SerialPort.Open()
+   at OpenGrade.FormGPS.SerialPortOpenGPS() in C:\Users\auzzy\Documents\7.Software Development\OpenGrade\OpenGrade_V3.0.1\BlackAce_OpenGrade\SourceCode\GPS\Forms\SerialComm.Designer.cs:line 364 - 12/31/2021 7:51:18 PM
+
+GradeControl Data Recvd System.IO.IOException: The I/O operation has been aborted because of either a thread exit or an application request.
+
+   at System.IO.Ports.InternalResources.WinIOError(Int32 errorCode, String str)
+   at System.IO.Ports.SerialStream.EndRead(IAsyncResult asyncResult)
+   at System.IO.Ports.SerialStream.Read(Byte[] array, Int32 offset, Int32 count, Int32 timeout)
+   at System.IO.Ports.SerialStream.Read(Byte[] array, Int32 offset, Int32 count)
+   at System.IO.Ports.SerialPort.InternalRead(Char[] buffer, Int32 offset, Int32 count, Int32 timeout, Boolean countMultiByteCharsAsOne)
+   at System.IO.Ports.SerialPort.ReadTo(String value)
+   at System.IO.Ports.SerialPort.ReadLine()
+   at OpenGrade.FormGPS.sp_DataReceivedGradeControl(Object sender, SerialDataReceivedEventArgs e) in C:\Users\auzzy\Documents\7.Software Development\OpenGrade\OpenGrade_V3.0.1\BlackAce_OpenGrade\SourceCode\GPS\Forms\SerialComm.Designer.cs:line 247 - 12/31/2021 7:51:18 PM
+
+Open GPS Port System.IO.IOException: The port 'COM GPS...' does not exist.
+   at System.IO.Ports.InternalResources.WinIOError(Int32 errorCode, String str)
+   at System.IO.Ports.SerialStream..ctor(String portName, Int32 baudRate, Parity parity, Int32 dataBits, StopBits stopBits, Int32 readTimeout, Int32 writeTimeout, Handshake handshake, Boolean dtrEnable, Boolean rtsEnable, Boolean discardNull, Byte parityReplace)
+   at System.IO.Ports.SerialPort.Open()
+   at OpenGrade.FormGPS.SerialPortOpenGPS() in C:\Users\auzzy\Documents\7.Software Development\OpenGrade\OpenGrade_V3.0.1\BlackAce_OpenGrade\SourceCode\GPS\Forms\SerialComm.Designer.cs:line 364 - 12/31/2021 7:53:15 PM
+
+Open GPS Port System.IO.IOException: The port 'COM GPS...' does not exist.
+   at System.IO.Ports.InternalResources.WinIOError(Int32 errorCode, String str)
+   at System.IO.Ports.SerialStream..ctor(String portName, Int32 baudRate, Parity parity, Int32 dataBits, StopBits stopBits, Int32 readTimeout, Int32 writeTimeout, Handshake handshake, Boolean dtrEnable, Boolean rtsEnable, Boolean discardNull, Byte parityReplace)
+   at System.IO.Ports.SerialPort.Open()
+   at OpenGrade.FormGPS.SerialPortOpenGPS() in C:\Users\auzzy\Documents\7.Software Development\OpenGrade\OpenGrade_V3.0.1\BlackAce_OpenGrade\SourceCode\GPS\Forms\SerialComm.Designer.cs:line 364 - 12/31/2021 7:54:04 PM
+
+Open GPS Port System.IO.IOException: The port 'COM GPS...' does not exist.
+   at System.IO.Ports.InternalResources.WinIOError(Int32 errorCode, String str)
+   at System.IO.Ports.SerialStream..ctor(String portName, Int32 baudRate, Parity parity, Int32 dataBits, StopBits stopBits, Int32 readTimeout, Int32 writeTimeout, Handshake handshake, Boolean dtrEnable, Boolean rtsEnable, Boolean discardNull, Byte parityReplace)
+   at System.IO.Ports.SerialPort.Open()
+   at OpenGrade.FormGPS.SerialPortOpenGPS() in C:\Users\auzzy\Documents\7.Software Development\OpenGrade\OpenGrade_V3.0.1\BlackAce_OpenGrade\SourceCode\GPS\Forms\SerialComm.Designer.cs:line 364 - 12/31/2021 7:55:48 PM
+
+GradeControl Data Recvd System.InvalidOperationException: Invoke or BeginInvoke cannot be called on a control until the window handle has been created.
+   at System.Windows.Forms.Control.MarshaledInvoke(Control caller, Delegate method, Object[] args, Boolean synchronous)
+   at System.Windows.Forms.Control.BeginInvoke(Delegate method, Object[] args)
+   at OpenGrade.FormGPS.sp_DataReceivedGradeControl(Object sender, SerialDataReceivedEventArgs e) - 12/31/2021 7:58:19 PM
+
+Open GPS Port System.IO.IOException: The port 'COM GPS...' does not exist.
+   at System.IO.Ports.InternalResources.WinIOError(Int32 errorCode, String str)
+   at System.IO.Ports.SerialStream..ctor(String portName, Int32 baudRate, Parity parity, Int32 dataBits, StopBits stopBits, Int32 readTimeout, Int32 writeTimeout, Handshake handshake, Boolean dtrEnable, Boolean rtsEnable, Boolean discardNull, Byte parityReplace)
+   at System.IO.Ports.SerialPort.Open()
+   at OpenGrade.FormGPS.SerialPortOpenGPS() in C:\Users\auzzy\Documents\7.Software Development\OpenGrade\OpenGrade_V3.0.1\BlackAce_OpenGrade\SourceCode\GPS\Forms\SerialComm.Designer.cs:line 364 - 12/31/2021 8:25:47 PM
+
+Open GPS Port System.IO.IOException: The port 'COM GPS...' does not exist.
+   at System.IO.Ports.InternalResources.WinIOError(Int32 errorCode, String str)
+   at System.IO.Ports.SerialStream..ctor(String portName, Int32 baudRate, Parity parity, Int32 dataBits, StopBits stopBits, Int32 readTimeout, Int32 writeTimeout, Handshake handshake, Boolean dtrEnable, Boolean rtsEnable, Boolean discardNull, Byte parityReplace)
+   at System.IO.Ports.SerialPort.Open()
+   at OpenGrade.FormGPS.SerialPortOpenGPS() in C:\Users\auzzy\Documents\7.Software Development\OpenGrade\OpenGrade_V3.0.1\BlackAce_OpenGrade\SourceCode\GPS\Forms\SerialComm.Designer.cs:line 364 - 12/31/2021 8:26:39 PM
+
+Open GPS Port System.IO.IOException: The port 'COM GPS...' does not exist.
+   at System.IO.Ports.InternalResources.WinIOError(Int32 errorCode, String str)
+   at System.IO.Ports.SerialStream..ctor(String portName, Int32 baudRate, Parity parity, Int32 dataBits, StopBits stopBits, Int32 readTimeout, Int32 writeTimeout, Handshake handshake, Boolean dtrEnable, Boolean rtsEnable, Boolean discardNull, Byte parityReplace)
+   at System.IO.Ports.SerialPort.Open()
+   at OpenGrade.FormGPS.SerialPortOpenGPS() in C:\Users\auzzy\Documents\7.Software Development\OpenGrade\OpenGrade_V3.0.1\BlackAce_OpenGrade\SourceCode\GPS\Forms\SerialComm.Designer.cs:line 364 - 12/31/2021 8:28:42 PM
+
+Open GPS Port System.IO.IOException: The port 'COM GPS...' does not exist.
+   at System.IO.Ports.InternalResources.WinIOError(Int32 errorCode, String str)
+   at System.IO.Ports.SerialStream..ctor(String portName, Int32 baudRate, Parity parity, Int32 dataBits, StopBits stopBits, Int32 readTimeout, Int32 writeTimeout, Handshake handshake, Boolean dtrEnable, Boolean rtsEnable, Boolean discardNull, Byte parityReplace)
+   at System.IO.Ports.SerialPort.Open()
+   at OpenGrade.FormGPS.SerialPortOpenGPS() in C:\Users\auzzy\Documents\7.Software Development\OpenGrade\OpenGrade_V3.0.1\BlackAce_OpenGrade\SourceCode\GPS\Forms\SerialComm.Designer.cs:line 364 - 12/31/2021 8:31:56 PM
+
+Open GPS Port System.IO.IOException: The port 'COM GPS...' does not exist.
+   at System.IO.Ports.InternalResources.WinIOError(Int32 errorCode, String str)
+   at System.IO.Ports.SerialStream..ctor(String portName, Int32 baudRate, Parity parity, Int32 dataBits, StopBits stopBits, Int32 readTimeout, Int32 writeTimeout, Handshake handshake, Boolean dtrEnable, Boolean rtsEnable, Boolean discardNull, Byte parityReplace)
+   at System.IO.Ports.SerialPort.Open()
+   at OpenGrade.FormGPS.SerialPortOpenGPS() in C:\Users\auzzy\Documents\7.Software Development\OpenGrade\OpenGrade_V3.0.1\BlackAce_OpenGrade\SourceCode\GPS\Forms\SerialComm.Designer.cs:line 364 - 12/31/2021 8:38:01 PM
+
+Open GPS Port System.IO.IOException: The port 'COM GPS...' does not exist.
+   at System.IO.Ports.InternalResources.WinIOError(Int32 errorCode, String str)
+   at System.IO.Ports.SerialStream..ctor(String portName, Int32 baudRate, Parity parity, Int32 dataBits, StopBits stopBits, Int32 readTimeout, Int32 writeTimeout, Handshake handshake, Boolean dtrEnable, Boolean rtsEnable, Boolean discardNull, Byte parityReplace)
+   at System.IO.Ports.SerialPort.Open()
+   at OpenGrade.FormGPS.SerialPortOpenGPS() in C:\Users\auzzy\Documents\7.Software Development\OpenGrade\OpenGrade_V3.0.1\BlackAce_OpenGrade\SourceCode\GPS\Forms\SerialComm.Designer.cs:line 364 - 12/31/2021 8:39:20 PM
+
+Open GPS Port System.IO.IOException: The port 'COM GPS...' does not exist.
+   at System.IO.Ports.InternalResources.WinIOError(Int32 errorCode, String str)
+   at System.IO.Ports.SerialStream..ctor(String portName, Int32 baudRate, Parity parity, Int32 dataBits, StopBits stopBits, Int32 readTimeout, Int32 writeTimeout, Handshake handshake, Boolean dtrEnable, Boolean rtsEnable, Boolean discardNull, Byte parityReplace)
+   at System.IO.Ports.SerialPort.Open()
+   at OpenGrade.FormGPS.SerialPortOpenGPS() in C:\Users\auzzy\Documents\7.Software Development\OpenGrade\OpenGrade_V3.0.1\BlackAce_OpenGrade\SourceCode\GPS\Forms\SerialComm.Designer.cs:line 364 - 12/31/2021 8:41:55 PM
+
+GradeControl Data Recvd System.IO.IOException: The I/O operation has been aborted because of either a thread exit or an application request.
+
+   at System.IO.Ports.InternalResources.WinIOError(Int32 errorCode, String str)
+   at System.IO.Ports.SerialStream.EndRead(IAsyncResult asyncResult)
+   at System.IO.Ports.SerialStream.Read(Byte[] array, Int32 offset, Int32 count, Int32 timeout)
+   at System.IO.Ports.SerialStream.Read(Byte[] array, Int32 offset, Int32 count)
+   at System.IO.Ports.SerialPort.InternalRead(Char[] buffer, Int32 offset, Int32 count, Int32 timeout, Boolean countMultiByteCharsAsOne)
+   at System.IO.Ports.SerialPort.ReadTo(String value)
+   at System.IO.Ports.SerialPort.ReadLine()
+   at OpenGrade.FormGPS.sp_DataReceivedGradeControl(Object sender, SerialDataReceivedEventArgs e) in C:\Users\auzzy\Documents\7.Software Development\OpenGrade\OpenGrade_V3.0.1\BlackAce_OpenGrade\SourceCode\GPS\Forms\SerialComm.Designer.cs:line 247 - 12/31/2021 8:41:55 PM
+
+Open GPS Port System.IO.IOException: The port 'COM GPS...' does not exist.
+   at System.IO.Ports.InternalResources.WinIOError(Int32 errorCode, String str)
+   at System.IO.Ports.SerialStream..ctor(String portName, Int32 baudRate, Parity parity, Int32 dataBits, StopBits stopBits, Int32 readTimeout, Int32 writeTimeout, Handshake handshake, Boolean dtrEnable, Boolean rtsEnable, Boolean discardNull, Byte parityReplace)
+   at System.IO.Ports.SerialPort.Open()
+   at OpenGrade.FormGPS.SerialPortOpenGPS() in C:\Users\auzzy\Documents\7.Software Development\OpenGrade\OpenGrade_V3.0.1\BlackAce_OpenGrade\SourceCode\GPS\Forms\SerialComm.Designer.cs:line 364 - 12/31/2021 8:44:25 PM
+
+Open GPS Port System.IO.IOException: The port 'COM GPS...' does not exist.
+   at System.IO.Ports.InternalResources.WinIOError(Int32 errorCode, String str)
+   at System.IO.Ports.SerialStream..ctor(String portName, Int32 baudRate, Parity parity, Int32 dataBits, StopBits stopBits, Int32 readTimeout, Int32 writeTimeout, Handshake handshake, Boolean dtrEnable, Boolean rtsEnable, Boolean discardNull, Byte parityReplace)
+   at System.IO.Ports.SerialPort.Open()
+   at OpenGrade.FormGPS.SerialPortOpenGPS() in C:\Users\auzzy\Documents\7.Software Development\OpenGrade\OpenGrade_V3.0.1\BlackAce_OpenGrade\SourceCode\GPS\Forms\SerialComm.Designer.cs:line 364 - 12/31/2021 8:45:06 PM
+
+Open GPS Port System.IO.IOException: The port 'COM GPS...' does not exist.
+   at System.IO.Ports.InternalResources.WinIOError(Int32 errorCode, String str)
+   at System.IO.Ports.SerialStream..ctor(String portName, Int32 baudRate, Parity parity, Int32 dataBits, StopBits stopBits, Int32 readTimeout, Int32 writeTimeout, Handshake handshake, Boolean dtrEnable, Boolean rtsEnable, Boolean discardNull, Byte parityReplace)
+   at System.IO.Ports.SerialPort.Open()
+   at OpenGrade.FormGPS.SerialPortOpenGPS() in C:\Users\auzzy\Documents\7.Software Development\OpenGrade\OpenGrade_V3.0.1\BlackAce_OpenGrade\SourceCode\GPS\Forms\SerialComm.Designer.cs:line 364 - 12/31/2021 8:45:43 PM
+
+Open GPS Port System.IO.IOException: The port 'COM GPS...' does not exist.
+   at System.IO.Ports.InternalResources.WinIOError(Int32 errorCode, String str)
+   at System.IO.Ports.SerialStream..ctor(String portName, Int32 baudRate, Parity parity, Int32 dataBits, StopBits stopBits, Int32 readTimeout, Int32 writeTimeout, Handshake handshake, Boolean dtrEnable, Boolean rtsEnable, Boolean discardNull, Byte parityReplace)
+   at System.IO.Ports.SerialPort.Open()
+   at OpenGrade.FormGPS.SerialPortOpenGPS() in C:\Users\auzzy\Documents\7.Software Development\OpenGrade\OpenGrade_V3.0.1\BlackAce_OpenGrade\SourceCode\GPS\Forms\SerialComm.Designer.cs:line 364 - 12/31/2021 8:47:41 PM
+
+GradeControl Data Recvd System.IO.IOException: The I/O operation has been aborted because of either a thread exit or an application request.
+
+   at System.IO.Ports.InternalResources.WinIOError(Int32 errorCode, String str)
+   at System.IO.Ports.SerialStream.EndRead(IAsyncResult asyncResult)
+   at System.IO.Ports.SerialStream.Read(Byte[] array, Int32 offset, Int32 count, Int32 timeout)
+   at System.IO.Ports.SerialStream.Read(Byte[] array, Int32 offset, Int32 count)
+   at System.IO.Ports.SerialPort.InternalRead(Char[] buffer, Int32 offset, Int32 count, Int32 timeout, Boolean countMultiByteCharsAsOne)
+   at System.IO.Ports.SerialPort.ReadTo(String value)
+   at System.IO.Ports.SerialPort.ReadLine()
+   at OpenGrade.FormGPS.sp_DataReceivedGradeControl(Object sender, SerialDataReceivedEventArgs e) in C:\Users\auzzy\Documents\7.Software Development\OpenGrade\OpenGrade_V3.0.1\BlackAce_OpenGrade\SourceCode\GPS\Forms\SerialComm.Designer.cs:line 247 - 12/31/2021 8:47:41 PM
+
+Open GPS Port System.IO.IOException: The port 'COM GPS...' does not exist.
+   at System.IO.Ports.InternalResources.WinIOError(Int32 errorCode, String str)
+   at System.IO.Ports.SerialStream..ctor(String portName, Int32 baudRate, Parity parity, Int32 dataBits, StopBits stopBits, Int32 readTimeout, Int32 writeTimeout, Handshake handshake, Boolean dtrEnable, Boolean rtsEnable, Boolean discardNull, Byte parityReplace)
+   at System.IO.Ports.SerialPort.Open()
+   at OpenGrade.FormGPS.SerialPortOpenGPS() in C:\Users\auzzy\Documents\7.Software Development\OpenGrade\OpenGrade_V3.0.1\BlackAce_OpenGrade\SourceCode\GPS\Forms\SerialComm.Designer.cs:line 364 - 12/31/2021 8:47:59 PM
+
+Open GPS Port System.IO.IOException: The port 'COM GPS...' does not exist.
+   at System.IO.Ports.InternalResources.WinIOError(Int32 errorCode, String str)
+   at System.IO.Ports.SerialStream..ctor(String portName, Int32 baudRate, Parity parity, Int32 dataBits, StopBits stopBits, Int32 readTimeout, Int32 writeTimeout, Handshake handshake, Boolean dtrEnable, Boolean rtsEnable, Boolean discardNull, Byte parityReplace)
+   at System.IO.Ports.SerialPort.Open()
+   at OpenGrade.FormGPS.SerialPortOpenGPS() in C:\Users\auzzy\Documents\7.Software Development\OpenGrade\OpenGrade_V3.0.1\BlackAce_OpenGrade\SourceCode\GPS\Forms\SerialComm.Designer.cs:line 364 - 12/31/2021 8:48:28 PM
+
+Open GPS Port System.IO.IOException: The port 'COM GPS...' does not exist.
+   at System.IO.Ports.InternalResources.WinIOError(Int32 errorCode, String str)
+   at System.IO.Ports.SerialStream..ctor(String portName, Int32 baudRate, Parity parity, Int32 dataBits, StopBits stopBits, Int32 readTimeout, Int32 writeTimeout, Handshake handshake, Boolean dtrEnable, Boolean rtsEnable, Boolean discardNull, Byte parityReplace)
+   at System.IO.Ports.SerialPort.Open()
+   at OpenGrade.FormGPS.SerialPortOpenGPS() in C:\Users\auzzy\Documents\7.Software Development\OpenGrade\OpenGrade_V3.0.1\BlackAce_OpenGrade\SourceCode\GPS\Forms\SerialComm.Designer.cs:line 364 - 12/31/2021 8:48:58 PM
+
+Open GPS Port System.IO.IOException: The port 'COM GPS...' does not exist.
+   at System.IO.Ports.InternalResources.WinIOError(Int32 errorCode, String str)
+   at System.IO.Ports.SerialStream..ctor(String portName, Int32 baudRate, Parity parity, Int32 dataBits, StopBits stopBits, Int32 readTimeout, Int32 writeTimeout, Handshake handshake, Boolean dtrEnable, Boolean rtsEnable, Boolean discardNull, Byte parityReplace)
+   at System.IO.Ports.SerialPort.Open()
+   at OpenGrade.FormGPS.SerialPortOpenGPS() in C:\Users\auzzy\Documents\7.Software Development\OpenGrade\OpenGrade_V3.0.1\BlackAce_OpenGrade\SourceCode\GPS\Forms\SerialComm.Designer.cs:line 364 - 12/31/2021 8:50:02 PM
+
+Open GPS Port System.IO.IOException: The port 'COM GPS...' does not exist.
+   at System.IO.Ports.InternalResources.WinIOError(Int32 errorCode, String str)
+   at System.IO.Ports.SerialStream..ctor(String portName, Int32 baudRate, Parity parity, Int32 dataBits, StopBits stopBits, Int32 readTimeout, Int32 writeTimeout, Handshake handshake, Boolean dtrEnable, Boolean rtsEnable, Boolean discardNull, Byte parityReplace)
+   at System.IO.Ports.SerialPort.Open()
+   at OpenGrade.FormGPS.SerialPortOpenGPS() in C:\Users\auzzy\Documents\7.Software Development\OpenGrade\OpenGrade_V3.0.1\BlackAce_OpenGrade\SourceCode\GPS\Forms\SerialComm.Designer.cs:line 364 - 12/31/2021 8:51:25 PM
+
+Open GPS Port System.IO.IOException: The port 'COM GPS...' does not exist.
+   at System.IO.Ports.InternalResources.WinIOError(Int32 errorCode, String str)
+   at System.IO.Ports.SerialStream..ctor(String portName, Int32 baudRate, Parity parity, Int32 dataBits, StopBits stopBits, Int32 readTimeout, Int32 writeTimeout, Handshake handshake, Boolean dtrEnable, Boolean rtsEnable, Boolean discardNull, Byte parityReplace)
+   at System.IO.Ports.SerialPort.Open()
+   at OpenGrade.FormGPS.SerialPortOpenGPS() in C:\Users\auzzy\Documents\7.Software Development\OpenGrade\OpenGrade_V3.0.1\BlackAce_OpenGrade\SourceCode\GPS\Forms\SerialComm.Designer.cs:line 364 - 12/31/2021 8:52:08 PM
+
+Open GPS Port System.IO.IOException: The port 'COM GPS...' does not exist.
+   at System.IO.Ports.InternalResources.WinIOError(Int32 errorCode, String str)
+   at System.IO.Ports.SerialStream..ctor(String portName, Int32 baudRate, Parity parity, Int32 dataBits, StopBits stopBits, Int32 readTimeout, Int32 writeTimeout, Handshake handshake, Boolean dtrEnable, Boolean rtsEnable, Boolean discardNull, Byte parityReplace)
+   at System.IO.Ports.SerialPort.Open()
+   at OpenGrade.FormGPS.SerialPortOpenGPS() in C:\Users\auzzy\Documents\7.Software Development\OpenGrade\OpenGrade_V3.0.1\BlackAce_OpenGrade\SourceCode\GPS\Forms\SerialComm.Designer.cs:line 364 - 12/31/2021 8:53:01 PM
+
+Open GPS Port System.IO.IOException: The port 'COM GPS...' does not exist.
+   at System.IO.Ports.InternalResources.WinIOError(Int32 errorCode, String str)
+   at System.IO.Ports.SerialStream..ctor(String portName, Int32 baudRate, Parity parity, Int32 dataBits, StopBits stopBits, Int32 readTimeout, Int32 writeTimeout, Handshake handshake, Boolean dtrEnable, Boolean rtsEnable, Boolean discardNull, Byte parityReplace)
+   at System.IO.Ports.SerialPort.Open()
+   at OpenGrade.FormGPS.SerialPortOpenGPS() in C:\Users\auzzy\Documents\7.Software Development\OpenGrade\OpenGrade_V3.0.1\BlackAce_OpenGrade\SourceCode\GPS\Forms\SerialComm.Designer.cs:line 364 - 12/31/2021 8:59:06 PM
+
+Open GPS Port System.IO.IOException: The port 'COM GPS...' does not exist.
+   at System.IO.Ports.InternalResources.WinIOError(Int32 errorCode, String str)
+   at System.IO.Ports.SerialStream..ctor(String portName, Int32 baudRate, Parity parity, Int32 dataBits, StopBits stopBits, Int32 readTimeout, Int32 writeTimeout, Handshake handshake, Boolean dtrEnable, Boolean rtsEnable, Boolean discardNull, Byte parityReplace)
+   at System.IO.Ports.SerialPort.Open()
+   at OpenGrade.FormGPS.SerialPortOpenGPS() in C:\Users\auzzy\Documents\7.Software Development\OpenGrade\OpenGrade_V3.0.1\BlackAce_OpenGrade\SourceCode\GPS\Forms\SerialComm.Designer.cs:line 364 - 12/31/2021 9:01:16 PM
+
+Open GPS Port System.IO.IOException: The port 'COM GPS...' does not exist.
+   at System.IO.Ports.InternalResources.WinIOError(Int32 errorCode, String str)
+   at System.IO.Ports.SerialStream..ctor(String portName, Int32 baudRate, Parity parity, Int32 dataBits, StopBits stopBits, Int32 readTimeout, Int32 writeTimeout, Handshake handshake, Boolean dtrEnable, Boolean rtsEnable, Boolean discardNull, Byte parityReplace)
+   at System.IO.Ports.SerialPort.Open()
+   at OpenGrade.FormGPS.SerialPortOpenGPS() in C:\Users\auzzy\Documents\7.Software Development\OpenGrade\OpenGrade_V3.0.1\BlackAce_OpenGrade\SourceCode\GPS\Forms\SerialComm.Designer.cs:line 364 - 12/31/2021 9:03:15 PM
+
+Open GPS Port System.IO.IOException: The port 'COM GPS...' does not exist.
+   at System.IO.Ports.InternalResources.WinIOError(Int32 errorCode, String str)
+   at System.IO.Ports.SerialStream..ctor(String portName, Int32 baudRate, Parity parity, Int32 dataBits, StopBits stopBits, Int32 readTimeout, Int32 writeTimeout, Handshake handshake, Boolean dtrEnable, Boolean rtsEnable, Boolean discardNull, Byte parityReplace)
+   at System.IO.Ports.SerialPort.Open()
+   at OpenGrade.FormGPS.SerialPortOpenGPS() in C:\Users\auzzy\Documents\7.Software Development\OpenGrade\OpenGrade_V3.0.1\BlackAce_OpenGrade\SourceCode\GPS\Forms\SerialComm.Designer.cs:line 364 - 12/31/2021 9:04:17 PM
+
+Open GPS Port System.IO.IOException: The port 'COM GPS...' does not exist.
+   at System.IO.Ports.InternalResources.WinIOError(Int32 errorCode, String str)
+   at System.IO.Ports.SerialStream..ctor(String portName, Int32 baudRate, Parity parity, Int32 dataBits, StopBits stopBits, Int32 readTimeout, Int32 writeTimeout, Handshake handshake, Boolean dtrEnable, Boolean rtsEnable, Boolean discardNull, Byte parityReplace)
+   at System.IO.Ports.SerialPort.Open()
+   at OpenGrade.FormGPS.SerialPortOpenGPS() in C:\Users\auzzy\Documents\7.Software Development\OpenGrade\OpenGrade_V3.0.1\BlackAce_OpenGrade\SourceCode\GPS\Forms\SerialComm.Designer.cs:line 364 - 12/31/2021 9:05:03 PM
+
+Open GPS Port System.IO.IOException: The port 'COM GPS...' does not exist.
+   at System.IO.Ports.InternalResources.WinIOError(Int32 errorCode, String str)
+   at System.IO.Ports.SerialStream..ctor(String portName, Int32 baudRate, Parity parity, Int32 dataBits, StopBits stopBits, Int32 readTimeout, Int32 writeTimeout, Handshake handshake, Boolean dtrEnable, Boolean rtsEnable, Boolean discardNull, Byte parityReplace)
+   at System.IO.Ports.SerialPort.Open()
+   at OpenGrade.FormGPS.SerialPortOpenGPS() in C:\Users\auzzy\Documents\7.Software Development\OpenGrade\OpenGrade_V3.0.1\BlackAce_OpenGrade\SourceCode\GPS\Forms\SerialComm.Designer.cs:line 364 - 12/31/2021 9:33:26 PM
+
+Open GPS Port System.IO.IOException: The port 'COM GPS...' does not exist.
+   at System.IO.Ports.InternalResources.WinIOError(Int32 errorCode, String str)
+   at System.IO.Ports.SerialStream..ctor(String portName, Int32 baudRate, Parity parity, Int32 dataBits, StopBits stopBits, Int32 readTimeout, Int32 writeTimeout, Handshake handshake, Boolean dtrEnable, Boolean rtsEnable, Boolean discardNull, Byte parityReplace)
+   at System.IO.Ports.SerialPort.Open()
+   at OpenGrade.FormGPS.SerialPortOpenGPS() in C:\Users\auzzy\Documents\7.Software Development\OpenGrade\OpenGrade_V3.0.1\BlackAce_OpenGrade\SourceCode\GPS\Forms\SerialComm.Designer.cs:line 364 - 12/31/2021 9:38:59 PM
+
+Open GPS Port System.IO.IOException: The port 'COM GPS...' does not exist.
+   at System.IO.Ports.InternalResources.WinIOError(Int32 errorCode, String str)
+   at System.IO.Ports.SerialStream..ctor(String portName, Int32 baudRate, Parity parity, Int32 dataBits, StopBits stopBits, Int32 readTimeout, Int32 writeTimeout, Handshake handshake, Boolean dtrEnable, Boolean rtsEnable, Boolean discardNull, Byte parityReplace)
+   at System.IO.Ports.SerialPort.Open()
+   at OpenGrade.FormGPS.SerialPortOpenGPS() in C:\Users\auzzy\Documents\7.Software Development\OpenGrade\OpenGrade_V3.0.1\BlackAce_OpenGrade\SourceCode\GPS\Forms\SerialComm.Designer.cs:line 364 - 12/31/2021 9:41:52 PM
+
+Open GPS Port System.IO.IOException: The port 'COM GPS...' does not exist.
+   at System.IO.Ports.InternalResources.WinIOError(Int32 errorCode, String str)
+   at System.IO.Ports.SerialStream..ctor(String portName, Int32 baudRate, Parity parity, Int32 dataBits, StopBits stopBits, Int32 readTimeout, Int32 writeTimeout, Handshake handshake, Boolean dtrEnable, Boolean rtsEnable, Boolean discardNull, Byte parityReplace)
+   at System.IO.Ports.SerialPort.Open()
+   at OpenGrade.FormGPS.SerialPortOpenGPS() in C:\Users\auzzy\Documents\7.Software Development\OpenGrade\OpenGrade_V3.0.1\BlackAce_OpenGrade\SourceCode\GPS\Forms\SerialComm.Designer.cs:line 364 - 12/31/2021 9:45:39 PM
+
+Open GPS Port System.IO.IOException: The port 'COM GPS...' does not exist.
+   at System.IO.Ports.InternalResources.WinIOError(Int32 errorCode, String str)
+   at System.IO.Ports.SerialStream..ctor(String portName, Int32 baudRate, Parity parity, Int32 dataBits, StopBits stopBits, Int32 readTimeout, Int32 writeTimeout, Handshake handshake, Boolean dtrEnable, Boolean rtsEnable, Boolean discardNull, Byte parityReplace)
+   at System.IO.Ports.SerialPort.Open()
+   at OpenGrade.FormGPS.SerialPortOpenGPS() in C:\Users\auzzy\Documents\7.Software Development\OpenGrade\OpenGrade_V3.0.1\BlackAce_OpenGrade\SourceCode\GPS\Forms\SerialComm.Designer.cs:line 364 - 12/31/2021 9:46:13 PM
+
+Open GPS Port System.IO.IOException: The port 'COM GPS...' does not exist.
+   at System.IO.Ports.InternalResources.WinIOError(Int32 errorCode, String str)
+   at System.IO.Ports.SerialStream..ctor(String portName, Int32 baudRate, Parity parity, Int32 dataBits, StopBits stopBits, Int32 readTimeout, Int32 writeTimeout, Handshake handshake, Boolean dtrEnable, Boolean rtsEnable, Boolean discardNull, Byte parityReplace)
+   at System.IO.Ports.SerialPort.Open()
+   at OpenGrade.FormGPS.SerialPortOpenGPS() in C:\Users\auzzy\Documents\7.Software Development\OpenGrade\OpenGrade_V3.0.1\BlackAce_OpenGrade\SourceCode\GPS\Forms\SerialComm.Designer.cs:line 364 - 12/31/2021 9:53:03 PM
+

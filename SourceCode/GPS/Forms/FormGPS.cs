@@ -541,6 +541,8 @@ namespace OpenGrade
         }
 
         //keystrokes for easy and quick startup
+        
+        // Keyboard shortCuts
         protected override bool ProcessCmdKey(ref Message msg, Keys keyData)
         {
             //reset Sim
@@ -618,6 +620,45 @@ namespace OpenGrade
             if (keyData == (Keys.A))
             {
                 btnGradeControl.PerformClick();
+                return true;    // indicate that you handled this keystroke
+            }
+
+            if (keyData == (Keys.PageUp))                
+            {
+                sim.altitude = (double)nudElevation.Value;
+                sim.altitude = sim.altitude + .005;
+                nudElevation.Value = (decimal)sim.altitude;
+                return true;    // indicate that you handled this keystroke
+            }
+            
+            if (keyData == (Keys.PageDown))
+            {
+                sim.altitude = (double)nudElevation.Value;
+                sim.altitude = sim.altitude - .005; ;
+                nudElevation.Value = (decimal)sim.altitude;
+                return true;    // indicate that you handled this keystroke
+            }
+
+            if (keyData == (Keys.Up))
+            {                
+                bladeOffset++;
+                if (bladeOffset > 50) bladeOffset = 50;
+                lblBladeOffset.Text = bladeOffset.ToString();                
+                return true;    // indicate that you handled this keystroke
+            }
+
+            if (keyData == (Keys.Down))
+            {
+                bladeOffset--;
+                if (bladeOffset < -50) bladeOffset = -50;
+                lblBladeOffset.Text = bladeOffset.ToString();
+                return true;    // indicate that you handled this keystroke
+            }
+
+            if (keyData == (Keys.Escape))
+            {
+                bladeOffset = 0;
+                lblBladeOffset.Text = bladeOffset.ToString();
                 return true;    // indicate that you handled this keystroke
             }
 
@@ -947,9 +988,8 @@ namespace OpenGrade
                 lblDitchCutLine.Visible = false;
                 sqrDitchCutLine.Visible = false;
 
+                if (!isJobStarted) btnGradeControl.Enabled = false;
 
-
-                //GradeControlOutToPort("Level Mode Active \n");
             }
             else
             {
@@ -968,8 +1008,9 @@ namespace OpenGrade
                 btnLevel.Image = Properties.Resources.levelBtn;
                 ct.zeroAltitude = pn.altitude;
 
-                //GradeControlOutToPort("Surface Mode Active \n");
+                btnGradeControl.Enabled = true;
 
+                
             }
         }
 

@@ -15,6 +15,7 @@ namespace OpenGrade
         //difference between blade tip and guide line
         public double cutDelta;
         private double minDist;
+        public int bladeOffset;
         
 
         //the point in the real world made from clicked screen coords
@@ -408,6 +409,7 @@ namespace OpenGrade
 
             //reset cut delta for frame
             cutDelta = 9999;
+            bladeOffset = Int16.Parse(lblBladeOffset.Text);
 
             int closestPoint = 0;
             int ptCnt = ct.ptList.Count;
@@ -720,7 +722,7 @@ namespace OpenGrade
                         if (ct.ptList[closestPoint].cutAltitude > 0)
                         {
                             //in cm
-                            cutDelta = (pn.altitude - ct.ptList[closestPoint].cutAltitude)*100;
+                            cutDelta = ((pn.altitude - ct.ptList[closestPoint].cutAltitude)*100)- bladeOffset;
                             GradeControlDataOutToPort();
                         }
                     }
@@ -729,7 +731,7 @@ namespace OpenGrade
             }
             else
             {           
-                cutDelta = (pn.altitude - ct.zeroAltitude)*100;
+                cutDelta = ((pn.altitude - ct.zeroAltitude)*100)-bladeOffset;
                 GradeControlDataOutToPort();
             }
         }

@@ -10,7 +10,7 @@ namespace OpenGrade
         private readonly double camPosZ;
 
         private double fixHeading;
-        private double camYaw;
+        public double camYaw;
 
         public double camPitch;
         public double offset;
@@ -32,7 +32,7 @@ namespace OpenGrade
             camYaw = _fixHeading;
 
             //back the camera up
-            gl.Translate(0, 0, camSetDistance * 0.5);
+            gl.Translate(0, 5, camSetDistance * 0.5);
 
             ////draw the guide
             //gl.Begin(OpenGL.GL_TRIANGLES);

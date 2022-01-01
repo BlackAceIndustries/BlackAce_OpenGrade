@@ -758,7 +758,7 @@ namespace OpenGrade
             FileSaveCutKML();
 
             //make sure google is installed
-            Process.Start(fieldsDirectory + currentFieldDirectory + "\\Cut.KML");
+            Process.Start(fieldsDirectory + currentFieldDirectory + "\\CutPaths\\KML Files\\" + "Cut_" + ct.cutNum + ".kml");
         }
 
         private void fieldViewerToolStripMenuItem_Click(object sender, EventArgs e)
@@ -1096,7 +1096,7 @@ namespace OpenGrade
                 sqrCutLine.Text = PureSteerAngle;
                 
                 voltageBar.Value = ((int)(mc.voltage * 100)) + 12; 
-                //lblDiagnostics.Text = (mc.voltage).ToString() + "Volts";
+                lblDiagnostics.Text = (mc.voltage).ToString() + "Volts";
 
 
                 if (cutDelta == 9999)

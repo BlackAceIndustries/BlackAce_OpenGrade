@@ -73,9 +73,10 @@ namespace OpenGrade
         
         public void DrawVehicle()        {
                  
-            //translate and rotate at pivot axle
+            //translate and rotate at pivot axle            
             gl.Translate(mf.pn.easting, mf.pn.northing, 0);
             gl.Rotate(glm.toDegrees(-mf.fixHeading), 0.0, 0.0, 1.0);
+            
 
             //draw the vehicle Body
             gl.Color(0.12, 0.6, 0.9);
@@ -89,51 +90,24 @@ namespace OpenGrade
             gl.End();
 
            
-            if (mf.isTurningRight && mf.isTurning)
+            if (mf.isTurningRight && mf.isTurning) // Vehicle is turning to the right
             {
                 //gl.Rotate(glm.toDegrees(-mf.fixHeading), 0.0, 0.0, 1.0);
                 temp =  mf.gpsHeading;
                 //gl.Rotate(glm.toDegrees(temp), 0.0, 0.0, 1.0);
                 //gl.Rotate(mf.camHeading, 0.0, 0.0, 1.0);
             }
-            if (!mf.isTurningRight && mf.isTurning)
+            if (!mf.isTurningRight && mf.isTurning) // Vehicle is turning to the Left
             {
                 temp = mf.gpsHeading;
                 //gl.Rotate(glm.toDegrees(temp), 0.0, 0.0, 1.0);
                 //gl.Rotate(mf.camHeading, 0.0, 0.0, 1.0);
-            }
-            //else if (!mf.isTurning)
-            //{
-            //    gl.Rotate(glm.toDegrees(temp + 25), 0.0, 0.0, 1.0);
-
-            //    //gl.Rotate(90, 0.0, 0.0, 1.0);
-            //}
-            if (!mf.isTurning)
+            }            
+            if (!mf.isTurning) // Vehicle is going straight
             {
                 //gl.Rotate(glm.toDegrees(mf.prevPrevGPSHeading), 0.0, 0.0, 1.0);
                 //gl.Rotate(mf.camHeading, 0.0, 0.0, 1.0);
-            }
-
-
-
-
-
-
-
-
-            //if (mf.gpsHeading - mf.prevGPSHeading > 0)
-            //{
-            //    //gl.Rotate(glm.toDegrees(-mf.fixHeading), 0.0, 0.0, 1.0);
-            //    temp = mf.fixHeading / 2;
-            //    gl.Rotate(glm.toDegrees(temp), 0.0, 0.0, 1.0);
-
-            //}
-            //if (mf.gpsHeading - mf.prevGPSHeading <= 0)
-            //{
-            //    gl.Rotate(glm.toDegrees(-temp*.25), 0.0, 0.0, 1.0);
-            //    //gl.Rotate(90, 0.0, 0.0, 1.0);
-            //}
-
+            }            
 
             //Hitch
             gl.Color(0.95f, 0.95f, 0.02f);            
@@ -143,8 +117,6 @@ namespace OpenGrade
             gl.Vertex(antennaPivot + .5, -4.25, 0);
             gl.Vertex(antennaPivot - .5, -4.25, 0);
             gl.End();
-
-
 
             //Scraper front 
             gl.Color(0.95f, 0.95f, 0.02f);
