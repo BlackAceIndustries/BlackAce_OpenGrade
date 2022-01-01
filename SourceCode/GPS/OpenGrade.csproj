@@ -108,6 +108,12 @@
     <Compile Include="Classes\CVehicle.cs" />
     <Compile Include="Classes\CWaypoint.cs" />
     <Compile Include="Classes\CWorldGrid.cs" />
+    <Compile Include="Forms\FormCutDir.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\FormCutDir.Designer.cs">
+      <DependentUpon>FormCutDir.cs</DependentUpon>
+    </Compile>
     <Compile Include="Forms\FormFieldDir.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -236,6 +242,9 @@
       <AutoGen>True</AutoGen>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
+    <EmbeddedResource Include="Forms\FormCutDir.resx">
+      <DependentUpon>FormCutDir.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Forms\FormFieldDir.resx">
       <DependentUpon>FormFieldDir.cs</DependentUpon>
       <SubType>Designer</SubType>

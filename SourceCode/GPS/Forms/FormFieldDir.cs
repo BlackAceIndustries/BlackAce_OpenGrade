@@ -61,7 +61,7 @@ namespace OpenGrade
             }
             catch (Exception ex)
             {
-                mf.WriteErrorLog("Creating new field " + ex);
+                mf.WriteErrorLog("Creating new Cut " + ex);
 
                 MessageBox.Show("Error", ex.ToString());
                 mf.currentFieldDirectory = "";

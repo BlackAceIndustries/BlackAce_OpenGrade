@@ -1044,14 +1044,18 @@ namespace OpenGrade
             string directoryName2 = Path.GetDirectoryName(csvCut);
             if ((directoryName2.Length > 0) && (!Directory.Exists(directoryName2)))
             { Directory.CreateDirectory(directoryName2); }
-            
-            string myFileName = "Cut_" + ct.cutNum + ".txt";
-            string myFileName2 = "Cut_" + ct.cutNum + ".csv";
 
-            while (File.Exists(dirCut + myFileName)){
+            using (var form2 = new FormCutDir(this))
+            { form2.ShowDialog(); }            
+
+
+            string myFileName = cutName + ".txt";
+            string myFileName2 = cutName + ".csv";
+
+            if (File.Exists(dirCut + myFileName)){
                 ct.cutNum++;
-                myFileName = "Cut_" + ct.cutNum + ".txt";
-                myFileName2 = "Cut_" + ct.cutNum + ".csv";
+                myFileName = cutName +" " + "(" +ct.cutNum + ")" + ".txt";
+                myFileName2 = cutName + ct.cutNum + ".csv";
             }
             
 
@@ -1310,22 +1314,36 @@ namespace OpenGrade
 
         }
 
-        public void FileSaveCutPathKML()
+        public void FileSaveCutKML()
         {
-
             //get the directory and make sure it exists, create if not
-            string dirField = fieldsDirectory + currentFieldDirectory + "\\";
+            string dirCut = fieldsDirectory + currentFieldDirectory + "\\CutPaths\\";
+            string kmlCut = dirCut + "\\KML Files\\";
 
-            string directoryName = Path.GetDirectoryName(dirField);
+            string directoryName = Path.GetDirectoryName(dirCut);
             if ((directoryName.Length > 0) && (!Directory.Exists(directoryName)))
             { Directory.CreateDirectory(directoryName); }
 
-            string myFileName;
-            myFileName = "Cut.kml";
+            string directoryName2 = Path.GetDirectoryName(kmlCut);
+            if ((directoryName2.Length > 0) && (!Directory.Exists(directoryName2)))
+            { Directory.CreateDirectory(directoryName2); }
+
+            using (var form2 = new FormCutDir(this))
+            { form2.ShowDialog(); }
+
+
+            string myFileName = cutName + ".kml";
+           
+
+            if (File.Exists(dirCut + myFileName))
+            {
+                ct.cutNum++;
+                myFileName = cutName + " " + "(" + ct.cutNum + ")" + ".kml";                
+            }           
 
             int cnt = ct.ptList.Count;
             
-            using (StreamWriter sw = new StreamWriter(dirField + myFileName))
+            using (StreamWriter sw = new StreamWriter(kmlCut + myFileName))
             {
                 sw.WriteLine(@"<?xml version=""1.0"" encoding=""UTF-8""?>");
                 sw.WriteLine(@"<kml xsi:schemaLocation=""http://earth.google.com/kml/2.1 http://earth.google.com/kml2.1.xsd"" xmlns=""http://earth.google.com/kml/2.1"" xmlns:xsi=""http://www.w3.org/2001/XMLSchema-instance"">");
@@ -1394,238 +1412,237 @@ namespace OpenGrade
             }
         }
 
-        //generate KML file from Cuts
-        public void FileSaveCutKML()
+    //    //generate KML file from Cuts
+    //    public void FileSaveCutKML()
+    //    {
+    //        //get the directory and make sure it exists, create if not
+    //        string dirCut = fieldsDirectory + currentFieldDirectory + "\\CutPaths\\";
+    //        string kmlCut = dirCut + "\\KML Files\\";
 
-        {
-            //get the directory and make sure it exists, create if not
-            string dirCut = fieldsDirectory + currentFieldDirectory + "\\CutPaths\\";
-            string kmlCut = dirCut + "\\KML Files\\";
+    //        string directoryName = Path.GetDirectoryName(dirCut);
+    //        if ((directoryName.Length > 0) && (!Directory.Exists(directoryName)))
+    //        { Directory.CreateDirectory(directoryName); }
 
-            string directoryName = Path.GetDirectoryName(dirCut);
-            if ((directoryName.Length > 0) && (!Directory.Exists(directoryName)))
-            { Directory.CreateDirectory(directoryName); }
+    //        string directoryName2 = Path.GetDirectoryName(kmlCut);
+    //        if ((directoryName2.Length > 0) && (!Directory.Exists(directoryName2)))
+    //        { Directory.CreateDirectory(directoryName2); }
 
-            string directoryName2 = Path.GetDirectoryName(kmlCut);
-            if ((directoryName2.Length > 0) && (!Directory.Exists(directoryName2)))
-            { Directory.CreateDirectory(directoryName2); }
+    //        string myFileName = "Cut_" + ct.cutNum + ".kml";
 
-            string myFileName = "Cut_" + ct.cutNum + ".kml";
+    //        while (File.Exists(kmlCut + myFileName))
+    //        {
+    //            ct.cutNum++;
+    //            myFileName = "Cut_" + ct.cutNum + ".kml";
 
-            while (File.Exists(kmlCut + myFileName))
-            {
-                ct.cutNum++;
-                myFileName = "Cut_" + ct.cutNum + ".kml";
+    //        }
 
-            }
-
-            int cutCnt = ct.cutList.Count();
+    //        int cutCnt = ct.cutList.Count();
             
-            XmlTextWriter kml = new XmlTextWriter(kmlCut + myFileName, Encoding.UTF8);
+    //        XmlTextWriter kml = new XmlTextWriter(kmlCut + myFileName, Encoding.UTF8);
 
-            kml.Formatting = Formatting.Indented;
-            kml.Indentation = 3;
+    //        kml.Formatting = Formatting.Indented;
+    //        kml.Indentation = 3;
 
-            kml.WriteStartDocument();
-            kml.WriteStartElement("kml", "http://www.opengis.net/kml/2.2");
-            kml.WriteStartElement("Document");
+    //        kml.WriteStartDocument();
+    //        kml.WriteStartElement("kml", "http://www.opengis.net/kml/2.2");
+    //        kml.WriteStartElement("Document");
 
             
-            // Each Point
-            if (cutCnt > 0)
-            {
-                kml.WriteStartElement("Folder");
-                kml.WriteElementString("name", "Swath Pts");
-                string Balloon = "\r<Style id=\"balloon\">";
-                Balloon += "\r\t<BalloonStyle>";
-                Balloon += "\r\t\t<text>";
+    //        // Each Point
+    //        if (cutCnt > 0)
+    //        {
+    //            kml.WriteStartElement("Folder");
+    //            kml.WriteElementString("name", "Swath Pts");
+    //            string Balloon = "\r<Style id=\"balloon\">";
+    //            Balloon += "\r\t<BalloonStyle>";
+    //            Balloon += "\r\t\t<text>";
 
-                Balloon += "\r\t\t\t<![CDATA[<b><font size=5>Field:</font><br>" + currentFieldDirectory + "</b><br><hr><table border=\"0\"";
-                Balloon += "\r\t\t\t\t<tr><td><b>Swath:</b><td><td>$[Numb]</td></tr>";
-                Balloon += "\r\t\t\t\t<tr><td><b>Point:</b><td><td>$[PtNbr]</td></tr>";
-                Balloon += "\r\t\t\t\t<tr><td><b>Altitude:</b><td><td>$[alt]</td></tr>";
-                Balloon += "\r\t\t\t\t<tr><td><b>Cut Altitude:</b><td><td>$[Calt]</td></tr>";
-                Balloon += "\r\t\t\t\t<tr><td><b>Pass Altitude:</b><td><td>$[Palt]</td></tr>";
-                Balloon += "\r\t\t\t\t<tr><td><b>Latitude:</b><td><td>$[lat]</td></tr>";
-                Balloon += "\r\t\t\t\t<tr><td><b>Longitude:</b><td><td>$[lon]</td></tr>";
-                Balloon += "\r\t\t\t</table>]]>";
+    //            Balloon += "\r\t\t\t<![CDATA[<b><font size=5>Field:</font><br>" + currentFieldDirectory + "</b><br><hr><table border=\"0\"";
+    //            Balloon += "\r\t\t\t\t<tr><td><b>Swath:</b><td><td>$[Numb]</td></tr>";
+    //            Balloon += "\r\t\t\t\t<tr><td><b>Point:</b><td><td>$[PtNbr]</td></tr>";
+    //            Balloon += "\r\t\t\t\t<tr><td><b>Altitude:</b><td><td>$[alt]</td></tr>";
+    //            Balloon += "\r\t\t\t\t<tr><td><b>Cut Altitude:</b><td><td>$[Calt]</td></tr>";
+    //            Balloon += "\r\t\t\t\t<tr><td><b>Pass Altitude:</b><td><td>$[Palt]</td></tr>";
+    //            Balloon += "\r\t\t\t\t<tr><td><b>Latitude:</b><td><td>$[lat]</td></tr>";
+    //            Balloon += "\r\t\t\t\t<tr><td><b>Longitude:</b><td><td>$[lon]</td></tr>";
+    //            Balloon += "\r\t\t\t</table>]]>";
 
-                Balloon += "\r\t\t</text>";
-                Balloon += "\r\t</BalloonStyle>";
-                Balloon += "\r</Style>\r";
-                kml.WriteRaw(Balloon);
+    //            Balloon += "\r\t\t</text>";
+    //            Balloon += "\r\t</BalloonStyle>";
+    //            Balloon += "\r</Style>\r";
+    //            kml.WriteRaw(Balloon);
 
                 
 
-                for (int i = 0; i < cutCnt; i++)
-                {
-                    kml.WriteStartElement("Placemark");
-                    kml.WriteElementString("name", "Tree_" + i.ToString());
+    //            for (int i = 0; i < cutCnt; i++)
+    //            {
+    //                kml.WriteStartElement("Placemark");
+    //                kml.WriteElementString("name", "Tree_" + i.ToString());
 
-                    Balloon = "\r\t\t<styleUrl>#balloon</styleUrl>";
-                    Balloon += "\r\t<ExtendedData>";
-                    //Balloon += "\r\t\t<Data name= \"Numb\">";
-                    //Balloon += "\r\t\t\t<value>" + ct.cutList[i].swathNbr + "</value>";
-                    //Balloon += "\r\t\t</Data>";
-                    Balloon += "\r\t\t<Data name= \"PtNbr\">";
-                    Balloon += "\r\t\t\t<value>" + i + "</value>";
-                    Balloon += "\r\t\t</Data>";
-                    Balloon += "\r\t\t<Data name= \"alt\">";
-                    Balloon += "\r\t\t\t<value>" + ct.cutList[i].altitude + "</value>";
-                    Balloon += "\r\t\t</Data>";
-                    Balloon += "\r\t\t<Data name= \"Calt\">";
-                    Balloon += "\r\t\t\t<value>" + ct.cutList[i].cutAltitude + "</value>";
-                    Balloon += "\r\t\t</Data>";
-                    Balloon += "\r\t\t<Data name= \"Palt\">";
-                    Balloon += "\r\t\t\t<value>" + ct.cutList[i].lastPassAltitude + "</value>";
-                    Balloon += "\r\t\t</Data>";
-                    Balloon += "\r\t\t<Data name= \"lat\">";
-                    Balloon += "\r\t\t\t<value>" + ct.cutList[i].latitude + "</value>";
-                    Balloon += "\r\t\t</Data>";
-                    Balloon += "\r\t\t<Data name= \"lon\">";
-                    Balloon += "\r\t\t\t<value>" + ct.cutList[i].longitude + "</value>";
-                    Balloon += "\r\t\t</Data>";
+    //                Balloon = "\r\t\t<styleUrl>#balloon</styleUrl>";
+    //                Balloon += "\r\t<ExtendedData>";
+    //                //Balloon += "\r\t\t<Data name= \"Numb\">";
+    //                //Balloon += "\r\t\t\t<value>" + ct.cutList[i].swathNbr + "</value>";
+    //                //Balloon += "\r\t\t</Data>";
+    //                Balloon += "\r\t\t<Data name= \"PtNbr\">";
+    //                Balloon += "\r\t\t\t<value>" + i + "</value>";
+    //                Balloon += "\r\t\t</Data>";
+    //                Balloon += "\r\t\t<Data name= \"alt\">";
+    //                Balloon += "\r\t\t\t<value>" + ct.cutList[i].altitude + "</value>";
+    //                Balloon += "\r\t\t</Data>";
+    //                Balloon += "\r\t\t<Data name= \"Calt\">";
+    //                Balloon += "\r\t\t\t<value>" + ct.cutList[i].cutAltitude + "</value>";
+    //                Balloon += "\r\t\t</Data>";
+    //                Balloon += "\r\t\t<Data name= \"Palt\">";
+    //                Balloon += "\r\t\t\t<value>" + ct.cutList[i].lastPassAltitude + "</value>";
+    //                Balloon += "\r\t\t</Data>";
+    //                Balloon += "\r\t\t<Data name= \"lat\">";
+    //                Balloon += "\r\t\t\t<value>" + ct.cutList[i].latitude + "</value>";
+    //                Balloon += "\r\t\t</Data>";
+    //                Balloon += "\r\t\t<Data name= \"lon\">";
+    //                Balloon += "\r\t\t\t<value>" + ct.cutList[i].longitude + "</value>";
+    //                Balloon += "\r\t\t</Data>";
 
-                    Balloon += "\r\t</ExtendedData>";
-                    kml.WriteRaw(Balloon);
+    //                Balloon += "\r\t</ExtendedData>";
+    //                kml.WriteRaw(Balloon);
 
-                    kml.WriteStartElement("Style");
-                    kml.WriteStartElement("IconStyle");
+    //                kml.WriteStartElement("Style");
+    //                kml.WriteStartElement("IconStyle");
 
 
-                    kml.WriteElementString("color", "ff44ff00");
-                    kml.WriteStartElement("Icon");
-                    kml.WriteElementString("href", "http://maps.google.com/mapfiles/kml/shapes/placemark_circle.png");
-                    kml.WriteEndElement();//Icon
-                    kml.WriteEndElement(); //IconStyle
-                    kml.WriteEndElement(); //Style
+    //                kml.WriteElementString("color", "ff44ff00");
+    //                kml.WriteStartElement("Icon");
+    //                kml.WriteElementString("href", "http://maps.google.com/mapfiles/kml/shapes/placemark_circle.png");
+    //                kml.WriteEndElement();//Icon
+    //                kml.WriteEndElement(); //IconStyle
+    //                kml.WriteEndElement(); //Style
 
-                    //Turn this on to write number of swath for GE
-                    //kml.WriteElementString("name", oldSwathNbr.ToString(CultureInfo.InvariantCulture) + "," + swathPtCnt.ToString(CultureInfo.InvariantCulture));
-                    kml.WriteElementString("name", " ");
-                    kml.WriteStartElement("Point");
-                    kml.WriteElementString("coordinates", ct.cutList[i].longitude.ToString(CultureInfo.InvariantCulture) +
-                        "," + ct.cutList[i].latitude.ToString(CultureInfo.InvariantCulture) + ",0");
-                    kml.WriteEndElement(); //Point
-                    kml.WriteEndElement(); // <Placemark>
-                }
-                kml.WriteEndElement(); // <Folder>   
+    //                //Turn this on to write number of swath for GE
+    //                //kml.WriteElementString("name", oldSwathNbr.ToString(CultureInfo.InvariantCulture) + "," + swathPtCnt.ToString(CultureInfo.InvariantCulture));
+    //                kml.WriteElementString("name", " ");
+    //                kml.WriteStartElement("Point");
+    //                kml.WriteElementString("coordinates", ct.cutList[i].longitude.ToString(CultureInfo.InvariantCulture) +
+    //                    "," + ct.cutList[i].latitude.ToString(CultureInfo.InvariantCulture) + ",0");
+    //                kml.WriteEndElement(); //Point
+    //                kml.WriteEndElement(); // <Placemark>
+    //            }
+    //            kml.WriteEndElement(); // <Folder>   
 
-            }
-            //End of Swath Point
+    //        }
+    //        //End of Swath Point
 
-            // Swath on the Surface
-            kml.WriteStartElement("Folder");
-            kml.WriteElementString("name", "Swath_Path");
-            kml.WriteElementString("visibility", "0");
+    //        // Swath on the Surface
+    //        kml.WriteStartElement("Folder");
+    //        kml.WriteElementString("name", "Swath_Path");
+    //        kml.WriteElementString("visibility", "0");
 
-            string linePts = "";
+    //        string linePts = "";
 
             
 
-            if (cutCnt >= 0)
-            {
+    //        if (cutCnt >= 0)
+    //        {
 
 
-                for (int i = 0; i <= cutCnt; i++)
-                {
-                    linePts = "";
-                    kml.WriteStartElement("Placemark");
-                    kml.WriteElementString("visibility", "0");
+    //            for (int i = 0; i <= cutCnt; i++)
+    //            {
+    //                linePts = "";
+    //                kml.WriteStartElement("Placemark");
+    //                kml.WriteElementString("visibility", "0");
 
-                    kml.WriteElementString("name", "Swath " + i);
-                    kml.WriteStartElement("Style");
+    //                kml.WriteElementString("name", "Swath " + i);
+    //                kml.WriteStartElement("Style");
 
-                    kml.WriteStartElement("LineStyle");
-                    kml.WriteElementString("color", "ff6699ff");
-                    kml.WriteElementString("width", "2");
-                    kml.WriteEndElement(); // <LineStyle>
-                    kml.WriteEndElement(); //Style
+    //                kml.WriteStartElement("LineStyle");
+    //                kml.WriteElementString("color", "ff6699ff");
+    //                kml.WriteElementString("width", "2");
+    //                kml.WriteEndElement(); // <LineStyle>
+    //                kml.WriteEndElement(); //Style
 
-                    kml.WriteStartElement("LineString");
-                    kml.WriteElementString("extrude", "1");
-                    kml.WriteElementString("tessellate", "1");
-                    kml.WriteElementString("altitudeMode", "absolute");
-                    kml.WriteStartElement("coordinates");
+    //                kml.WriteStartElement("LineString");
+    //                kml.WriteElementString("extrude", "1");
+    //                kml.WriteElementString("tessellate", "1");
+    //                kml.WriteElementString("altitudeMode", "absolute");
+    //                kml.WriteStartElement("coordinates");
 
-                    for (int j = 0; j < ct.cutList.Count; j++)
-                    {                       
-                        linePts += ct.cutList[j].longitude.ToString("N9", CultureInfo.InvariantCulture) + ',' + ct.cutList[j].latitude.ToString("N9", CultureInfo.InvariantCulture) + ',' + ct.cutList[j].altitude.ToString("N3", CultureInfo.InvariantCulture) + ' ';
-                        //(utmLon.ToString("N7", CultureInfo.InvariantCulture) + ',' + utmLat.ToString("N7", CultureInfo.InvariantCulture) + ",0 ");
+    //                for (int j = 0; j < ct.cutList.Count; j++)
+    //                {                       
+    //                    linePts += ct.cutList[j].longitude.ToString("N9", CultureInfo.InvariantCulture) + ',' + ct.cutList[j].latitude.ToString("N9", CultureInfo.InvariantCulture) + ',' + ct.cutList[j].altitude.ToString("N3", CultureInfo.InvariantCulture) + ' ';
+    //                    //(utmLon.ToString("N7", CultureInfo.InvariantCulture) + ',' + utmLat.ToString("N7", CultureInfo.InvariantCulture) + ",0 ");
                        
-                    }
-                    kml.WriteRaw(linePts);
+    //                }
+    //                kml.WriteRaw(linePts);
 
-                    kml.WriteEndElement(); // <coordinates>
-                    kml.WriteEndElement(); // <LineString>
+    //                kml.WriteEndElement(); // <coordinates>
+    //                kml.WriteEndElement(); // <LineString>
 
-                    kml.WriteEndElement(); // <Placemark>
-                }
-            }
-            kml.WriteEndElement(); // <Folder>
-
-
-
-            //Swath tool Height
-            kml.WriteStartElement("Folder");
-            kml.WriteElementString("name", "Swath_Tool_Height");
-            kml.WriteElementString("visibility", "0");
-
-            //string linePts = "";
+    //                kml.WriteEndElement(); // <Placemark>
+    //            }
+    //        }
+    //        kml.WriteEndElement(); // <Folder>
 
 
-            if (true)
-            {
 
-                for (int i = 0; i <= cutCnt; i++)
-                {
-                    linePts = "";
-                    kml.WriteStartElement("Placemark");
-                    kml.WriteElementString("visibility", "0");
+    //        //Swath tool Height
+    //        kml.WriteStartElement("Folder");
+    //        kml.WriteElementString("name", "Swath_Tool_Height");
+    //        kml.WriteElementString("visibility", "0");
 
-                    kml.WriteElementString("name", "Tool Height " + i);
-                    kml.WriteStartElement("Style");
+    //        //string linePts = "";
 
-                    kml.WriteStartElement("LineStyle");
-                    kml.WriteElementString("color", "ff6699ff");
-                    kml.WriteElementString("width", "2");
-                    kml.WriteEndElement(); // <LineStyle>
-                    kml.WriteEndElement(); //Style
 
-                    kml.WriteStartElement("LineString");
-                    kml.WriteElementString("extrude", "1");
-                    //kml.WriteElementString("tessellate", "1");
-                    kml.WriteElementString("altitudeMode", "absolute");
-                    kml.WriteStartElement("coordinates");
+    //        if (true)
+    //        {
 
-                    for (int j = 0; j < cutCnt; j++)
-                    {
+    //            for (int i = 0; i <= cutCnt; i++)
+    //            {
+    //                linePts = "";
+    //                kml.WriteStartElement("Placemark");
+    //                kml.WriteElementString("visibility", "0");
+
+    //                kml.WriteElementString("name", "Tool Height " + i);
+    //                kml.WriteStartElement("Style");
+
+    //                kml.WriteStartElement("LineStyle");
+    //                kml.WriteElementString("color", "ff6699ff");
+    //                kml.WriteElementString("width", "2");
+    //                kml.WriteEndElement(); // <LineStyle>
+    //                kml.WriteEndElement(); //Style
+
+    //                kml.WriteStartElement("LineString");
+    //                kml.WriteElementString("extrude", "1");
+    //                //kml.WriteElementString("tessellate", "1");
+    //                kml.WriteElementString("altitudeMode", "absolute");
+    //                kml.WriteStartElement("coordinates");
+
+    //                for (int j = 0; j < cutCnt; j++)
+    //                {
                                              
-                       linePts += ct.cutList[j].longitude.ToString("N9", CultureInfo.InvariantCulture) + ',' + ct.cutList[j].latitude.ToString("N9", CultureInfo.InvariantCulture) + ',' + ct.cutList[j].lastPassAltitude.ToString("N3", CultureInfo.InvariantCulture) + ' ';
-                       //(utmLon.ToString("N7", CultureInfo.InvariantCulture) + ',' + utmLat.ToString("N7", CultureInfo.InvariantCulture) + ",0 ");
+    //                   linePts += ct.cutList[j].longitude.ToString("N9", CultureInfo.InvariantCulture) + ',' + ct.cutList[j].latitude.ToString("N9", CultureInfo.InvariantCulture) + ',' + ct.cutList[j].lastPassAltitude.ToString("N3", CultureInfo.InvariantCulture) + ' ';
+    //                   //(utmLon.ToString("N7", CultureInfo.InvariantCulture) + ',' + utmLat.ToString("N7", CultureInfo.InvariantCulture) + ",0 ");
                        
-                    }
-                    kml.WriteRaw(linePts);
+    //                }
+    //                kml.WriteRaw(linePts);
 
-                    kml.WriteEndElement(); // <coordinates>
-                    kml.WriteEndElement(); // <LineString>
+    //                kml.WriteEndElement(); // <coordinates>
+    //                kml.WriteEndElement(); // <LineString>
 
-                    kml.WriteEndElement(); // <Placemark>
-                }
-            }
-            kml.WriteEndElement(); // <Folder>             
+    //                kml.WriteEndElement(); // <Placemark>
+    //            }
+    //        }
+    //        kml.WriteEndElement(); // <Folder>             
 
-            //end of document
-            kml.WriteEndElement(); // <Document>
-            kml.WriteEndElement(); // <kml>
+    //        //end of document
+    //        kml.WriteEndElement(); // <Document>
+    //        kml.WriteEndElement(); // <kml>
 
-            //The end
-            kml.WriteEndDocument();
+    //        //The end
+    //        kml.WriteEndDocument();
 
-            kml.Flush();
+    //        kml.Flush();
 
-            //Write the XML to file and close the kml
-            kml.Close();
-        }
+    //        //Write the XML to file and close the kml
+    //        kml.Close();
+    //    }
     }
 }

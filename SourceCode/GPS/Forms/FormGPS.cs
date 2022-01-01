@@ -28,7 +28,7 @@ namespace OpenGrade
         public string vehiclesDirectory, vehiclefileName = "";
 
         //current fields and field directory
-        public string fieldsDirectory, currentFieldDirectory;
+        public string fieldsDirectory, currentFieldDirectory, cutName;
 
         // Cutlines directory
         public string cutDirectory;                    
