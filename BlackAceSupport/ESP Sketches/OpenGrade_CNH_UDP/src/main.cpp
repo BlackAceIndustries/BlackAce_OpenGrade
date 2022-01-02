@@ -9,7 +9,8 @@
 ///
 /// UDP Variables
 WiFiUDP Udp;  // Creation of wifi Udp instance
-const char *ssid = "GradeConrtrol";
+
+const char *ssid = "GradeControl";
 
 char packetBuffer[255];
 uint16_t localPort = 9999; //OpenGrade Server Port
@@ -118,8 +119,9 @@ Button offsetDecBtn(OFF_DEC_BTN);
 Button autoEngageBtn (AUTO_BTN);
 
 void setup() {
-  SetupUdp();
+  
   SetupGradeController();
+  SetupUdp();
 
 }
   
@@ -356,10 +358,7 @@ void SetValveLimits(){
   
 }
 
-
-
-bool SetupUdp(){
-  //Serial.begin(115200);
+bool SetupUdp(){  
   WiFi.begin(ssid);  
   WiFi.mode(WIFI_MODE_APSTA); // ESP-32 Server
   WiFi.config(gradeControlIP, gradeControlIP, Subnet, Dns);  
