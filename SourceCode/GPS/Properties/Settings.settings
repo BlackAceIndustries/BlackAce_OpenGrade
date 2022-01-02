@@ -122,10 +122,10 @@
     <Setting Name="setIP_autoSteerPort" Type="System.Int32" Scope="User">
       <Value Profile="(Default)">8888</Value>
     </Setting>
-    <Setting Name="setIP_rateRelayIP" Type="System.String" Scope="User">
+    <Setting Name="setIP_gradeControlIP" Type="System.String" Scope="User">
       <Value Profile="(Default)">127.0.0.1</Value>
     </Setting>
-    <Setting Name="setIP_rateRelayPort" Type="System.Int32" Scope="User">
+    <Setting Name="setIP_gradeControlPort" Type="System.Int32" Scope="User">
       <Value Profile="(Default)">7777</Value>
     </Setting>
     <Setting Name="setMenu_isSimulatorOn" Type="System.Boolean" Scope="User">

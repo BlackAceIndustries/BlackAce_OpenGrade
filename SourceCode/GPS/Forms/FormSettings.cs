@@ -177,6 +177,8 @@ namespace OpenGrade
 
             //back to FormGPS
             DialogResult = DialogResult.OK;
+
+            mf.GradeControlSettingsOutToPort();
             
             Close();
         }

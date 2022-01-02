@@ -19,6 +19,7 @@ namespace OpenGrade
 
         //endpoint of the auto steer module
         IPEndPoint epAutoSteer;
+        IPEndPoint epGradeControl;
 
         // Data stream
         private byte[] buffer = new byte[1024];
@@ -39,7 +40,7 @@ namespace OpenGrade
                     if (byteData.Length != 0)
 
                         // Send packet to the zero
-                        sendSocket.BeginSendTo(byteData, 0, byteData.Length, SocketFlags.None, epAutoSteer, new AsyncCallback(SendData), null);
+                        sendSocket.BeginSendTo(byteData, 0, byteData.Length, SocketFlags.None, epGradeControl, new AsyncCallback(SendData), null);
                 }
                 catch (Exception e)
                 {

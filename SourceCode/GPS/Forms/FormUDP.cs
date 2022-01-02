@@ -24,8 +24,8 @@ namespace OpenGrade
             Properties.Settings.Default.setIP_autoSteerIP = tboxAutoSteerIP.Text;
             Properties.Settings.Default.setIP_autoSteerPort = (int)nudAutoSteerPort.Value;
 
-            Properties.Settings.Default.setIP_rateRelayIP = tboxRateRelayIP.Text;
-            Properties.Settings.Default.setIP_rateRelayPort = (int)nudRateRelayPort.Value;
+            Properties.Settings.Default.setIP_gradeControlIP = tboxGradeControlIP.Text;
+            Properties.Settings.Default.setIP_gradeControlPort = (int)nudGradeControlPort.Value;
 
             Properties.Settings.Default.Save();
 
@@ -45,8 +45,8 @@ namespace OpenGrade
             tboxAutoSteerIP.Text = Properties.Settings.Default.setIP_autoSteerIP;
             nudAutoSteerPort.Value = Properties.Settings.Default.setIP_autoSteerPort;
 
-            tboxRateRelayIP.Text = Properties.Settings.Default.setIP_rateRelayIP;
-            nudRateRelayPort.Value = Properties.Settings.Default.setIP_rateRelayPort;
+            tboxGradeControlIP.Text = Properties.Settings.Default.setIP_gradeControlIP;
+            nudGradeControlPort.Value = Properties.Settings.Default.setIP_gradeControlPort;
         }
 
         public Boolean CheckIPValid(String strIP)
@@ -88,12 +88,17 @@ namespace OpenGrade
 
         private void tboxRateRelayIP_TextChanged(object sender, EventArgs e)
         {
-            if (!CheckIPValid(tboxRateRelayIP.Text))
+            if (!CheckIPValid(tboxGradeControlIP.Text))
             {
-                tboxRateRelayIP.Text = "127.0.0.1";
-                tboxRateRelayIP.Focus();
+                tboxGradeControlIP.Text = "127.0.0.1";
+                tboxGradeControlIP.Focus();
                 mf.TimedMessageBox(3000, "Invalid IP Address", "Set to Default Local 127.0.0.1");
             }
+        }
+
+        private void groupBox1_Enter(object sender, EventArgs e)
+        {
+
         }
     }
 }

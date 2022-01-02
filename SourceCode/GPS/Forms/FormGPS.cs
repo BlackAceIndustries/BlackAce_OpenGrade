@@ -735,7 +735,7 @@ namespace OpenGrade
             if (wasAutoSteerConnectedLastRun) SerialPortAutoSteerOpen();
 
             //start udp server
-            //StartUDPServer();
+            //   StartUDPServer();
 
             //set the correct zoom and grid
             camera.camSetDistance = zoomValue * zoomValue * -1;
@@ -1155,6 +1155,10 @@ namespace OpenGrade
                 //IP address and port of Auto Steer server
                 IPAddress epIP = IPAddress.Parse(Properties.Settings.Default.setIP_autoSteerIP);
                 epAutoSteer = new IPEndPoint(epIP, Properties.Settings.Default.setIP_autoSteerPort);
+
+                //IP address and port of GradeControl server
+                IPAddress gcIP = IPAddress.Parse(Properties.Settings.Default.setIP_gradeControlIP);
+                epGradeControl = new IPEndPoint(gcIP, Properties.Settings.Default.setIP_gradeControlPort);
 
                 // Initialise the IPEndPoint for the client - async listner client only!
                 EndPoint client = new IPEndPoint(IPAddress.Any, 0);

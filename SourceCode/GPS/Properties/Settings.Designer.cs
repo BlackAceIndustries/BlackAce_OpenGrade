@@ -506,24 +506,24 @@ namespace OpenGrade.Properties {
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("127.0.0.1")]
-        public string setIP_rateRelayIP {
+        public string setIP_gradeControlIP {
             get {
-                return ((string)(this["setIP_rateRelayIP"]));
+                return ((string)(this["setIP_gradeControlIP"]));
             }
             set {
-                this["setIP_rateRelayIP"] = value;
+                this["setIP_gradeControlIP"] = value;
             }
         }
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("7777")]
-        public int setIP_rateRelayPort {
+        public int setIP_gradeControlPort {
             get {
-                return ((int)(this["setIP_rateRelayPort"]));
+                return ((int)(this["setIP_gradeControlPort"]));
             }
             set {
-                this["setIP_rateRelayPort"] = value;
+                this["setIP_gradeControlPort"] = value;
             }
         }
         

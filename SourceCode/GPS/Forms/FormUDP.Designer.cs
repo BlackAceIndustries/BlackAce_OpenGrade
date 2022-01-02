@@ -51,13 +51,13 @@
             this.label11 = new System.Windows.Forms.Label();
             this.label12 = new System.Windows.Forms.Label();
             this.label13 = new System.Windows.Forms.Label();
-            this.nudRateRelayPort = new System.Windows.Forms.NumericUpDown();
-            this.tboxRateRelayIP = new System.Windows.Forms.TextBox();
+            this.nudGradeControlPort = new System.Windows.Forms.NumericUpDown();
+            this.tboxGradeControlIP = new System.Windows.Forms.TextBox();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.groupBox4.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.nudThisPort)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.nudAutoSteerPort)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.nudRateRelayPort)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.nudGradeControlPort)).BeginInit();
             this.groupBox1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -322,9 +322,9 @@
             this.label11.ForeColor = System.Drawing.SystemColors.ButtonFace;
             this.label11.Location = new System.Drawing.Point(8, 201);
             this.label11.Name = "label11";
-            this.label11.Size = new System.Drawing.Size(113, 23);
+            this.label11.Size = new System.Drawing.Size(126, 23);
             this.label11.TabIndex = 89;
-            this.label11.Text = "Rate Control";
+            this.label11.Text = "Grade Control";
             // 
             // label12
             // 
@@ -348,46 +348,46 @@
             this.label13.TabIndex = 87;
             this.label13.Text = "Port";
             // 
-            // nudRateRelayPort
+            // nudGradeControlPort
             // 
-            this.nudRateRelayPort.BackColor = System.Drawing.SystemColors.ActiveCaptionText;
-            this.nudRateRelayPort.Font = new System.Drawing.Font("Tahoma", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.nudRateRelayPort.ForeColor = System.Drawing.SystemColors.ButtonFace;
-            this.nudRateRelayPort.Location = new System.Drawing.Point(70, 276);
-            this.nudRateRelayPort.Maximum = new decimal(new int[] {
+            this.nudGradeControlPort.BackColor = System.Drawing.SystemColors.ActiveCaptionText;
+            this.nudGradeControlPort.Font = new System.Drawing.Font("Tahoma", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.nudGradeControlPort.ForeColor = System.Drawing.SystemColors.ButtonFace;
+            this.nudGradeControlPort.Location = new System.Drawing.Point(70, 276);
+            this.nudGradeControlPort.Maximum = new decimal(new int[] {
             65535,
             0,
             0,
             0});
-            this.nudRateRelayPort.Minimum = new decimal(new int[] {
+            this.nudGradeControlPort.Minimum = new decimal(new int[] {
             1025,
             0,
             0,
             0});
-            this.nudRateRelayPort.Name = "nudRateRelayPort";
-            this.nudRateRelayPort.Size = new System.Drawing.Size(96, 30);
-            this.nudRateRelayPort.TabIndex = 86;
-            this.nudRateRelayPort.Value = new decimal(new int[] {
+            this.nudGradeControlPort.Name = "nudGradeControlPort";
+            this.nudGradeControlPort.Size = new System.Drawing.Size(96, 30);
+            this.nudGradeControlPort.TabIndex = 86;
+            this.nudGradeControlPort.Value = new decimal(new int[] {
             7777,
             0,
             0,
             0});
             // 
-            // tboxRateRelayIP
+            // tboxGradeControlIP
             // 
-            this.tboxRateRelayIP.BackColor = System.Drawing.SystemColors.ActiveCaptionText;
-            this.tboxRateRelayIP.Font = new System.Drawing.Font("Tahoma", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.tboxRateRelayIP.ForeColor = System.Drawing.SystemColors.ButtonFace;
-            this.tboxRateRelayIP.Location = new System.Drawing.Point(70, 234);
-            this.tboxRateRelayIP.Name = "tboxRateRelayIP";
-            this.tboxRateRelayIP.Size = new System.Drawing.Size(167, 30);
-            this.tboxRateRelayIP.TabIndex = 85;
-            this.tboxRateRelayIP.Text = "192.168.1.255";
-            this.tboxRateRelayIP.TextChanged += new System.EventHandler(this.tboxRateRelayIP_TextChanged);
+            this.tboxGradeControlIP.BackColor = System.Drawing.SystemColors.ActiveCaptionText;
+            this.tboxGradeControlIP.Font = new System.Drawing.Font("Tahoma", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.tboxGradeControlIP.ForeColor = System.Drawing.SystemColors.ButtonFace;
+            this.tboxGradeControlIP.Location = new System.Drawing.Point(70, 234);
+            this.tboxGradeControlIP.Name = "tboxGradeControlIP";
+            this.tboxGradeControlIP.Size = new System.Drawing.Size(167, 30);
+            this.tboxGradeControlIP.TabIndex = 85;
+            this.tboxGradeControlIP.Text = "192.168.1.255";
+            this.tboxGradeControlIP.TextChanged += new System.EventHandler(this.tboxRateRelayIP_TextChanged);
             // 
             // groupBox1
             // 
-            this.groupBox1.Controls.Add(this.tboxRateRelayIP);
+            this.groupBox1.Controls.Add(this.tboxGradeControlIP);
             this.groupBox1.Controls.Add(this.label8);
             this.groupBox1.Controls.Add(this.tboxAutoSteerIP);
             this.groupBox1.Controls.Add(this.label11);
@@ -396,7 +396,7 @@
             this.groupBox1.Controls.Add(this.label6);
             this.groupBox1.Controls.Add(this.label13);
             this.groupBox1.Controls.Add(this.label5);
-            this.groupBox1.Controls.Add(this.nudRateRelayPort);
+            this.groupBox1.Controls.Add(this.nudGradeControlPort);
             this.groupBox1.Controls.Add(this.label4);
             this.groupBox1.Controls.Add(this.label3);
             this.groupBox1.Font = new System.Drawing.Font("Tahoma", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -406,7 +406,8 @@
             this.groupBox1.Size = new System.Drawing.Size(257, 319);
             this.groupBox1.TabIndex = 91;
             this.groupBox1.TabStop = false;
-            this.groupBox1.Text = "Module Adress and Ports";
+            this.groupBox1.Text = "Module Address and Ports";
+            this.groupBox1.Enter += new System.EventHandler(this.groupBox1_Enter);
             // 
             // FormUDP
             // 
@@ -427,13 +428,13 @@
             this.MinimizeBox = false;
             this.Name = "FormUDP";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
-            this.Text = "Ethernet Configuration";
+            this.Text = "UDP Configuration";
             this.Load += new System.EventHandler(this.FormUDp_Load);
             this.groupBox4.ResumeLayout(false);
             this.groupBox4.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.nudThisPort)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.nudAutoSteerPort)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.nudRateRelayPort)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.nudGradeControlPort)).EndInit();
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
             this.ResumeLayout(false);
@@ -457,8 +458,8 @@
         private System.Windows.Forms.Label label11;
         private System.Windows.Forms.Label label12;
         private System.Windows.Forms.Label label13;
-        private System.Windows.Forms.NumericUpDown nudRateRelayPort;
-        private System.Windows.Forms.TextBox tboxRateRelayIP;
+        private System.Windows.Forms.NumericUpDown nudGradeControlPort;
+        private System.Windows.Forms.TextBox tboxGradeControlIP;
         private System.Windows.Forms.GroupBox groupBox1;
         private System.Windows.Forms.TextBox tboxThisIP;
         private System.Windows.Forms.NumericUpDown nudThisPort;

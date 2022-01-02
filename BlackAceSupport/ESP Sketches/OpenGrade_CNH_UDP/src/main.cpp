@@ -1,45 +1,43 @@
-/*
-  OG GradeControl
-*/
-// Last change: 2021-11-12 by BlackAce 12h30
-// to be used with OpenGrade v3.0.xx
-// test with blade offset
-// Only MCP4725 output 0-5V
-//-------------------------------------------------------------------------
-//to change the deadband go a the end a change
-//the value in the cutval digital.write
-//
-//-------------------------------------------------------------------------
-// Function STUBS for Platform IO
-bool SetupGradeController();
-bool SetAutoState();
-void CheckBtns();
-void RecvSerialPortData();
-void SendSerialPortData();
-void SetOutput();
-void SetValveLimits();
-
-// configured to Run on Esp 32
-#include "EEPROM.h"
+#include <Arduino.h>
+#include <WiFi.h>
+#include <WiFiUdp.h>
 #include <SPI.h>
 #include <Adafruit_MCP4725.h>
 #include <Wire.h>
 #include <Button.h>
 
-///////////////////////PINS///////////////////////
+///
+/// UDP Variables
+WiFiUDP Udp;  // Creation of wifi Udp instance
+const char *ssid = "GradeConrtrol";
+
+char packetBuffer[255];
+uint16_t localPort = 9999; //OpenGrade Server Port
+uint16_t openGradePort = 7777; // OpenGrade Port
+uint16_t portDestination = 9999; //AOG port that listens
+
+IPAddress openGradeIP(192,168,0,120);   // Declaration of default IP for server
+IPAddress gradeControlIP(127,0,0,1);   // Different IP than server (Client) this unit
+IPAddress Subnet(255, 255, 255, 0);
+IPAddress Dns(8,8,8,8);
+//// ethernet mac address - must be unique on your network
+//static uint8_t mymac[] = { 0x70,0x69,0x69,0x2A,0x30,0x31 };
+//uint8_t data[] = {0x80,0x81,0x7D,0xD3,8, 0,0,0,0, 0,0,0,0, 15};
+//int16_t dataSize = sizeof(data);
+
+///
+/// gradeControl Variables
+///
+////////////Inputs/outputs/////////////////////
 #define DAC1_ENABLE 4      // DAC 1 enable/
 #define DAC2_ENABLE 5     //  DAC 2 enable/
-// BTN's
 #define OFF_INC_BTN 2      //signal to move the blade offset up 1 mm
 #define OFF_DEC_BTN 0       //signal to move the blade offset down 1 mm
 #define AUTO_BTN 15        // Auto Grade Activation Btn
-// I2C
 #define SCL_PIN 22      // I2C SCL PIN
 #define SDA_PIN 21      // I2C SCL PIN
-// Debug
 #define RXD2 16
 #define TXD2 17
-//
 #define VALVE_FLOAT 2048
 #define CNH 0
 #define DEERE 1
@@ -51,16 +49,37 @@ void SetValveLimits();
 #define DANFOSS_MIN .26
 #define DANFOSS_MAX .74
 
+//////////////////PID/////////////////////
+float Kp=38; //Mine was 8
+float Ki=.02; //Mine was 0.2
+float Kd=2800; //Mine was 3100
+float delta_setpoint = 0; 
+float PID_p, PID_i, PID_d, PID_total;
+float delta_previous_error, delta_error;
 
+//////////////////CNH Valve//////////////////// 
+uint16_t analogOutput1 = VALVE_FLOAT; //send to MCP4725
+uint16_t analogOutput2 = VALVE_FLOAT; //send to MCP4725
+int cut1;
+int bladeOffsetOut = 0;
+int retDeadband = 1845;
+int extDeadband = 2250;
+int retMin = (0.11 * 4096);   //450.56  CNH 
+int extMax = (0.89 * 4096);   //3645
+double voltage; // voltage sent to OpenGrade
+bool isAutoActive = false;
+bool isCutting = false;
 
-//////////////SETTINGS////////////
-float Kp=35; //Mine was 38
-float Ki=.02; //Mine was 0.02
-float Kd=3100; //Mine was 2800
-float delta_setpoint = 0;  
+///
+///Serial Variables
+///
+byte watchdogTimer = 0;      //make sure we are talking to OpenGrade
+byte serialResetTimer = 0;   //if serial buffer is getting full, empty it
+bool settingsRecieved = false;
+bool isDataFound = false, isSettingFound = false; //Communication with OpenGrade
+int header = 0, tempHeader = 0, temp; //Communication with OpenGrade
 
-
-///////////// Com Bytes///////////////////////
+//ComBytes
 byte b_Ki, b_Kp, b_Kd;
 byte b_autoState = 0, b_deltaDir = 0, b_cutDelta = 0;
 byte b_bladeOffsetOut = 0;
@@ -69,85 +88,65 @@ byte b_extDeadband = 75;
 byte b_valveType = 255;   // 0= CNH    1= Deere     2= Danfoss
 byte b_deadband = 2;
 
-///////////////////PID/////////////////////////
-float PID_p, PID_i, PID_d, PID_total;
-float delta_previous_error, delta_error;
-//////////////////////////////////////////////////////////
-
-/// CNH Valve 
-uint16_t analogOutput1 = VALVE_FLOAT; //send to MCP4725
-uint16_t analogOutput2 = VALVE_FLOAT; //send to MCP4725
-int cut1 = -1;
-double voltage = 0; // diagnostic Voltage
-int retDeadband = 1845;
-int extDeadband = 2250;
-int retMin = (0.11 * 4096);   //450.56  CNH 
-int extMax = (0.89 * 4096);   //3645
-bool isAutoActive = false;
-bool isCutting = false;
-
-//loop time variables in milliseconds
-const byte LOOP_TIME = 50; //20hz
-const byte LOOP_TIME2 = 5;
+///
+/// Timers
+///
+const byte LOOP_TIME = 50; //20hz  Serial Send loop
+const byte LOOP_TIME2 = 10; //100hz  Serial Recv loop
 unsigned long lastTime = LOOP_TIME;
 unsigned long lastTime2 = LOOP_TIME2; 
-unsigned long currentTime = LOOP_TIME; 
-
-//Comm checks
-byte watchdogTimer = 0;      //make sure we are talking to OpenGrade
-byte serialResetTimer = 0;   //if serial buffer is getting full, empty it
-bool settingsRecieved = false;
-
-//Communication with OpenGrade
-bool isDataFound = false, isSettingFound = false;
-int header = 0, tempHeader = 0, temp;
-
-///////////////////////Initalize Objects///////////////////////
-// DAC's
-Adafruit_MCP4725 Dac1;
-Adafruit_MCP4725 Dac2;
-// BTN's
-Button offsetIncBtn(OFF_INC_BTN); 
-Button offsetDecBtn(OFF_DEC_BTN);
-Button autoEngageBtn (AUTO_BTN);
+unsigned long currentTime;
 
 // Function STUBS for Platform IO
+bool SetupUdp();
 bool SetupGradeController();
 bool SetAutoState();
 void CheckBtns();
 void RecvSerialPortData();
 void SendSerialPortData();
 void SetOutput();
+bool SendUdpData();
+bool RecvUdpData();
+void SetValveLimits();
 
-void setup()
-{
+///////////////////////Initalize Objects///////////////////////
+
+Adafruit_MCP4725 Dac1;  // DAC's
+Adafruit_MCP4725 Dac2;
+Button offsetIncBtn(OFF_INC_BTN); // BTN's
+Button offsetDecBtn(OFF_DEC_BTN); 
+Button autoEngageBtn (AUTO_BTN);
+
+void setup() {
+  SetupUdp();
   SetupGradeController();
+
 }
-
-void loop(){  //Loop triggers every 50 msec (20hz) and sends back offsets Pid ect
-
-  currentTime = millis();  
-  if (currentTime - lastTime >= LOOP_TIME)
-  {    
-    lastTime = currentTime; 
-    SendSerialPortData();      
-  }
   
-  if (currentTime - lastTime2 >= LOOP_TIME2){
+
+void loop() {
+  currentTime = millis(); 
+  
+  if (currentTime - lastTime >= LOOP_TIME)
+  {
+    lastTime = currentTime;        
+    SendSerialPortData();
+    
+  }
+  if (currentTime - lastTime2 >= LOOP_TIME2)
+  {
     lastTime2 = currentTime;
     CheckBtns();
-    SetAutoState(); 
-    RecvSerialPortData();
+    SetAutoState();
+    RecvSerialPortData(); 
   }
+  //SendUdpData();
+  //RecvUdpData(); 
 }
 
-///
-/// Functions
-///
 
 
-bool SetupGradeController()
-{
+bool SetupGradeController(){
   //set the baud rate
   Serial.begin(38400);  
   //Serial1.begin(38400, SERIAL_8N1, RXD2, TXD2); 
@@ -180,16 +179,15 @@ bool SetAutoState(){
     isAutoActive = false;
     return false;
     
-  }     
+  }      
 }
 
 void CheckBtns(){ 
-  //////BTNS    =============================================== 
   if (offsetIncBtn.pressed()){
-    b_bladeOffsetOut ++; 
+    bladeOffsetOut ++; 
   } 
   if (offsetDecBtn.pressed()){ 
-    b_bladeOffsetOut --;
+    bladeOffsetOut --;
   }
   if (autoEngageBtn.pressed()){
     if (isAutoActive){
@@ -200,7 +198,7 @@ void CheckBtns(){
       isAutoActive = true;
       b_autoState = 1;
     }
-  }
+  } 
 }
 
 void RecvSerialPortData(){
@@ -222,8 +220,9 @@ void RecvSerialPortData(){
     isDataFound = false;      
     b_deltaDir = Serial.read();// Cut Delta Dir 
     b_cutDelta = Serial.read();// Cut Delta      
-    b_autoState = Serial.read();// Auto State     
+    b_autoState = Serial.read();// Auto State    
     
+  
     
   }
   
@@ -269,7 +268,7 @@ void SendSerialPortData()
 void SetOutput()
 {
   
-  analogOutput1 = VALVE_FLOAT;  
+  analogOutput1 = 2048;  
   
   if (b_deltaDir == 0){
     cut1 = -(int)b_cutDelta;
@@ -356,3 +355,59 @@ void SetValveLimits(){
   
   
 }
+
+
+
+bool SetupUdp(){
+  //Serial.begin(115200);
+  WiFi.begin(ssid);  
+  WiFi.mode(WIFI_MODE_APSTA); // ESP-32 Server
+  WiFi.config(gradeControlIP, gradeControlIP, Subnet, Dns);  
+  Udp.begin(localPort);
+  return true;
+}
+
+bool SendUdpData()
+{
+  //SENDING
+    Udp.beginPacket(openGradeIP,9999);   //Initiate transmission of data
+    
+    Udp.printf("Millis: ");
+    
+    char buf[20];   // buffer to hold the string to append
+    unsigned long testID = millis();   // time since ESP-32 is running millis() 
+    sprintf(buf, "%lu", testID);  // appending the millis to create a char
+    Udp.printf(buf);  // print the char
+    
+    Udp.printf("\r\n");   // End segment    
+    Udp.endPacket();  // Close communication
+    
+    Serial.print("Time Since Startup: ");   // Serial monitor for user 
+    Serial.println(buf);
+    delay(5);
+   // 
+  return true;
+}
+
+bool RecvUdpData()
+{
+  //RECEPTION
+  int packetSize = Udp.parsePacket();   // Size of packet to receive
+  if (packetSize) {       // If we received a package
+    
+    int len = Udp.read(packetBuffer, sizeof(packetBuffer));
+    
+    if (len > 0) packetBuffer[len-1] = 0;
+    Serial.print("RECIEVED(IP/Port/Size/Data): ");
+    Serial.print(Udp.remoteIP());Serial.print(" / ");
+    Serial.print(Udp.remotePort()); Serial.print(" / ");
+    Serial.print(packetSize);Serial.print(" / ");
+    Serial.println(packetBuffer);
+    
+  }
+  Serial.println("");
+  delay(5);
+  return true;
+  
+}
+
