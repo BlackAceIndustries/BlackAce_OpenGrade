@@ -1036,6 +1036,7 @@ namespace OpenGrade
             //get the directory and make sure it exists, create if not
             string dirCut = fieldsDirectory + currentFieldDirectory + "\\CutPaths\\";
             string csvCut = dirCut + "\\CSV Files\\";
+            string kmlCut = dirCut + "\\KML Files\\";
             
             string directoryName = Path.GetDirectoryName(dirCut);
             if ((directoryName.Length > 0) && (!Directory.Exists(directoryName)))
@@ -1045,19 +1046,54 @@ namespace OpenGrade
             if ((directoryName2.Length > 0) && (!Directory.Exists(directoryName2)))
             { Directory.CreateDirectory(directoryName2); }
 
+            string directoryName3 = Path.GetDirectoryName(kmlCut);
+            if ((directoryName2.Length > 0) && (!Directory.Exists(directoryName2)))
+            { Directory.CreateDirectory(directoryName3); }
+
             using (var form2 = new FormCutDir(this))
-            { form2.ShowDialog(); }            
+            { form2.ShowDialog(); }
 
 
-            string myFileName = cutName + ".txt";
+            string myFileName = cutName + ".kml";
+            string myFileName1 = cutName + ".txt";
             string myFileName2 = cutName + ".csv";
 
-            if (File.Exists(dirCut + myFileName)){
+            if (File.Exists(dirCut + myFileName))
+            {
                 ct.cutNum++;
-                myFileName = cutName +" " + "(" +ct.cutNum + ")" + ".txt";
-                myFileName2 = cutName + ct.cutNum + ".csv";
+                myFileName1 = cutName + " " + "(" + ct.cutNum + ")" + ".txt";
+                myFileName2 = cutName + " " + "(" + ct.cutNum + ")"+".csv";
+                myFileName = cutName + " " + "(" + ct.cutNum + ")" + ".kml";
             }
-            
+
+            //Write Out KML File
+
+            int cnt = ct.ptList.Count;
+
+            using (StreamWriter sw = new StreamWriter(kmlCut + myFileName))
+            {
+                sw.WriteLine(@"<?xml version=""1.0"" encoding=""UTF-8""?>");
+                sw.WriteLine(@"<kml xsi:schemaLocation=""http://earth.google.com/kml/2.1 http://earth.google.com/kml2.1.xsd"" xmlns=""http://earth.google.com/kml/2.1"" xmlns:xsi=""http://www.w3.org/2001/XMLSchema-instance"">");
+                sw.WriteLine(@"  <Placemark>");
+                sw.Write(@"    <name>");
+                sw.Write(currentFieldDirectory);
+                sw.WriteLine(@" </name> ");
+                sw.WriteLine(@"    <Style><LineStyle><color>FFFF00FF</color><width>3.0</width></LineStyle></Style>");
+                sw.WriteLine(@"    <LineString><extrude>false</extrude><tessellate>true</tessellate><altitudeMode>clampToGround</altitudeMode>");
+                sw.WriteLine(@"       <coordinates>");
+
+                if (cnt > 0)
+                {
+                    for (int i = 0; i < cnt; i++)
+                        sw.Write(Convert.ToString(ct.ptList[i].longitude) + ',' + Convert.ToString(ct.ptList[i].latitude) + ",0 ");
+                }
+                else sw.Write(Convert.ToString(pn.longitude) + ',' + Convert.ToString(pn.latitude) + ",0 ");
+
+                sw.WriteLine(@"       </coordinates>");
+                sw.WriteLine(@"    </LineString>");
+                sw.WriteLine(@"</Placemark>");
+                sw.WriteLine(@"</kml>");
+            }
 
             //write out txt the file
                         

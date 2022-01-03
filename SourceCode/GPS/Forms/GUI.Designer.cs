@@ -755,10 +755,11 @@ namespace OpenGrade
         private void btnGoogleEarth_Click(object sender, EventArgs e)
         {
             //save new copy of contour
-            FileSaveCutKML();
+            //FileSaveCutKML();
+            //btnGoogleEarth.Enabled = false;
 
             //make sure google is installed
-            Process.Start(fieldsDirectory + currentFieldDirectory + "\\CutPaths\\KML Files\\" + "Cut_" + ct.cutNum + ".kml");
+            //Process.Start(fieldsDirectory + currentFieldDirectory + "\\CutPaths\\KML Files\\" + "Cut_" + ct.cutNum + ".kml");
         }
 
         private void fieldViewerToolStripMenuItem_Click(object sender, EventArgs e)
