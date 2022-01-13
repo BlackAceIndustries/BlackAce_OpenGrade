@@ -723,7 +723,7 @@ namespace OpenGrade
                         {
                             //in cm
                             cutDelta = ((pn.altitude - ct.ptList[closestPoint].cutAltitude)*100)- bladeOffset;
-                            GradeControlDataOutToPort();
+                            
                         }
                     }
                 }
@@ -731,8 +731,7 @@ namespace OpenGrade
             }
             else
             {           
-                cutDelta = ((pn.altitude - ct.zeroAltitude)*100)-bladeOffset;
-                GradeControlDataOutToPort();
+                cutDelta = ((pn.altitude - ct.zeroAltitude)*100)-bladeOffset;                
             }
         }
 
@@ -818,30 +817,50 @@ namespace OpenGrade
             int endPt = -1;
             int lowestPt = 0;
             int upCnt = 0;
+            bool startFound = false;
             //int maxCnt = 6;
             //int MaxSearch = 30;
 
-            ct.drawList.Clear();   
-            
-            for (int k = 1; k < ptCnt; k++)
-            {
-                               
-                if (ct.ptList[k].altitude <= ct.ptList[k-1].altitude)
-                {
-                    lowestPt = k;
-                }
-                else 
-                {
-                    upCnt++;
-                }
+            ct.drawList.Clear();
 
-                if (upCnt == 2)
+            if (true)  // Add if Find First low Later
+            {
+                for (int k = 1; k < ptCnt; k++)
                 {
-                    startPt = lowestPt;                    
-                    break;
-                }             
+
+                    if (!startFound)
+                    {
+                        if (ct.ptList[k].altitude <= ct.ptList[k - 1].altitude)
+                        {
+                            lowestPt = k;
+                        }
+                        else
+                        {
+                            upCnt++;
+                        }
+
+                        if (upCnt == 2)
+                        {
+                            startPt = lowestPt;
+                            startFound = true;
+                            break;
+                        }
+                    }
+
+                    
+                    if (ct.ptList[k].altitude <= ct.ptList[k - 1].altitude)
+                    {
+                        lowestPt = k;
+                    }
+                }
+                endPt = lowestPt;
+            }
+            else {
+                startPt = 5;
+                lowestPt = ptCnt - 5;
             }
 
+            
             
             if (isSurfaceModeOn)
             {
@@ -896,7 +915,7 @@ namespace OpenGrade
                         {
                             distFromLastPlot += ct.ptList[h].distance;  // add distance all distances from lastPt to hPt 
                         }
-                        //lblDiagnostics.Text = (distFromLastPlot.ToString());
+                        
                     }
                     else
                     {
@@ -909,17 +928,44 @@ namespace OpenGrade
                     }
 
                     minDeltaHt = (Math.Tan((angle * (Math.PI / 180))) * distFromLastPlot);     // distFromLastPlot                      
-
-                    temp.easting = i;
-                    temp.northing = ((double)ct.ptList[i].altitude);
-
-                    if (ct.ptList[i].altitude < ct.drawList[drawPts - 1].northing + minDeltaHt)
+                    
+                    if (minDeltaHt != 0)
                     {
-                        ct.drawList.Add(temp);
+                        temp.easting = i;  // proposed point number
+                        temp.northing = ((double)ct.ptList[i].altitude);  // proposed altitude
                     }
+                    
+                    
+                    //if ((temp.northing - ct.ptList[i].altitude) < vehicle.minDitchCut / 100)
+                    //{
+                    //    temp.northing = temp.northing - vehicle.minDitchCut / 100;
+                    //    //ct.drawList.Add(temp);
+                    //}
+
+
+                    if (temp.northing <= (ct.drawList[drawPts - 1].northing + minDeltaHt))
+                    {
+                        if (i != startPt || i != endPt)
+                        {
+                            temp.northing = temp.northing - vehicle.minDitchCut;
+                            ct.drawList.Add(temp);
+                        }
+                        else
+                        {
+                            ct.drawList.Add(temp);
+                        }
+                        
+                        
+                        //}
+                                
+                        
+                    }
+    
                     distFromLastPlot = 0;
                     endPt = i;
                 }
+                
+                
 
 
             }
@@ -1040,6 +1086,8 @@ namespace OpenGrade
                 }                
             }
 
+            stripMinMax.Text = "MAX " + maxFieldY.ToString("N2") + "m : MIN " + minFieldY.ToString("N2") + "m : " + (maxFieldY - minFieldY).ToString("N2") + "m";
+
             if (maxFieldX == -9999999 | minFieldX == 9999999 | maxFieldY == -9999999 | minFieldY == 9999999)
             {
                 maxFieldX = 0; minFieldX = 0; maxFieldY = 0; minFieldY = 0;
@@ -1073,7 +1121,8 @@ namespace OpenGrade
 
                 centerX = (maxFieldX + minFieldX) / 2.0;
                 centerY = (maxFieldY + minFieldY) / 2.0;                
-                stripMinMax.Text=minFieldY.ToString("N2") + ":" + maxFieldY.ToString("N2") + ":" + (maxFieldY-minFieldY).ToString("N2");
+                
+                
 
             }
         }

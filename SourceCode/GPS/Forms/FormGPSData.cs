@@ -35,10 +35,10 @@ namespace OpenGrade
             lblHDOP.Text = mf.HDOP;            
 
             tboxSerialFromGradeControl.Text = mf.mc.serialRecvGradeControlStr;
-            txtBoxSendGradeControl.Text = "32762, " + mf.mc.GradeControlData[mf.mc.gcDeltaDir] + ", " + mf.mc.GradeControlData[mf.mc.gcCutDelta] + ", " + mf.mc.GradeControlData[mf.mc.gcisAutoActive];  
+            txtBoxSendGradeControl.Text = "32762 " + mf.mc.GradeControlData[mf.mc.gcHeaderHi]+"-" + mf.mc.GradeControlData[mf.mc.gcHeaderLo] + "," + mf.mc.GradeControlData[mf.mc.gcDeltaDir] + ", " + mf.mc.GradeControlData[mf.mc.gcCutDelta] + ", " + mf.mc.GradeControlData[mf.mc.gcisAutoActive];  
 
             tboxNMEASerial.Text = mf.recvSentenceSettings;
-            //tboxNMEASerial.Text = mainForm.pn.rawBuffer;
+            //tboxNMEASerial.Text = mf.pn.rawBuffer;
 
             tboxSerialFromAutoSteer.Text = mf.mc.serialRecvAutoSteerStr;
             tboxSerialToAutoSteer.Text = "32766, " + mf.mc.autoSteerData[mf.mc.sdRelay] + ", " + mf.mc.autoSteerData[mf.mc.sdSpeed]

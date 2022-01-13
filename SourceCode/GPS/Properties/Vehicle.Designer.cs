@@ -12,7 +12,7 @@ namespace OpenGrade.Properties {
     
     
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.VisualStudio.Editors.SettingsDesigner.SettingsSingleFileGenerator", "15.5.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.VisualStudio.Editors.SettingsDesigner.SettingsSingleFileGenerator", "16.8.1.0")]
     internal sealed partial class Vehicle : global::System.Configuration.ApplicationSettingsBase {
         
         private static Vehicle defaultInstance = ((Vehicle)(global::System.Configuration.ApplicationSettingsBase.Synchronized(new Vehicle())));
@@ -94,156 +94,10 @@ namespace OpenGrade.Properties {
                 this["setVehicle_maxSteerAngle"] = value;
             }
         }
-
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("4")]
-        public double setVehicle_plowHeight
-        {
-            get
-            {
-                return ((double)(this["setVehicle_plowHeight"]));
-            }
-            set
-            {
-                this["setVehicle_plowHeight"] = value;
-            }
-        }
-
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("4")]
-        public double setVehicle_maxDitchCut
-        {
-            get
-            {
-                return ((double)(this["setVehicle_maxDitchCut"]));
-            }
-            set
-            {
-                this["setVehicle_maxDitchCut"] = value;
-            }
-        }
-
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("4")]
-        public double setVehicle_maxTileCut
-        {
-            get
-            {
-                return ((double)(this["setVehicle_maxTileCut"]));
-            }
-            set
-            {
-                this["setVehicle_maxTileCut"] = value;
-            }
-        }
-
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("4")]
-        public double setVehicle_minTileCover
-        {
-            get
-            {
-                return ((double)(this["setVehicle_minTileCover"]));
-            }
-            set
-            {
-                this["setVehicle_minTileCover"] = value;
-            }
-        }
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("4")]
-
-        public double setVehicle_KpGain
-        {
-            get
-            {
-                return ((double)(this["setVehicle_KpGain"]));
-            }
-            set
-            {
-                this["setVehicle_KpGain"] = value;
-            }
-        }
-
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("4")]
-
-        public double setVehicle_KiGain
-        {
-            get
-            {
-                return ((double)(this["setVehicle_KiGain"]));
-            }
-            set
-            {
-                this["setVehicle_KiGain"] = value;
-            }
-        }
-
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("4")]
-
-        public double setVehicle_KdGain
-        {
-            get
-            {
-                return ((double)(this["setVehicle_KdGain"]));
-            }
-            set
-            {
-                this["setVehicle_KdGain"] = value;
-            }
-        }
-
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("4")]
-
-
-        public double setVehicle_viewDistAboveGnd
-        {
-            get
-            {
-                return ((double)(this["setVehicle_viewDistAboveGnd"]));
-            }
-            set
-            {
-                this["setVehicle_viewDistAboveGnd"] = value;
-            }
-
-
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("4")]
-        public double setVehicle_viewDistUnderGnd
-        {
-            get
-            {
-                return ((double)(this["setVehicle_viewDistUnderGnd"]));
-            }
-            set
-            {
-                this["setVehicle_viewDistUnderGnd"] = value;
-            }
-
-
-        }
-
-
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("4")]
-        
         public double setVehicle_toolWidth {
             get {
                 return ((double)(this["setVehicle_toolWidth"]));
@@ -262,6 +116,66 @@ namespace OpenGrade.Properties {
             }
             set {
                 this["setVehicle_minSlope"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("0.5")]
+        public double setVehicle_plowHeight {
+            get {
+                return ((double)(this["setVehicle_plowHeight"]));
+            }
+            set {
+                this["setVehicle_plowHeight"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("200")]
+        public double setVehicle_maxTileCut {
+            get {
+                return ((double)(this["setVehicle_maxTileCut"]));
+            }
+            set {
+                this["setVehicle_maxTileCut"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("150")]
+        public double setVehicle_maxDitchCut {
+            get {
+                return ((double)(this["setVehicle_maxDitchCut"]));
+            }
+            set {
+                this["setVehicle_maxDitchCut"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("15")]
+        public double setVehicle_minDitchCut {
+            get {
+                return ((double)(this["setVehicle_minDitchCut"]));
+            }
+            set {
+                this["setVehicle_minDitchCut"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("20")]
+        public double setVehicle_minTileCover {
+            get {
+                return ((double)(this["setVehicle_minTileCover"]));
+            }
+            set {
+                this["setVehicle_minTileCover"] = value;
             }
         }
     }

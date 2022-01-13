@@ -57,9 +57,6 @@ namespace OpenGrade
                     writer.WriteLine("KiGain," + Properties.Settings.Default.set_KiGain.ToString(CultureInfo.InvariantCulture));
                     writer.WriteLine("KdGain," + Properties.Settings.Default.set_KdGain.ToString(CultureInfo.InvariantCulture));
 
-                    writer.WriteLine("ViewDistUnderGnd," + Properties.Vehicle.Default.setVehicle_viewDistUnderGnd.ToString(CultureInfo.InvariantCulture));
-                    writer.WriteLine("ViewDistAboveGnd," + Properties.Vehicle.Default.setVehicle_viewDistAboveGnd.ToString(CultureInfo.InvariantCulture));
-
                     writer.WriteLine("ToolWidth," + Properties.Vehicle.Default.setVehicle_toolWidth.ToString(CultureInfo.InvariantCulture));
                     writer.WriteLine("MinimumSlope," + Properties.Vehicle.Default.setVehicle_minSlope.ToString(CultureInfo.InvariantCulture));
 
@@ -186,12 +183,8 @@ namespace OpenGrade
                         line = reader.ReadLine(); words = line.Split(',');
                         Properties.Settings.Default.set_KdGain = byte.Parse(words[1], CultureInfo.InvariantCulture);
 
-                        // Pat Codes
-                        line = reader.ReadLine(); words = line.Split(',');
-                        Properties.Vehicle.Default.setVehicle_viewDistAboveGnd = double.Parse(words[1], CultureInfo.InvariantCulture);
-                        line = reader.ReadLine(); words = line.Split(',');
-                        Properties.Vehicle.Default.setVehicle_viewDistUnderGnd = double.Parse(words[1], CultureInfo.InvariantCulture);
-                        
+
+
 
 
                         line = reader.ReadLine(); words = line.Split(',');
@@ -1047,7 +1040,7 @@ namespace OpenGrade
             { Directory.CreateDirectory(directoryName2); }
 
             string directoryName3 = Path.GetDirectoryName(kmlCut);
-            if ((directoryName2.Length > 0) && (!Directory.Exists(directoryName2)))
+            if ((directoryName3.Length > 0) && (!Directory.Exists(directoryName3)))
             { Directory.CreateDirectory(directoryName3); }
 
             using (var form2 = new FormCutDir(this))
@@ -1097,7 +1090,7 @@ namespace OpenGrade
 
             //write out txt the file
                         
-            using (StreamWriter writer = new StreamWriter(dirCut + myFileName))
+            using (StreamWriter writer = new StreamWriter(dirCut + myFileName1))
             {
                 //Write out the date
                 writer.WriteLine(DateTime.Now.ToString("yyyy-MMMM-dd hh:mm:ss tt", CultureInfo.InvariantCulture));

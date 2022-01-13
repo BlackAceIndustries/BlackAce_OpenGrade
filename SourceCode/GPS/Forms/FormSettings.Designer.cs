@@ -45,19 +45,7 @@
             this.label18 = new System.Windows.Forms.Label();
             this.nudAntennaHeight = new System.Windows.Forms.NumericUpDown();
             this.tabDisplay = new System.Windows.Forms.TabPage();
-            this.tabPage1 = new System.Windows.Forms.TabPage();
-            this.label4 = new System.Windows.Forms.Label();
-            this.nudPlowHeight = new System.Windows.Forms.NumericUpDown();
-            this.lblMinTileCover = new System.Windows.Forms.Label();
-            this.nudMinTileCover = new System.Windows.Forms.NumericUpDown();
-            this.nudMaxTileCut = new System.Windows.Forms.NumericUpDown();
-            this.lblMaxDitchCut = new System.Windows.Forms.Label();
-            this.nudMaxDitchCut = new System.Windows.Forms.NumericUpDown();
-            this.lblMaxTileCut = new System.Windows.Forms.Label();
-            this.label17 = new System.Windows.Forms.Label();
-            this.lblInchesCm = new System.Windows.Forms.Label();
-            this.btnCancel = new System.Windows.Forms.Button();
-            this.bntOK = new System.Windows.Forms.Button();
+            this.valveSelectChoice = new System.Windows.Forms.ComboBox();
             this.label9 = new System.Windows.Forms.Label();
             this.nudExtDeadband = new System.Windows.Forms.NumericUpDown();
             this.label8 = new System.Windows.Forms.Label();
@@ -68,23 +56,38 @@
             this.nudKi = new System.Windows.Forms.NumericUpDown();
             this.label5 = new System.Windows.Forms.Label();
             this.nudKp = new System.Windows.Forms.NumericUpDown();
-            this.valveSelectChoice = new System.Windows.Forms.ComboBox();
+            this.tabPage1 = new System.Windows.Forms.TabPage();
+            this.lblMinDitchCut = new System.Windows.Forms.Label();
+            this.nudMinDitchCut = new System.Windows.Forms.NumericUpDown();
+            this.lblMinTileCover = new System.Windows.Forms.Label();
+            this.nudMinTileCover = new System.Windows.Forms.NumericUpDown();
+            this.nudMaxTileCut = new System.Windows.Forms.NumericUpDown();
+            this.lblMaxDitchCut = new System.Windows.Forms.Label();
+            this.nudMaxDitchCut = new System.Windows.Forms.NumericUpDown();
+            this.lblMaxTileCut = new System.Windows.Forms.Label();
+            this.label17 = new System.Windows.Forms.Label();
+            this.lblInchesCm = new System.Windows.Forms.Label();
+            this.btnCancel = new System.Windows.Forms.Button();
+            this.bntOK = new System.Windows.Forms.Button();
+            this.label4 = new System.Windows.Forms.Label();
+            this.nudPlowHeight = new System.Windows.Forms.NumericUpDown();
             this.tabOpenGrade.SuspendLayout();
             this.tabVehicle.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.nudMinSlope)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.nudToolWidth)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.nudAntennaHeight)).BeginInit();
             this.tabDisplay.SuspendLayout();
-            this.tabPage1.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.nudPlowHeight)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.nudMinTileCover)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.nudMaxTileCut)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.nudMaxDitchCut)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.nudExtDeadband)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.nudRetDeadband)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.nudKd)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.nudKi)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.nudKp)).BeginInit();
+            this.tabPage1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.nudMinDitchCut)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.nudMinTileCover)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.nudMaxTileCut)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.nudMaxDitchCut)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.nudPlowHeight)).BeginInit();
             this.SuspendLayout();
             // 
             // tabOpenGrade
@@ -101,6 +104,8 @@
             // 
             this.tabVehicle.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(35)))), ((int)(((byte)(35)))), ((int)(((byte)(35)))));
             resources.ApplyResources(this.tabVehicle, "tabVehicle");
+            this.tabVehicle.Controls.Add(this.label4);
+            this.tabVehicle.Controls.Add(this.nudPlowHeight);
             this.tabVehicle.Controls.Add(this.label3);
             this.tabVehicle.Controls.Add(this.nudMinSlope);
             this.tabVehicle.Controls.Add(this.nudToolWidth);
@@ -262,164 +267,18 @@
             resources.ApplyResources(this.tabDisplay, "tabDisplay");
             this.tabDisplay.Name = "tabDisplay";
             // 
-            // tabPage1
+            // valveSelectChoice
             // 
-            this.tabPage1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(35)))), ((int)(((byte)(35)))), ((int)(((byte)(35)))));
-            this.tabPage1.Controls.Add(this.label4);
-            this.tabPage1.Controls.Add(this.nudPlowHeight);
-            this.tabPage1.Controls.Add(this.lblMinTileCover);
-            this.tabPage1.Controls.Add(this.nudMinTileCover);
-            this.tabPage1.Controls.Add(this.nudMaxTileCut);
-            this.tabPage1.Controls.Add(this.lblMaxDitchCut);
-            this.tabPage1.Controls.Add(this.nudMaxDitchCut);
-            this.tabPage1.Controls.Add(this.lblMaxTileCut);
-            resources.ApplyResources(this.tabPage1, "tabPage1");
-            this.tabPage1.Name = "tabPage1";
-            // 
-            // label4
-            // 
-            resources.ApplyResources(this.label4, "label4");
-            this.label4.ForeColor = System.Drawing.SystemColors.ButtonFace;
-            this.label4.Name = "label4";
-            this.label4.Click += new System.EventHandler(this.label4_Click);
-            // 
-            // nudPlowHeight
-            // 
-            this.nudPlowHeight.BackColor = System.Drawing.SystemColors.MenuText;
-            resources.ApplyResources(this.nudPlowHeight, "nudPlowHeight");
-            this.nudPlowHeight.ForeColor = System.Drawing.SystemColors.ButtonFace;
-            this.nudPlowHeight.Maximum = new decimal(new int[] {
-            9999,
-            0,
-            0,
-            0});
-            this.nudPlowHeight.Minimum = new decimal(new int[] {
-            1,
-            0,
-            0,
-            0});
-            this.nudPlowHeight.Name = "nudPlowHeight";
-            this.nudPlowHeight.Value = new decimal(new int[] {
-            7,
-            0,
-            0,
-            0});
-            // 
-            // lblMinTileCover
-            // 
-            resources.ApplyResources(this.lblMinTileCover, "lblMinTileCover");
-            this.lblMinTileCover.ForeColor = System.Drawing.SystemColors.ButtonFace;
-            this.lblMinTileCover.Name = "lblMinTileCover";
-            // 
-            // nudMinTileCover
-            // 
-            this.nudMinTileCover.BackColor = System.Drawing.SystemColors.MenuText;
-            resources.ApplyResources(this.nudMinTileCover, "nudMinTileCover");
-            this.nudMinTileCover.ForeColor = System.Drawing.SystemColors.ButtonFace;
-            this.nudMinTileCover.Maximum = new decimal(new int[] {
-            9999,
-            0,
-            0,
-            0});
-            this.nudMinTileCover.Minimum = new decimal(new int[] {
-            1,
-            0,
-            0,
-            0});
-            this.nudMinTileCover.Name = "nudMinTileCover";
-            this.nudMinTileCover.Value = new decimal(new int[] {
-            7,
-            0,
-            0,
-            0});
-            // 
-            // nudMaxTileCut
-            // 
-            this.nudMaxTileCut.BackColor = System.Drawing.SystemColors.MenuText;
-            resources.ApplyResources(this.nudMaxTileCut, "nudMaxTileCut");
-            this.nudMaxTileCut.ForeColor = System.Drawing.SystemColors.ButtonFace;
-            this.nudMaxTileCut.Maximum = new decimal(new int[] {
-            9999,
-            0,
-            0,
-            0});
-            this.nudMaxTileCut.Minimum = new decimal(new int[] {
-            1,
-            0,
-            0,
-            0});
-            this.nudMaxTileCut.Name = "nudMaxTileCut";
-            this.nudMaxTileCut.Value = new decimal(new int[] {
-            7,
-            0,
-            0,
-            0});
-            // 
-            // lblMaxDitchCut
-            // 
-            resources.ApplyResources(this.lblMaxDitchCut, "lblMaxDitchCut");
-            this.lblMaxDitchCut.ForeColor = System.Drawing.SystemColors.ButtonFace;
-            this.lblMaxDitchCut.Name = "lblMaxDitchCut";
-            // 
-            // nudMaxDitchCut
-            // 
-            this.nudMaxDitchCut.BackColor = System.Drawing.SystemColors.MenuText;
-            resources.ApplyResources(this.nudMaxDitchCut, "nudMaxDitchCut");
-            this.nudMaxDitchCut.ForeColor = System.Drawing.SystemColors.ButtonFace;
-            this.nudMaxDitchCut.Maximum = new decimal(new int[] {
-            9999,
-            0,
-            0,
-            0});
-            this.nudMaxDitchCut.Minimum = new decimal(new int[] {
-            1,
-            0,
-            0,
-            0});
-            this.nudMaxDitchCut.Name = "nudMaxDitchCut";
-            this.nudMaxDitchCut.Value = new decimal(new int[] {
-            7,
-            0,
-            0,
-            0});
-            // 
-            // lblMaxTileCut
-            // 
-            resources.ApplyResources(this.lblMaxTileCut, "lblMaxTileCut");
-            this.lblMaxTileCut.ForeColor = System.Drawing.SystemColors.ButtonFace;
-            this.lblMaxTileCut.Name = "lblMaxTileCut";
-            this.lblMaxTileCut.Click += new System.EventHandler(this.label5_Click);
-            // 
-            // label17
-            // 
-            resources.ApplyResources(this.label17, "label17");
-            this.label17.ForeColor = System.Drawing.SystemColors.ButtonFace;
-            this.label17.Name = "label17";
-            // 
-            // lblInchesCm
-            // 
-            resources.ApplyResources(this.lblInchesCm, "lblInchesCm");
-            this.lblInchesCm.ForeColor = System.Drawing.Color.Red;
-            this.lblInchesCm.Name = "lblInchesCm";
-            // 
-            // btnCancel
-            // 
-            this.btnCancel.BackColor = System.Drawing.Color.Black;
-            resources.ApplyResources(this.btnCancel, "btnCancel");
-            this.btnCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-            this.btnCancel.Image = global::OpenGrade.Properties.Resources.Cancel64;
-            this.btnCancel.Name = "btnCancel";
-            this.btnCancel.UseVisualStyleBackColor = false;
-            this.btnCancel.Click += new System.EventHandler(this.btnCancel_Click);
-            // 
-            // bntOK
-            // 
-            this.bntOK.BackColor = System.Drawing.Color.Black;
-            resources.ApplyResources(this.bntOK, "bntOK");
-            this.bntOK.Image = global::OpenGrade.Properties.Resources.OK64;
-            this.bntOK.Name = "bntOK";
-            this.bntOK.UseVisualStyleBackColor = false;
-            this.bntOK.Click += new System.EventHandler(this.btnOK_Click);
+            this.valveSelectChoice.BackColor = System.Drawing.SystemColors.InfoText;
+            resources.ApplyResources(this.valveSelectChoice, "valveSelectChoice");
+            this.valveSelectChoice.ForeColor = System.Drawing.SystemColors.ButtonFace;
+            this.valveSelectChoice.FormattingEnabled = true;
+            this.valveSelectChoice.Items.AddRange(new object[] {
+            resources.GetString("valveSelectChoice.Items"),
+            resources.GetString("valveSelectChoice.Items1"),
+            resources.GetString("valveSelectChoice.Items2")});
+            this.valveSelectChoice.Name = "valveSelectChoice";
+            this.valveSelectChoice.SelectedIndexChanged += new System.EventHandler(this.valveSelectChoice_SelectedIndexChanged);
             // 
             // label9
             // 
@@ -493,6 +352,7 @@
             0,
             0,
             0});
+            this.nudKd.ValueChanged += new System.EventHandler(this.nudKd_ValueChanged_1);
             // 
             // label6
             // 
@@ -516,6 +376,7 @@
             0,
             0,
             0});
+            this.nudKi.ValueChanged += new System.EventHandler(this.nudKi_ValueChanged_1);
             // 
             // label5
             // 
@@ -539,19 +400,170 @@
             0,
             0,
             0});
+            this.nudKp.ValueChanged += new System.EventHandler(this.nudKp_ValueChanged_1);
             // 
-            // valveSelectChoice
+            // tabPage1
             // 
-            this.valveSelectChoice.BackColor = System.Drawing.SystemColors.InfoText;
-            resources.ApplyResources(this.valveSelectChoice, "valveSelectChoice");
-            this.valveSelectChoice.ForeColor = System.Drawing.SystemColors.ButtonFace;
-            this.valveSelectChoice.FormattingEnabled = true;
-            this.valveSelectChoice.Items.AddRange(new object[] {
-            resources.GetString("valveSelectChoice.Items"),
-            resources.GetString("valveSelectChoice.Items1"),
-            resources.GetString("valveSelectChoice.Items2")});
-            this.valveSelectChoice.Name = "valveSelectChoice";
-            this.valveSelectChoice.SelectedIndexChanged += new System.EventHandler(this.valveSelectChoice_SelectedIndexChanged);
+            this.tabPage1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(35)))), ((int)(((byte)(35)))), ((int)(((byte)(35)))));
+            this.tabPage1.Controls.Add(this.lblMinDitchCut);
+            this.tabPage1.Controls.Add(this.nudMinDitchCut);
+            this.tabPage1.Controls.Add(this.lblMinTileCover);
+            this.tabPage1.Controls.Add(this.nudMinTileCover);
+            this.tabPage1.Controls.Add(this.nudMaxTileCut);
+            this.tabPage1.Controls.Add(this.lblMaxDitchCut);
+            this.tabPage1.Controls.Add(this.nudMaxDitchCut);
+            this.tabPage1.Controls.Add(this.lblMaxTileCut);
+            resources.ApplyResources(this.tabPage1, "tabPage1");
+            this.tabPage1.Name = "tabPage1";
+            // 
+            // lblMinDitchCut
+            // 
+            resources.ApplyResources(this.lblMinDitchCut, "lblMinDitchCut");
+            this.lblMinDitchCut.ForeColor = System.Drawing.SystemColors.ButtonFace;
+            this.lblMinDitchCut.Name = "lblMinDitchCut";
+            this.lblMinDitchCut.Click += new System.EventHandler(this.label10_Click);
+            // 
+            // nudMinDitchCut
+            // 
+            this.nudMinDitchCut.BackColor = System.Drawing.SystemColors.MenuText;
+            resources.ApplyResources(this.nudMinDitchCut, "nudMinDitchCut");
+            this.nudMinDitchCut.ForeColor = System.Drawing.SystemColors.ButtonFace;
+            this.nudMinDitchCut.Maximum = new decimal(new int[] {
+            9999,
+            0,
+            0,
+            0});
+            this.nudMinDitchCut.Name = "nudMinDitchCut";
+            this.nudMinDitchCut.Value = new decimal(new int[] {
+            7,
+            0,
+            0,
+            0});
+            // 
+            // lblMinTileCover
+            // 
+            resources.ApplyResources(this.lblMinTileCover, "lblMinTileCover");
+            this.lblMinTileCover.ForeColor = System.Drawing.SystemColors.ButtonFace;
+            this.lblMinTileCover.Name = "lblMinTileCover";
+            // 
+            // nudMinTileCover
+            // 
+            this.nudMinTileCover.BackColor = System.Drawing.SystemColors.MenuText;
+            resources.ApplyResources(this.nudMinTileCover, "nudMinTileCover");
+            this.nudMinTileCover.ForeColor = System.Drawing.SystemColors.ButtonFace;
+            this.nudMinTileCover.Maximum = new decimal(new int[] {
+            9999,
+            0,
+            0,
+            0});
+            this.nudMinTileCover.Name = "nudMinTileCover";
+            this.nudMinTileCover.Value = new decimal(new int[] {
+            7,
+            0,
+            0,
+            0});
+            // 
+            // nudMaxTileCut
+            // 
+            this.nudMaxTileCut.BackColor = System.Drawing.SystemColors.MenuText;
+            resources.ApplyResources(this.nudMaxTileCut, "nudMaxTileCut");
+            this.nudMaxTileCut.ForeColor = System.Drawing.SystemColors.ButtonFace;
+            this.nudMaxTileCut.Maximum = new decimal(new int[] {
+            9999,
+            0,
+            0,
+            0});
+            this.nudMaxTileCut.Name = "nudMaxTileCut";
+            this.nudMaxTileCut.Value = new decimal(new int[] {
+            7,
+            0,
+            0,
+            0});
+            // 
+            // lblMaxDitchCut
+            // 
+            resources.ApplyResources(this.lblMaxDitchCut, "lblMaxDitchCut");
+            this.lblMaxDitchCut.ForeColor = System.Drawing.SystemColors.ButtonFace;
+            this.lblMaxDitchCut.Name = "lblMaxDitchCut";
+            // 
+            // nudMaxDitchCut
+            // 
+            this.nudMaxDitchCut.BackColor = System.Drawing.SystemColors.MenuText;
+            resources.ApplyResources(this.nudMaxDitchCut, "nudMaxDitchCut");
+            this.nudMaxDitchCut.ForeColor = System.Drawing.SystemColors.ButtonFace;
+            this.nudMaxDitchCut.Maximum = new decimal(new int[] {
+            9999,
+            0,
+            0,
+            0});
+            this.nudMaxDitchCut.Name = "nudMaxDitchCut";
+            this.nudMaxDitchCut.Value = new decimal(new int[] {
+            7,
+            0,
+            0,
+            0});
+            this.nudMaxDitchCut.ValueChanged += new System.EventHandler(this.nudMaxDitchCut_ValueChanged_1);
+            // 
+            // lblMaxTileCut
+            // 
+            resources.ApplyResources(this.lblMaxTileCut, "lblMaxTileCut");
+            this.lblMaxTileCut.ForeColor = System.Drawing.SystemColors.ButtonFace;
+            this.lblMaxTileCut.Name = "lblMaxTileCut";
+            this.lblMaxTileCut.Click += new System.EventHandler(this.label5_Click);
+            // 
+            // label17
+            // 
+            resources.ApplyResources(this.label17, "label17");
+            this.label17.ForeColor = System.Drawing.SystemColors.ButtonFace;
+            this.label17.Name = "label17";
+            // 
+            // lblInchesCm
+            // 
+            resources.ApplyResources(this.lblInchesCm, "lblInchesCm");
+            this.lblInchesCm.ForeColor = System.Drawing.Color.Red;
+            this.lblInchesCm.Name = "lblInchesCm";
+            // 
+            // btnCancel
+            // 
+            this.btnCancel.BackColor = System.Drawing.Color.Black;
+            resources.ApplyResources(this.btnCancel, "btnCancel");
+            this.btnCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
+            this.btnCancel.Image = global::OpenGrade.Properties.Resources.Cancel64;
+            this.btnCancel.Name = "btnCancel";
+            this.btnCancel.UseVisualStyleBackColor = false;
+            this.btnCancel.Click += new System.EventHandler(this.btnCancel_Click);
+            // 
+            // bntOK
+            // 
+            this.bntOK.BackColor = System.Drawing.Color.Black;
+            resources.ApplyResources(this.bntOK, "bntOK");
+            this.bntOK.Image = global::OpenGrade.Properties.Resources.OK64;
+            this.bntOK.Name = "bntOK";
+            this.bntOK.UseVisualStyleBackColor = false;
+            this.bntOK.Click += new System.EventHandler(this.btnOK_Click);
+            // 
+            // label4
+            // 
+            resources.ApplyResources(this.label4, "label4");
+            this.label4.ForeColor = System.Drawing.SystemColors.ButtonFace;
+            this.label4.Name = "label4";
+            // 
+            // nudPlowHeight
+            // 
+            this.nudPlowHeight.BackColor = System.Drawing.SystemColors.MenuText;
+            resources.ApplyResources(this.nudPlowHeight, "nudPlowHeight");
+            this.nudPlowHeight.ForeColor = System.Drawing.SystemColors.ButtonFace;
+            this.nudPlowHeight.Maximum = new decimal(new int[] {
+            9999,
+            0,
+            0,
+            0});
+            this.nudPlowHeight.Name = "nudPlowHeight";
+            this.nudPlowHeight.Value = new decimal(new int[] {
+            7,
+            0,
+            0,
+            0});
             // 
             // FormSettings
             // 
@@ -577,17 +589,18 @@
             ((System.ComponentModel.ISupportInitialize)(this.nudAntennaHeight)).EndInit();
             this.tabDisplay.ResumeLayout(false);
             this.tabDisplay.PerformLayout();
-            this.tabPage1.ResumeLayout(false);
-            this.tabPage1.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.nudPlowHeight)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.nudMinTileCover)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.nudMaxTileCut)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.nudMaxDitchCut)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.nudExtDeadband)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.nudRetDeadband)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.nudKd)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.nudKi)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.nudKp)).EndInit();
+            this.tabPage1.ResumeLayout(false);
+            this.tabPage1.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.nudMinDitchCut)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.nudMinTileCover)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.nudMaxTileCut)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.nudMaxDitchCut)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.nudPlowHeight)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -622,8 +635,6 @@
         private System.Windows.Forms.Label lblMaxTileCut;
         private System.Windows.Forms.Label lblMinTileCover;
         private System.Windows.Forms.NumericUpDown nudMinTileCover;
-        private System.Windows.Forms.Label label4;
-        private System.Windows.Forms.NumericUpDown nudPlowHeight;
         private System.Windows.Forms.Label label9;
         private System.Windows.Forms.NumericUpDown nudExtDeadband;
         private System.Windows.Forms.Label label8;
@@ -635,5 +646,9 @@
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.NumericUpDown nudKp;
         private System.Windows.Forms.ComboBox valveSelectChoice;
+        private System.Windows.Forms.Label lblMinDitchCut;
+        private System.Windows.Forms.NumericUpDown nudMinDitchCut;
+        private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.NumericUpDown nudPlowHeight;
     }
 }

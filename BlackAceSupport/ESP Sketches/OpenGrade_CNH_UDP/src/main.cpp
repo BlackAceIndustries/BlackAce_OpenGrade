@@ -4,7 +4,20 @@
 #include <SPI.h>
 #include <Adafruit_MCP4725.h>
 #include <Wire.h>
-#include <Button.h>
+
+// Function STUBS for Platform IO
+bool SetupGradeController();
+bool SetAutoState();
+void RecvSerialPortData();
+void GetGradeControlData();
+void SendDataToPort();
+void SetOutput();
+void SetValveLimits();
+void ClearSerialBuff();
+// UDP
+bool SetupUdp();
+bool SendUdpData();
+bool RecvUdpData();
 
 ///
 /// UDP Variables
@@ -13,32 +26,36 @@ WiFiUDP Udp;  // Creation of wifi Udp instance
 const char *ssid = "GradeControl";
 
 char packetBuffer[255];
-uint16_t localPort = 9999; //OpenGrade Server Port
-uint16_t openGradePort = 7777; // OpenGrade Port
-uint16_t portDestination = 9999; //AOG port that listens
+uint16_t openGradePort = 9999; //OpenGrade Server Port
+uint16_t gradeControlPort = 7777; // GradeControl  Port
 
 IPAddress openGradeIP(192,168,0,120);   // Declaration of default IP for server
 IPAddress gradeControlIP(127,0,0,1);   // Different IP than server (Client) this unit
+IPAddress gateway(192,168,4,9);   // what we want the sp 32 IPAddress to be
 IPAddress Subnet(255, 255, 255, 0);
 IPAddress Dns(8,8,8,8);
-//// ethernet mac address - must be unique on your network
-//static uint8_t mymac[] = { 0x70,0x69,0x69,0x2A,0x30,0x31 };
+
 //uint8_t data[] = {0x80,0x81,0x7D,0xD3,8, 0,0,0,0, 0,0,0,0, 15};
 //int16_t dataSize = sizeof(data);
+
 
 ///
 /// gradeControl Variables
 ///
-////////////Inputs/outputs/////////////////////
+///////////////////////PINS///////////////////////
+#define SERIAL_BAUD 115200
 #define DAC1_ENABLE 4      // DAC 1 enable/
 #define DAC2_ENABLE 5     //  DAC 2 enable/
-#define OFF_INC_BTN 2      //signal to move the blade offset up 1 mm
-#define OFF_DEC_BTN 0       //signal to move the blade offset down 1 mm
-#define AUTO_BTN 15        // Auto Grade Activation Btn
 #define SCL_PIN 22      // I2C SCL PIN
 #define SDA_PIN 21      // I2C SCL PIN
-#define RXD2 16
-#define TXD2 17
+#define RXD2 16  // Diagnostic RX
+#define TXD2 17 // Diagnostic TX
+#define IMU_ID 1200
+#define CONST_180_DIVIDED_BY_PI 57.2957795130823
+#define BNO055_SAMPLERATE_DELAY_MS (95)
+//
+
+// Valve Definitions
 #define VALVE_FLOAT 2048
 #define CNH 0
 #define DEERE 1
@@ -50,37 +67,13 @@ IPAddress Dns(8,8,8,8);
 #define DANFOSS_MIN .26
 #define DANFOSS_MAX .74
 
-//////////////////PID/////////////////////
-float Kp=38; //Mine was 8
-float Ki=.02; //Mine was 0.2
-float Kd=2800; //Mine was 3100
-float delta_setpoint = 0; 
-float PID_p, PID_i, PID_d, PID_total;
-float delta_previous_error, delta_error;
+//////////////SETTINGS////////////
+float Kp=35; //Mine was 38
+float Ki=.02; //Mine was 0.02
+float Kd=3100; //Mine was 2800
+float delta_setpoint = 0;  
 
-//////////////////CNH Valve//////////////////// 
-uint16_t analogOutput1 = VALVE_FLOAT; //send to MCP4725
-uint16_t analogOutput2 = VALVE_FLOAT; //send to MCP4725
-int cut1;
-int bladeOffsetOut = 0;
-int retDeadband = 1845;
-int extDeadband = 2250;
-int retMin = (0.11 * 4096);   //450.56  CNH 
-int extMax = (0.89 * 4096);   //3645
-double voltage; // voltage sent to OpenGrade
-bool isAutoActive = false;
-bool isCutting = false;
-
-///
-///Serial Variables
-///
-byte watchdogTimer = 0;      //make sure we are talking to OpenGrade
-byte serialResetTimer = 0;   //if serial buffer is getting full, empty it
-bool settingsRecieved = false;
-bool isDataFound = false, isSettingFound = false; //Communication with OpenGrade
-int header = 0, tempHeader = 0, temp; //Communication with OpenGrade
-
-//ComBytes
+///////////// Com Bytes///////////////////////
 byte b_Ki, b_Kp, b_Kd;
 byte b_autoState = 0, b_deltaDir = 0, b_cutDelta = 0;
 byte b_bladeOffsetOut = 0;
@@ -89,78 +82,96 @@ byte b_extDeadband = 75;
 byte b_valveType = 255;   // 0= CNH    1= Deere     2= Danfoss
 byte b_deadband = 2;
 
-///
-/// Timers
-///
-const byte LOOP_TIME = 50; //20hz  Serial Send loop
-const byte LOOP_TIME2 = 10; //100hz  Serial Recv loop
-unsigned long lastTime = LOOP_TIME;
-unsigned long lastTime2 = LOOP_TIME2; 
-unsigned long currentTime;
 
-// Function STUBS for Platform IO
-bool SetupUdp();
-bool SetupGradeController();
-bool SetAutoState();
-void CheckBtns();
-void RecvSerialPortData();
-void SendSerialPortData();
-void SetOutput();
-bool SendUdpData();
-bool RecvUdpData();
-void SetValveLimits();
+///////////////////PID/////////////////////////
+float PID_p, PID_i, PID_d, PID_total;
+float delta_previous_error, delta_error;
+
+/////////////// CNH Valve /////////////////////////
+uint16_t analogOutput1 = VALVE_FLOAT; //send to MCP4725
+uint16_t analogOutput2 = VALVE_FLOAT; //send to MCP4725
+int cut1 = -1;
+double voltage = 0; // diagnostic Voltage
+int retDeadband = 1845;
+int extDeadband = 2250;
+int retMin = (0.11 * 4096);   //450.56  CNH 
+int extMax = (0.89 * 4096);   //3645
+bool isAutoActive = false;
+bool isCutting = false;
+
+//loop time variables in milliseconds
+const byte LOOP_TIME = 50; //20hz  Send Serial Loop 
+const byte LOOP_TIME2 = 5; //100HZ    Recv Serial Loop
+const byte LOOP_TIME3 = BNO055_SAMPLERATE_DELAY_MS; //10HZ  Poll IMU Loop
+
+unsigned long lastTime = LOOP_TIME;
+unsigned long lastTime2 = LOOP_TIME2;
+unsigned long lastTime3 = LOOP_TIME3;  
+unsigned long currentTime = 0; 
+
+//Comm checks
+byte watchdogTimer = 0;      //make sure we are talking to OpenGrade
+byte serialResetTimer = 0;   //if serial buffer is getting full, empty it
+
+//Communication with OpenGrade
+bool isDataFound = false, isSettingFound = false;
+int header = 0, tempHeader = 0, temp;
 
 ///////////////////////Initalize Objects///////////////////////
+// I2C
+TwoWire esp = TwoWire(5);
+// DAC's
+Adafruit_MCP4725 Dac1 = Adafruit_MCP4725();
+Adafruit_MCP4725 Dac2 = Adafruit_MCP4725();
 
-Adafruit_MCP4725 Dac1;  // DAC's
-Adafruit_MCP4725 Dac2;
-Button offsetIncBtn(OFF_INC_BTN); // BTN's
-Button offsetDecBtn(OFF_DEC_BTN); 
-Button autoEngageBtn (AUTO_BTN);
 
-void setup() {
-  
+void setup()
+{  
+  esp.begin(SDA_PIN , SCL_PIN);
   SetupGradeController();
   SetupUdp();
-
 }
   
 
-void loop() {
-  currentTime = millis(); 
-  
+void loop(){  //Loop triggers every 50 msec (20hz) and sends back offsets Pid ect
+
+  currentTime = millis();  // Send GradeControl Data to OG
+  SetOutput();
+  SetAutoState();
+
   if (currentTime - lastTime >= LOOP_TIME)
-  {
-    lastTime = currentTime;        
-    SendSerialPortData();
+  {  
+    lastTime = currentTime;
+    SendDataToPort();
+                  
+  }
+  
+  if (currentTime - lastTime2 >= LOOP_TIME2){ // Recv Data from OG 
+    lastTime2 = currentTime;
+    RecvSerialPortData();
+  }
+  
+  if (currentTime - lastTime3 >= LOOP_TIME3){ //
+   
     
   }
-  if (currentTime - lastTime2 >= LOOP_TIME2)
-  {
-    lastTime2 = currentTime;
-    CheckBtns();
-    SetAutoState();
-    RecvSerialPortData(); 
-  }
-  //SendUdpData();
-  //RecvUdpData(); 
 }
 
 
 
-bool SetupGradeController(){
+bool SetupGradeController()
+{
   //set the baud rate
-  Serial.begin(38400);  
-  //Serial1.begin(38400, SERIAL_8N1, RXD2, TXD2); 
+  Serial.begin(SERIAL_BAUD);  
+  Serial1.begin(115200, SERIAL_8N1, RXD2, TXD2); 
 
   digitalWrite(2, HIGH); delay(500); digitalWrite(2, LOW); delay(500); digitalWrite(2, HIGH); delay(500);
   digitalWrite(2, LOW); delay(500); digitalWrite(2, HIGH); delay(500); digitalWrite(2, LOW); delay(500);
 
-  offsetIncBtn.begin(); 
-  offsetDecBtn.begin();
-  autoEngageBtn.begin();
-  Dac1.begin(0x62);
-  Dac2.begin(0x63);
+  
+  Dac1.begin(0x62, &esp);
+  Dac2.begin(0x63, &esp); 
+
   return true;
 
 }
@@ -181,57 +192,45 @@ bool SetAutoState(){
     isAutoActive = false;
     return false;
     
-  }      
-}
-
-void CheckBtns(){ 
-  if (offsetIncBtn.pressed()){
-    bladeOffsetOut ++; 
-  } 
-  if (offsetDecBtn.pressed()){ 
-    bladeOffsetOut --;
-  }
-  if (autoEngageBtn.pressed()){
-    if (isAutoActive){
-      isAutoActive = false;
-      b_autoState = 0;
-    }
-    else {
-      isAutoActive = true;
-      b_autoState = 1;
-    }
-  } 
+  }     
 }
 
 void RecvSerialPortData(){
+  
   if (Serial.available() > 0 && !isDataFound && !isSettingFound)
   {
-    //Serial1.println("Serial Available Data and settings not found!");
+    
     int temp = Serial.read();    
     header = tempHeader << 8 | temp;                //high,low bytes to make int
-    tempHeader = temp;  
-    //Serial1.println(header);                            //save for next time
-    if (header == 32762) isDataFound = true;        //Do we have a match?
-    if (header == 32760) isSettingFound = true;        //Do we have a match?
+    tempHeader = temp;      //save for next time
+    if (header == 32762) {//Do we have a match?
+      isDataFound = true; 
+      //Serial1.print("Data Recieved   Bytes in Buffer -> ");
+      //Serial1.println(Serial.available());   
+    }    
+    if (header == 32760){//Do we have a match?
+      isSettingFound = true; 
+      //Serial1.print("Settings Recieved   Bytes in Buffer -> ");
+      //Serial1.println(Serial.available());
+    }       
+    
   }
 
   //Data Header has been found, so the next x bytes are the data
-  if (Serial.available() > 3 && isDataFound)   //
-  {     
-    
+  if (Serial.available() > 2 && isDataFound  && !isSettingFound)   //
+  {
     isDataFound = false;      
-    b_deltaDir = Serial.read();// Cut Delta Dir 
-    b_cutDelta = Serial.read();// Cut Delta      
-    b_autoState = Serial.read();// Auto State    
+    b_deltaDir = Serial.read();// Cut Delta Dir         
+    b_cutDelta = Serial.read();// Cut Delta        
+    b_autoState = Serial.read();// Auto State 
     
-  
-    
+    ClearSerialBuff();
   }
   
   //Setting Header has been found, so the next 8 bytes are the data
-  if (Serial.available() > 9 && isSettingFound)
+  if (Serial.available() > 6 && isSettingFound && !isDataFound)
   {
-    digitalWrite(LED_BUILTIN, HIGH);
+    //Serial1.println("Settings Found");
     isSettingFound = false;
     b_Kp = Serial.read();
     b_Ki = Serial.read();
@@ -239,86 +238,85 @@ void RecvSerialPortData(){
     b_retDeadband = Serial.read();
     b_extDeadband = Serial.read();
     b_valveType = Serial.read();
-    
     Kp = double(b_Kp);
     Ki = double(b_Ki / 100);
-    Kd = double(b_Kp * 100);    
-    SetValveLimits();     
+    Kd = double(b_Kp * 100);
+    SetValveLimits();
 
-  }
+    ClearSerialBuff();
+  }  
   
-  if (isAutoActive && isCutting){    
-    SetOutput();
-  }
-  else{    
-    analogOutput1 = VALVE_FLOAT;
-    voltage = ((double)analogOutput1/4096) * 5.0;
-    Dac1.setVoltage(analogOutput1, false);                      
-  }
-
 }
 
-void SendSerialPortData()
-{    
-  Serial.print(b_bladeOffsetOut);
-  Serial.print(", ");
+void SendDataToPort(){
+
   Serial.print(b_autoState);
-  Serial.print(", ");
-  Serial.println(voltage);
+  Serial.print(",");
+  Serial.print(voltage);
+  Serial.print(",");
+  Serial.print("--");
+  Serial.print(",");
+  Serial.print("--");
+  Serial.print(",");
+  Serial.println("--");
 }
 
 void SetOutput()
 {
-  
-  analogOutput1 = 2048;  
-  
-  if (b_deltaDir == 0){
-    cut1 = -(int)b_cutDelta;
-  }  
-  else {
-    cut1 = (int)b_cutDelta;
-  }
 
-  delta_error = (delta_setpoint) - cut1;
+  if (isAutoActive && isCutting){    
+    analogOutput1 = VALVE_FLOAT;  
+  
+    if (b_deltaDir == 0){
+      cut1 = -(int)b_cutDelta;
+    }  
+    else {
+      cut1 = (int)b_cutDelta;
+    }
 
-  PID_p = Kp * delta_error;// calculate the P errror  
-  
-  PID_d = Kd*((delta_error - delta_previous_error)/LOOP_TIME);// calculate the d error
-  
-  if(-b_deadband < delta_error && delta_error < b_deadband){  // 3 cm deadband for i
-    PID_i = PID_i + (Ki * delta_error);//calculate the i error
+    delta_error = (delta_setpoint) - cut1;
+
+    PID_p = Kp * delta_error;// calculate the P errror  
+    
+    PID_d = Kd*((delta_error - delta_previous_error)/LOOP_TIME);// calculate the d error
+    
+    if(-b_deadband < delta_error && delta_error < b_deadband){  // 3 cm deadband for i
+      PID_i = PID_i + (Ki * delta_error);//calculate the i error
+    }
+    else{
+      PID_i = 0;
+    }
+
+    PID_total = PID_p + PID_i + PID_d;
+
+    if (PID_total >  2300) PID_total = 2300;      
+    if (PID_total <  -2300) PID_total = -2300;
+
+    if (b_deltaDir == 1){ // Delta is Positive need to lower IMP RETRACT
+      analogOutput1 = map(PID_total, 0.0, -2300, retDeadband , retMin);
+    }
+    else if (b_deltaDir == 0){// Delta is Negative need to raise IMP
+      analogOutput1 = map(PID_total,  0.0, 2300, extDeadband, extMax);
+    }
+    
+    if (analogOutput1 >= extMax) analogOutput1 = extMax; // do not exceed 4096
+    if (analogOutput1 <= retMin) analogOutput1 = retMin; // do not write negative numbers 
+    
+    
+    if (b_cutDelta < b_deadband){
+      analogOutput1 = VALVE_FLOAT;
+    }
+    
+    Dac1.setVoltage(analogOutput1, false);  
+    voltage = ((double)analogOutput1/4096) * 5.0;
+    delta_previous_error = delta_error;
   }
   else{
-    PID_i = 0;
-  }
-
-  PID_total = PID_p + PID_i + PID_d;
-
-  if (PID_total >  2300) PID_total = 2300;      
-  if (PID_total <  -2300) PID_total = -2300;
-
-  if (b_deltaDir == 1){ // Delta is Positive need to lower IMP RETRACT
-    analogOutput1 = map(PID_total, 0.0, -2300, retDeadband , retMin);
-  }
-  else if (b_deltaDir == 0){// Delta is Negative need to raise IMP
-    analogOutput1 = map(PID_total,  0.0, 2300, extDeadband, extMax);
-  }
-  
-  if (analogOutput1 >= extMax) analogOutput1 = extMax; // do not exceed 4096
-  if (analogOutput1 <= retMin) analogOutput1 = retMin; // do not write negative numbers 
-   
-  
-  if (b_cutDelta > b_deadband){
+    analogOutput1 = VALVE_FLOAT;   
     Dac1.setVoltage(analogOutput1, false);
-  }
-  else {
-    analogOutput1 = VALVE_FLOAT;
-    Dac1.setVoltage(analogOutput1, false);
-  }
-  
-  voltage = ((double)analogOutput1/4096) * 5.0;
-
-  delta_previous_error = delta_error;  
+    voltage = ((double)analogOutput1/4096) * 5.0;                          
+  }  
+    
 }
 
 void SetValveLimits(){
@@ -353,26 +351,39 @@ void SetValveLimits(){
       extMax = (CNH_MAX * 4096);
       
   }
-
-  
-  
 }
 
+void ClearSerialBuff(){
+  while (Serial.available() > 0){  /// clean out serial buffer
+        Serial.read();
+    }
+}
+
+
+///
+/// UDP Stuff
+///
+
+
 bool SetupUdp(){  
-  WiFi.begin(ssid);  
-  WiFi.mode(WIFI_MODE_APSTA); // ESP-32 Server
-  WiFi.config(gradeControlIP, gradeControlIP, Subnet, Dns);  
-  Udp.begin(localPort);
+  WiFi.softAPConfig(gradeControlIP, gateway, Subnet);
+  WiFi.softAP(ssid);
+
+  Serial.println(WiFi.softAPIP());
+  
+  //WiFi.config(gradeControlIP, gradeControlIP, Subnet, Dns);    
+  //WiFi.mode(WIFI_MODE_APSTA); // ESP-32 Server
+  //WiFi.begin(ssid);  
+  Udp.begin(openGradePort, openGradePort);
   return true;
 }
 
 bool SendUdpData()
 {
   //SENDING
-    Udp.beginPacket(openGradeIP,9999);   //Initiate transmission of data
+    Udp.beginPacket(openGradeIP,openGradePort);   //Initiate transmission of data
     
-    Udp.printf("Millis: ");
-    
+    Udp.printf("Millis: ");    
     char buf[20];   // buffer to hold the string to append
     unsigned long testID = millis();   // time since ESP-32 is running millis() 
     sprintf(buf, "%lu", testID);  // appending the millis to create a char

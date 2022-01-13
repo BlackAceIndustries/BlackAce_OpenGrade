@@ -125,10 +125,79 @@
     <value>Center</value>
   </data>
   <assembly alias="mscorlib" name="mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
-  <data name="label3.AutoSize" type="System.Boolean, mscorlib">
+  <data name="label4.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
   </data>
   <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
+  <data name="label4.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Tahoma, 14.25pt</value>
+  </data>
+  <data name="label4.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="label4.Location" type="System.Drawing.Point, System.Drawing">
+    <value>31, 372</value>
+  </data>
+  <data name="label4.RightToLeft" type="System.Windows.Forms.RightToLeft, System.Windows.Forms">
+    <value>No</value>
+  </data>
+  <data name="label4.Size" type="System.Drawing.Size, System.Drawing">
+    <value>154, 23</value>
+  </data>
+  <data name="label4.TabIndex" type="System.Int32, mscorlib">
+    <value>126</value>
+  </data>
+  <data name="label4.Text" xml:space="preserve">
+    <value>Plow Mast Height</value>
+  </data>
+  <data name="&gt;&gt;label4.Name" xml:space="preserve">
+    <value>label4</value>
+  </data>
+  <data name="&gt;&gt;label4.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;label4.Parent" xml:space="preserve">
+    <value>tabVehicle</value>
+  </data>
+  <data name="&gt;&gt;label4.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="nudPlowHeight.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Tahoma, 36pt, style=Bold</value>
+  </data>
+  <data name="nudPlowHeight.Location" type="System.Drawing.Point, System.Drawing">
+    <value>31, 398</value>
+  </data>
+  <data name="nudPlowHeight.RightToLeft" type="System.Windows.Forms.RightToLeft, System.Windows.Forms">
+    <value>No</value>
+  </data>
+  <data name="nudPlowHeight.Size" type="System.Drawing.Size, System.Drawing">
+    <value>166, 65</value>
+  </data>
+  <data name="nudPlowHeight.TabIndex" type="System.Int32, mscorlib">
+    <value>125</value>
+  </data>
+  <data name="nudPlowHeight.TextAlign" type="System.Windows.Forms.HorizontalAlignment, System.Windows.Forms">
+    <value>Right</value>
+  </data>
+  <data name="nudPlowHeight.UpDownAlign" type="System.Windows.Forms.LeftRightAlignment, System.Windows.Forms">
+    <value>Left</value>
+  </data>
+  <data name="&gt;&gt;nudPlowHeight.Name" xml:space="preserve">
+    <value>nudPlowHeight</value>
+  </data>
+  <data name="&gt;&gt;nudPlowHeight.Type" xml:space="preserve">
+    <value>System.Windows.Forms.NumericUpDown, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;nudPlowHeight.Parent" xml:space="preserve">
+    <value>tabVehicle</value>
+  </data>
+  <data name="&gt;&gt;nudPlowHeight.ZOrder" xml:space="preserve">
+    <value>1</value>
+  </data>
+  <data name="label3.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
   <data name="label3.Font" type="System.Drawing.Font, System.Drawing">
     <value>Tahoma, 14.25pt</value>
   </data>
@@ -160,7 +229,7 @@
     <value>tabVehicle</value>
   </data>
   <data name="&gt;&gt;label3.ZOrder" xml:space="preserve">
-    <value>0</value>
+    <value>2</value>
   </data>
   <data name="nudMinSlope.Font" type="System.Drawing.Font, System.Drawing">
     <value>Tahoma, 36pt, style=Bold</value>
@@ -193,7 +262,7 @@
     <value>tabVehicle</value>
   </data>
   <data name="&gt;&gt;nudMinSlope.ZOrder" xml:space="preserve">
-    <value>1</value>
+    <value>3</value>
   </data>
   <data name="nudToolWidth.Font" type="System.Drawing.Font, System.Drawing">
     <value>Tahoma, 36pt, style=Bold</value>
@@ -226,7 +295,7 @@
     <value>tabVehicle</value>
   </data>
   <data name="&gt;&gt;nudToolWidth.ZOrder" xml:space="preserve">
-    <value>2</value>
+    <value>4</value>
   </data>
   <data name="label2.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -262,7 +331,7 @@
     <value>tabVehicle</value>
   </data>
   <data name="&gt;&gt;label2.ZOrder" xml:space="preserve">
-    <value>3</value>
+    <value>5</value>
   </data>
   <data name="label1.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -298,7 +367,7 @@
     <value>tabVehicle</value>
   </data>
   <data name="&gt;&gt;label1.ZOrder" xml:space="preserve">
-    <value>4</value>
+    <value>6</value>
   </data>
   <data name="label15.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -328,7 +397,7 @@
     <value>tabVehicle</value>
   </data>
   <data name="&gt;&gt;label15.ZOrder" xml:space="preserve">
-    <value>5</value>
+    <value>7</value>
   </data>
   <data name="label28.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -358,7 +427,7 @@
     <value>tabVehicle</value>
   </data>
   <data name="&gt;&gt;label28.ZOrder" xml:space="preserve">
-    <value>6</value>
+    <value>8</value>
   </data>
   <data name="label26.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -388,7 +457,7 @@
     <value>tabVehicle</value>
   </data>
   <data name="&gt;&gt;label26.ZOrder" xml:space="preserve">
-    <value>7</value>
+    <value>9</value>
   </data>
   <data name="label12.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -418,7 +487,7 @@
     <value>tabVehicle</value>
   </data>
   <data name="&gt;&gt;label12.ZOrder" xml:space="preserve">
-    <value>8</value>
+    <value>10</value>
   </data>
   <data name="label13.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -448,7 +517,7 @@
     <value>tabVehicle</value>
   </data>
   <data name="&gt;&gt;label13.ZOrder" xml:space="preserve">
-    <value>9</value>
+    <value>11</value>
   </data>
   <data name="label25.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -478,7 +547,7 @@
     <value>tabVehicle</value>
   </data>
   <data name="&gt;&gt;label25.ZOrder" xml:space="preserve">
-    <value>10</value>
+    <value>12</value>
   </data>
   <data name="label18.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -508,7 +577,7 @@
     <value>tabVehicle</value>
   </data>
   <data name="&gt;&gt;label18.ZOrder" xml:space="preserve">
-    <value>11</value>
+    <value>13</value>
   </data>
   <data name="nudAntennaHeight.Font" type="System.Drawing.Font, System.Drawing">
     <value>Tahoma, 36pt, style=Bold</value>
@@ -541,7 +610,7 @@
     <value>tabVehicle</value>
   </data>
   <data name="&gt;&gt;nudAntennaHeight.ZOrder" xml:space="preserve">
-    <value>12</value>
+    <value>14</value>
   </data>
   <data name="tabVehicle.Location" type="System.Drawing.Point, System.Drawing">
     <value>4, 45</value>
@@ -981,73 +1050,73 @@
   <data name="&gt;&gt;tabDisplay.ZOrder" xml:space="preserve">
     <value>1</value>
   </data>
-  <data name="label4.AutoSize" type="System.Boolean, mscorlib">
+  <data name="lblMinDitchCut.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
   </data>
-  <data name="label4.Font" type="System.Drawing.Font, System.Drawing">
+  <data name="lblMinDitchCut.Font" type="System.Drawing.Font, System.Drawing">
     <value>Tahoma, 14.25pt</value>
   </data>
-  <data name="label4.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+  <data name="lblMinDitchCut.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
     <value>NoControl</value>
   </data>
-  <data name="label4.Location" type="System.Drawing.Point, System.Drawing">
-    <value>434, 119</value>
+  <data name="lblMinDitchCut.Location" type="System.Drawing.Point, System.Drawing">
+    <value>21, 128</value>
   </data>
-  <data name="label4.RightToLeft" type="System.Windows.Forms.RightToLeft, System.Windows.Forms">
+  <data name="lblMinDitchCut.RightToLeft" type="System.Windows.Forms.RightToLeft, System.Windows.Forms">
     <value>No</value>
   </data>
-  <data name="label4.Size" type="System.Drawing.Size, System.Drawing">
-    <value>154, 23</value>
+  <data name="lblMinDitchCut.Size" type="System.Drawing.Size, System.Drawing">
+    <value>180, 23</value>
   </data>
-  <data name="label4.TabIndex" type="System.Int32, mscorlib">
-    <value>124</value>
+  <data name="lblMinDitchCut.TabIndex" type="System.Int32, mscorlib">
+    <value>126</value>
   </data>
-  <data name="label4.Text" xml:space="preserve">
-    <value>Plow Mast Height</value>
+  <data name="lblMinDitchCut.Text" xml:space="preserve">
+    <value>Min Ditch Cut Depth</value>
   </data>
-  <data name="&gt;&gt;label4.Name" xml:space="preserve">
-    <value>label4</value>
+  <data name="&gt;&gt;lblMinDitchCut.Name" xml:space="preserve">
+    <value>lblMinDitchCut</value>
   </data>
-  <data name="&gt;&gt;label4.Type" xml:space="preserve">
+  <data name="&gt;&gt;lblMinDitchCut.Type" xml:space="preserve">
     <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="&gt;&gt;label4.Parent" xml:space="preserve">
+  <data name="&gt;&gt;lblMinDitchCut.Parent" xml:space="preserve">
     <value>tabPage1</value>
   </data>
-  <data name="&gt;&gt;label4.ZOrder" xml:space="preserve">
+  <data name="&gt;&gt;lblMinDitchCut.ZOrder" xml:space="preserve">
     <value>0</value>
   </data>
-  <data name="nudPlowHeight.Font" type="System.Drawing.Font, System.Drawing">
+  <data name="nudMinDitchCut.Font" type="System.Drawing.Font, System.Drawing">
     <value>Tahoma, 36pt, style=Bold</value>
   </data>
-  <data name="nudPlowHeight.Location" type="System.Drawing.Point, System.Drawing">
-    <value>434, 145</value>
+  <data name="nudMinDitchCut.Location" type="System.Drawing.Point, System.Drawing">
+    <value>25, 154</value>
   </data>
-  <data name="nudPlowHeight.RightToLeft" type="System.Windows.Forms.RightToLeft, System.Windows.Forms">
+  <data name="nudMinDitchCut.RightToLeft" type="System.Windows.Forms.RightToLeft, System.Windows.Forms">
     <value>No</value>
   </data>
-  <data name="nudPlowHeight.Size" type="System.Drawing.Size, System.Drawing">
+  <data name="nudMinDitchCut.Size" type="System.Drawing.Size, System.Drawing">
     <value>166, 65</value>
   </data>
-  <data name="nudPlowHeight.TabIndex" type="System.Int32, mscorlib">
-    <value>123</value>
+  <data name="nudMinDitchCut.TabIndex" type="System.Int32, mscorlib">
+    <value>125</value>
   </data>
-  <data name="nudPlowHeight.TextAlign" type="System.Windows.Forms.HorizontalAlignment, System.Windows.Forms">
+  <data name="nudMinDitchCut.TextAlign" type="System.Windows.Forms.HorizontalAlignment, System.Windows.Forms">
     <value>Right</value>
   </data>
-  <data name="nudPlowHeight.UpDownAlign" type="System.Windows.Forms.LeftRightAlignment, System.Windows.Forms">
+  <data name="nudMinDitchCut.UpDownAlign" type="System.Windows.Forms.LeftRightAlignment, System.Windows.Forms">
     <value>Left</value>
   </data>
-  <data name="&gt;&gt;nudPlowHeight.Name" xml:space="preserve">
-    <value>nudPlowHeight</value>
+  <data name="&gt;&gt;nudMinDitchCut.Name" xml:space="preserve">
+    <value>nudMinDitchCut</value>
   </data>
-  <data name="&gt;&gt;nudPlowHeight.Type" xml:space="preserve">
+  <data name="&gt;&gt;nudMinDitchCut.Type" xml:space="preserve">
     <value>System.Windows.Forms.NumericUpDown, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="&gt;&gt;nudPlowHeight.Parent" xml:space="preserve">
+  <data name="&gt;&gt;nudMinDitchCut.Parent" xml:space="preserve">
     <value>tabPage1</value>
   </data>
-  <data name="&gt;&gt;nudPlowHeight.ZOrder" xml:space="preserve">
+  <data name="&gt;&gt;nudMinDitchCut.ZOrder" xml:space="preserve">
     <value>1</value>
   </data>
   <data name="lblMinTileCover.AutoSize" type="System.Boolean, mscorlib">
@@ -1060,7 +1129,7 @@
     <value>NoControl</value>
   </data>
   <data name="lblMinTileCover.Location" type="System.Drawing.Point, System.Drawing">
-    <value>434, 23</value>
+    <value>21, 25</value>
   </data>
   <data name="lblMinTileCover.RightToLeft" type="System.Windows.Forms.RightToLeft, System.Windows.Forms">
     <value>No</value>
@@ -1090,7 +1159,7 @@
     <value>Tahoma, 36pt, style=Bold</value>
   </data>
   <data name="nudMinTileCover.Location" type="System.Drawing.Point, System.Drawing">
-    <value>434, 49</value>
+    <value>21, 51</value>
   </data>
   <data name="nudMinTileCover.RightToLeft" type="System.Windows.Forms.RightToLeft, System.Windows.Forms">
     <value>No</value>
@@ -1123,7 +1192,7 @@
     <value>Tahoma, 36pt, style=Bold</value>
   </data>
   <data name="nudMaxTileCut.Location" type="System.Drawing.Point, System.Drawing">
-    <value>21, 49</value>
+    <value>434, 51</value>
   </data>
   <data name="nudMaxTileCut.RightToLeft" type="System.Windows.Forms.RightToLeft, System.Windows.Forms">
     <value>No</value>
@@ -1162,7 +1231,7 @@
     <value>NoControl</value>
   </data>
   <data name="lblMaxDitchCut.Location" type="System.Drawing.Point, System.Drawing">
-    <value>17, 119</value>
+    <value>430, 128</value>
   </data>
   <data name="lblMaxDitchCut.RightToLeft" type="System.Windows.Forms.RightToLeft, System.Windows.Forms">
     <value>No</value>
@@ -1192,7 +1261,7 @@
     <value>Tahoma, 36pt, style=Bold</value>
   </data>
   <data name="nudMaxDitchCut.Location" type="System.Drawing.Point, System.Drawing">
-    <value>21, 145</value>
+    <value>434, 154</value>
   </data>
   <data name="nudMaxDitchCut.RightToLeft" type="System.Windows.Forms.RightToLeft, System.Windows.Forms">
     <value>No</value>
@@ -1234,7 +1303,7 @@
     <value>NoControl</value>
   </data>
   <data name="lblMaxTileCut.Location" type="System.Drawing.Point, System.Drawing">
-    <value>17, 23</value>
+    <value>430, 25</value>
   </data>
   <data name="lblMaxTileCut.RightToLeft" type="System.Windows.Forms.RightToLeft, System.Windows.Forms">
     <value>No</value>

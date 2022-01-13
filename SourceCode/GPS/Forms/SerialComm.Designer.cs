@@ -11,10 +11,10 @@ namespace OpenGrade
     public partial class FormGPS
     {
         public static string portNameGPS = "COM GPS";
-        public static int baudRateGPS = 4800;
+        public static int baudRateGPS = 115200;
 
         public static string portNameGradeControl = "COM Sect";
-        public static int baudRateGradeControl = 38400;
+        public static int baudRateGradeControl = 115200;
 
         public static string portNameAutoSteer = "COM AS";
         public static int baudRateAutoSteer = 38400;
@@ -218,15 +218,17 @@ namespace OpenGrade
             mc.serialRecvGradeControlStr = sentence;
 
             string[] words = mc.serialRecvGradeControlStr.Split(',');
-            if (words.Length == 3)
+            if (words.Length == 5)
             {
                 //first 2 used for display mainly in autosteer window chart as strings
                 //parse the values
-                
-                int.TryParse(words[0], out mc.bladeOffset);
-                int.TryParse(words[1], out mc.autoState);
-                double.TryParse(words[2], out mc.voltage);
-                //double.TryParse(words[3], out double temp);
+                mc.prevHeadingIMU = mc.headingIMU;
+
+                int.TryParse(words[0], out mc.autoState);
+                double.TryParse(words[1], out mc.voltage);
+                float.TryParse(words[2], out mc.headingIMU);
+                float.TryParse(words[3], out mc.pitchIMU);
+                float.TryParse(words[4], out mc.rollIMU);
             }
 
         }
@@ -246,7 +248,7 @@ namespace OpenGrade
                     System.Threading.Thread.Sleep(25);
                     string sentence = spGradeControl.ReadLine();
                     this.BeginInvoke(new LineReceivedEventHandlerRelay(SerialLineReceivedGradeControl), sentence);                    
-                    if (spGradeControl.BytesToRead > 9) spGradeControl.DiscardInBuffer();
+                    if (spGradeControl.BytesToRead > 15) spGradeControl.DiscardInBuffer();
                 }
                 //this is bad programming, it just ignores errors until its hooked up again.
                 catch (Exception ex)
@@ -334,7 +336,7 @@ namespace OpenGrade
                     System.Threading.Thread.Sleep(50);
 
                     //read whatever is in port
-                    string sentence = sp.ReadExisting();
+                    string sentence = sp.ReadExisting();   //sp.ReadExisting();
                     this.BeginInvoke(new LineReceivedEventHandler(SerialLineReceived), sentence);
                 }
                 catch (Exception ex)

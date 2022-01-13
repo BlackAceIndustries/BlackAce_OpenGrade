@@ -11,7 +11,8 @@ namespace OpenGrade
        //class variables
         private readonly FormGPS mf = null;
 
-        private double antennaHeight, plowHeight, minSlope, toolWidth, maxTileCut, maxDitchCut, minTileCover, viewDistAboveGnd, viewDistUnderGnd;
+        private double antennaHeight, plowHeight, minSlope, toolWidth, maxTileCut, 
+            maxDitchCut, minTileCover, minDitchCut,viewDistAboveGnd, viewDistUnderGnd;
         private byte KpGain, KiGain, KdGain, retDeadband, extDeadband, valveType;
       
         private readonly double metImp2m, m2MetImp;
@@ -47,6 +48,7 @@ namespace OpenGrade
             plowHeight = Properties.Vehicle.Default.setVehicle_plowHeight;
 
             maxTileCut = Properties.Vehicle.Default.setVehicle_maxTileCut;  
+            minDitchCut = Properties.Vehicle.Default.setVehicle_minDitchCut;
             maxDitchCut = Properties.Vehicle.Default.setVehicle_maxDitchCut;
             minTileCover = Properties.Vehicle.Default.setVehicle_minTileCover;      
             
@@ -86,6 +88,10 @@ namespace OpenGrade
             nudMaxDitchCut.ValueChanged -= nudMaxDitchCut_ValueChanged;
             nudMaxDitchCut.Value = (decimal)(maxDitchCut * m2MetImp);
             nudMaxDitchCut.ValueChanged += nudMaxDitchCut_ValueChanged;
+
+            nudMinDitchCut.ValueChanged -= nudMinDitchCut_ValueChanged;
+            nudMinDitchCut.Value = (decimal)(minDitchCut * m2MetImp);
+            nudMinDitchCut.ValueChanged += nudMinDitchCut_ValueChanged;
 
             nudKp.ValueChanged -= nudKp_ValueChanged;
             nudKp.Value = KpGain;
@@ -132,6 +138,8 @@ namespace OpenGrade
             //
             mf.vehicle.maxTileCut = maxTileCut;
             Properties.Vehicle.Default.setVehicle_maxTileCut = mf.vehicle.maxTileCut;
+            mf.vehicle.minDitchCut = minDitchCut;
+            Properties.Vehicle.Default.setVehicle_minDitchCut = mf.vehicle.minDitchCut;
             mf.vehicle.maxDitchCut = maxDitchCut;
             Properties.Vehicle.Default.setVehicle_maxDitchCut = mf.vehicle.maxDitchCut;
             mf.vehicle.minTileCover = minTileCover;
@@ -172,13 +180,15 @@ namespace OpenGrade
             //Sections ------------------------------------------------------------------------------------------
 
             Properties.Settings.Default.Save();
-            Properties.Vehicle.Default.Save();                     
+            Properties.Vehicle.Default.Save();
+
+            mf.GradeControlDataOutToPort();
+           
            
 
             //back to FormGPS
             DialogResult = DialogResult.OK;
 
-            mf.GradeControlSettingsOutToPort();
             
             Close();
         }
@@ -229,45 +239,85 @@ namespace OpenGrade
             if (valveSelectChoice.Text == "CNH")
             {
                 mf.mc.gradeControlSettings[mf.mc.gsValveType] = 0;
-                Properties.Settings.Default.set_ValveType = 0;
-                mf.vehicle.valveType = 0;
+                Properties.Settings.Default.set_ValveType = mf.mc.gradeControlSettings[mf.mc.gsValveType];
+                valveType = mf.mc.gradeControlSettings[mf.mc.gsValveType];
                 Properties.Settings.Default.set_ValveName = valveSelectChoice.Text;
-                mf.GradeControlSettingsOutToPort();
                 Properties.Settings.Default.Save();
+                mf.GradeControlSettingsOutToPort();
 
             }
             if (valveSelectChoice.Text == "DEERE")
             {
                 mf.mc.gradeControlSettings[mf.mc.gsValveType] = 1;
-                Properties.Settings.Default.set_ValveType = 1;
-                mf.vehicle.valveType = 1;
+                Properties.Settings.Default.set_ValveType = mf.mc.gradeControlSettings[mf.mc.gsValveType];
+                valveType = mf.mc.gradeControlSettings[mf.mc.gsValveType];
                 Properties.Settings.Default.set_ValveName = valveSelectChoice.Text;
-                mf.GradeControlSettingsOutToPort();
                 Properties.Settings.Default.Save();
+                mf.GradeControlSettingsOutToPort();
             }
             if (valveSelectChoice.Text == "DANFOSS")
             {
                 mf.mc.gradeControlSettings[mf.mc.gsValveType] = 2;
-                Properties.Settings.Default.set_ValveType = 2;
-                mf.vehicle.valveType = 2;
+                Properties.Settings.Default.set_ValveType = mf.mc.gradeControlSettings[mf.mc.gsValveType];
+                valveType = mf.mc.gradeControlSettings[mf.mc.gsValveType];
                 Properties.Settings.Default.set_ValveName = valveSelectChoice.Text;
-                mf.GradeControlSettingsOutToPort();
                 Properties.Settings.Default.Save();
+                mf.GradeControlSettingsOutToPort();
             }
             else 
             {
                 mf.mc.gradeControlSettings[mf.mc.gsValveType] = 0;
-                Properties.Settings.Default.set_ValveType = 0;
-                mf.vehicle.valveType = 0;
+                Properties.Settings.Default.set_ValveType = mf.mc.gradeControlSettings[mf.mc.gsValveType];
+                valveType = mf.mc.gradeControlSettings[mf.mc.gsValveType];
                 Properties.Settings.Default.set_ValveName = valveSelectChoice.Text;
-                mf.GradeControlSettingsOutToPort();
                 Properties.Settings.Default.Save();
+                mf.GradeControlSettingsOutToPort();
             }
-            
-            
         }
 
         private void label8_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void nudKp_ValueChanged_1(object sender, EventArgs e)
+        {
+            KpGain = (byte)nudKp.Value;            
+            mf.mc.gradeControlSettings[mf.mc.gsKpGain] = KpGain;
+            Properties.Settings.Default.set_KdGain = KdGain;
+            KpGain = Properties.Settings.Default.set_KpGain;
+            Properties.Settings.Default.Save();
+            mf.GradeControlSettingsOutToPort();
+        }
+
+        private void nudKi_ValueChanged_1(object sender, EventArgs e)
+        {
+            KiGain = (byte)nudKi.Value;            
+            mf.mc.gradeControlSettings[mf.mc.gsKiGain] = KiGain;
+            Properties.Settings.Default.set_KiGain = KiGain;
+            KiGain = Properties.Settings.Default.set_KiGain; /// 10
+            Properties.Settings.Default.Save();
+            mf.GradeControlSettingsOutToPort();
+
+        }
+
+        private void nudKd_ValueChanged_1(object sender, EventArgs e)
+        {
+            KdGain = (byte)nudKd.Value;            
+            mf.mc.gradeControlSettings[mf.mc.gsKdGain] = KdGain;
+            Properties.Settings.Default.set_KdGain = KdGain;
+            KdGain = Properties.Settings.Default.set_KdGain;
+            Properties.Settings.Default.Save();
+            mf.GradeControlSettingsOutToPort();
+            
+        }
+
+        private void label10_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void nudMaxDitchCut_ValueChanged_1(object sender, EventArgs e)
         {
 
         }
@@ -281,6 +331,9 @@ namespace OpenGrade
         {
             extDeadband = (byte)nudExtDeadband.Value;
             mf.mc.gradeControlSettings[mf.mc.gsExtDeadband] = extDeadband;
+            Properties.Settings.Default.set_ExtDeadband = extDeadband;            
+            extDeadband = Properties.Settings.Default.set_ExtDeadband;
+            Properties.Settings.Default.Save();
             mf.GradeControlSettingsOutToPort();
 
         }
@@ -289,7 +342,10 @@ namespace OpenGrade
         {
             retDeadband = (byte)nudRetDeadband.Value;
             mf.mc.gradeControlSettings[mf.mc.gsRetDeadband] = retDeadband;
+            Properties.Settings.Default.set_RetDeadband = retDeadband;
+            Properties.Settings.Default.Save();
             mf.GradeControlSettingsOutToPort();
+            
         }
 
 
@@ -298,19 +354,21 @@ namespace OpenGrade
         {
             plowHeight = (double)nudPlowHeight.Value * metImp2m;
         }
-        private void nudMaxTileCut_ValueChanged(object sender, EventArgs e)
-        {
-            maxTileCut = (double)nudMaxTileCut.Value * metImp2m;
-        }
-        private void nudMaxDitchCut_ValueChanged(object sender, EventArgs e)
-        {
-            maxDitchCut = (double)nudMaxDitchCut.Value * metImp2m;
-        }
         private void nudMinTileCover_ValueChanged(object sender, EventArgs e)
         {
             minTileCover = (double)nudMinTileCover.Value * metImp2m;
         }
-
+        private void nudMaxTileCut_ValueChanged(object sender, EventArgs e)
+        {
+            maxTileCut = (double)nudMaxTileCut.Value * metImp2m;
+        }
+        private void nudMinDitchCut_ValueChanged(object sender, EventArgs e)
+        {
+            minDitchCut = (double)nudMinDitchCut.Value * metImp2m;
+        }private void nudMaxDitchCut_ValueChanged(object sender, EventArgs e)
+        {
+            maxDitchCut = (double)nudMaxDitchCut.Value * metImp2m;
+        }        
         private void nudKp_ValueChanged(object sender, EventArgs e)
         {
             KpGain = (byte)nudKp.Value;
@@ -347,9 +405,6 @@ namespace OpenGrade
         {
             toolWidth = (double)nudToolWidth.Value * metImp2m;
         }
-
-
-
 
 
 

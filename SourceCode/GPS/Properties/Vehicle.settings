@@ -26,5 +26,20 @@
     <Setting Name="setVehicle_minSlope" Type="System.Double" Scope="User">
       <Value Profile="(Default)">-0.001</Value>
     </Setting>
+    <Setting Name="setVehicle_plowHeight" Type="System.Double" Scope="User">
+      <Value Profile="(Default)">0.5</Value>
+    </Setting>
+    <Setting Name="setVehicle_maxTileCut" Type="System.Double" Scope="User">
+      <Value Profile="(Default)">200</Value>
+    </Setting>
+    <Setting Name="setVehicle_maxDitchCut" Type="System.Double" Scope="User">
+      <Value Profile="(Default)">150</Value>
+    </Setting>
+    <Setting Name="setVehicle_minDitchCut" Type="System.Double" Scope="User">
+      <Value Profile="(Default)">15</Value>
+    </Setting>
+    <Setting Name="setVehicle_minTileCover" Type="System.Double" Scope="User">
+      <Value Profile="(Default)">20</Value>
+    </Setting>
   </Settings>
 </SettingsFile>

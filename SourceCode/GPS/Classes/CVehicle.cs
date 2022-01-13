@@ -17,24 +17,11 @@ namespace OpenGrade
         public double minSlope;
 
         // Black Ace Industries
-        public double antennaHeight;
-        public double plowHeight;
-        public double maxDitchCut;
-        public double maxTileCut;
-        public double minTileCover;
-        
-        public byte KpGain;
-        public byte KiGain;
-        public byte KdGain;
-        public byte retDeadband;
-        public byte extDeadband;
-        public byte valveType;
+        public double antennaHeight, plowHeight, maxDitchCut, minDitchCut, maxTileCut, minTileCover;
+
+        public byte KpGain, KiGain, KdGain, retDeadband, extDeadband, valveType;
 
         public double temp = 1;
-
-
-
-
 
         //width of cutting tool
         public double toolWidth;
@@ -59,6 +46,7 @@ namespace OpenGrade
             
             // Black Ace Industries
             maxDitchCut = Properties.Vehicle.Default.setVehicle_maxDitchCut;
+            minDitchCut = Properties.Vehicle.Default.setVehicle_minDitchCut;
             maxTileCut = Properties.Vehicle.Default.setVehicle_maxTileCut;
             minTileCover = Properties.Vehicle.Default.setVehicle_minTileCover;
             

@@ -22,5 +22,5 @@ C:\Users\auzzy\Documents\7.Software Development\OpenGrade\OpenGrade_V3.0.1\Black
 C:\Users\auzzy\Documents\7.Software Development\OpenGrade\OpenGrade_V3.0.1\BlackAce_OpenGrade\SourceCode\GPS\obj\x86\Release\OpenGrade.csproj.CopyComplete
 C:\Users\auzzy\Documents\7.Software Development\OpenGrade\OpenGrade_V3.0.1\BlackAce_OpenGrade\SourceCode\GPS\obj\x86\Release\OpenGrade.exe
 C:\Users\auzzy\Documents\7.Software Development\OpenGrade\OpenGrade_V3.0.1\BlackAce_OpenGrade\SourceCode\GPS\obj\x86\Release\OpenGrade.pdb
-C:\Users\auzzy\Documents\7.Software Development\OpenGrade\OpenGrade_V3.0.1\BlackAce_OpenGrade\SourceCode\GPS\obj\x86\Release\OpenGrade.csprojAssemblyReference.cache
 C:\Users\auzzy\Documents\7.Software Development\OpenGrade\OpenGrade_V3.0.1\BlackAce_OpenGrade\SourceCode\GPS\obj\x86\Release\OpenGrade.FormCutDir.resources
+C:\Users\auzzy\Documents\7.Software Development\OpenGrade\OpenGrade_V3.0.1\BlackAce_OpenGrade\SourceCode\GPS\obj\x86\Release\OpenGrade.FormRemote.resources

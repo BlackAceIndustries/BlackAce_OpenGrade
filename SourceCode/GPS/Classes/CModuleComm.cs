@@ -6,7 +6,6 @@ namespace OpenGrade
         //copy of the mainform address
         private readonly FormGPS mf = null;
 
-
         //GradeControl ------------------------------------------------------------------------------------------------
         public string serialRecvGradeControlStr;   ///Black Ace Industries
 
@@ -14,12 +13,12 @@ namespace OpenGrade
         public int incomingInt;
 
         // PGN - 32762 - 127.250
-        public static int numGradeControlDataItems = 6;
+        public static int numGradeControlDataItems = 5;
         public byte[] GradeControlData = new byte[numGradeControlDataItems];
         public int gcHeaderHi, gcHeaderLo = 1, gcDeltaDir = 2, gcCutDelta = 3, gcisAutoActive = 4;                                
 
         //info coming from Grade Control Mod
-        public int autoState = 0, bladeOffset = 0;
+        public int autoState = 0, bladeOffset = 0; //public byte autoState = 0;        
         public double voltage = 0;
 
         // PGN - 32760 - 127.248
@@ -50,6 +49,8 @@ namespace OpenGrade
         //imu and roll inclinometer
         public int steerSwitchValue, gyroHeading=9999, prevGyroHeading = 9999;
         public int rollRaw=9999; //inclinometer ?
+
+        public float headingIMU = 9999, prevHeadingIMU = 9999, rollIMU = 9999, pitchIMU = 9999;
 
         
 

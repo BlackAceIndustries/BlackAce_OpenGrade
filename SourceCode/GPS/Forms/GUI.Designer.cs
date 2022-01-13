@@ -115,13 +115,13 @@ namespace OpenGrade
             {
                 isGradeControlBtnOn = false;
                 btnGradeControl.Image = Properties.Resources.GradeControlOff1;
-                mc.GradeControlData[mc.gcisAutoActive] = 0;
+                mc.GradeControlData[mc.gcisAutoActive] = 0;                
             }
             else
             {
                 isGradeControlBtnOn = true;
                 btnGradeControl.Image = Properties.Resources.GradeControlOn1;
-                mc.GradeControlData[mc.gcisAutoActive] = 1;
+                mc.GradeControlData[mc.gcisAutoActive] = 1;                
 
             }
 
@@ -190,27 +190,54 @@ namespace OpenGrade
 
         //button for Manual On Off of the sections
         private void btnManualOffOn_Click(object sender, EventArgs e)
-        {
+        { 
             switch (manualBtnState)
             {
+               
                 case btnStates.Off:
-                    manualBtnState = btnStates.Rec;
-                    btnManualOffOn.Image = Properties.Resources.SurveyStop1;
-                    userDistance = 0;
-                    lblCut.Text = "*";
-                    lblFill.Text = "*";
-                    lblCutFillRatio.Text = "*";
-                    lblDrawSlope.Text = "*";                    
 
-                    btnDoneDraw.Enabled = false;
-                    btnDeleteLastPoint.Enabled = false;
-                    btnStartDraw.Enabled = false;
-                    
-                    
+                    if (ct.ptList.Count > 0 && !isCutSaved && btnSaveCut.Enabled == true)
+                    {
+                        DialogResult result3 = MessageBox.Show("Do you wish to start a new survey Line? \nThis will erase Your current cut if it has not been saved \n \n Do you wish to Continue?", "Do you wish to start a new survey Line?",
+                                             MessageBoxButtons.YesNoCancel, MessageBoxIcon.Warning); 
+                        
+                        if (result3 == DialogResult.Yes)
+                        {
+                            manualBtnState = btnStates.Rec;
+                            btnManualOffOn.Image = Properties.Resources.SurveyStop1;
+                            userDistance = 0;
+                            lblCut.Text = "*";
+                            lblFill.Text = "*";
+                            lblCutFillRatio.Text = "*";
+                            lblDrawSlope.Text = "*";
+
+                            btnDoneDraw.Enabled = false;
+                            btnDeleteLastPoint.Enabled = false;
+                            btnStartDraw.Enabled = false;
+                        }
+                    }
+                    else
+                    {
+                        manualBtnState = btnStates.Rec;
+                        btnManualOffOn.Image = Properties.Resources.SurveyStop1;
+                        userDistance = 0;
+                        lblCut.Text = "*";
+                        lblFill.Text = "*";
+                        lblCutFillRatio.Text = "*";
+                        lblDrawSlope.Text = "*";
+
+                        btnDoneDraw.Enabled = false;
+                        btnDeleteLastPoint.Enabled = false;
+                        btnStartDraw.Enabled = false;
+
+                        
+
+                    }
 
                     break;
 
                 case btnStates.Rec:
+
                     manualBtnState = btnStates.Off;
                     btnManualOffOn.Image = Properties.Resources.SurveyStart;
                     CalculateContourPointDistances();
@@ -218,10 +245,9 @@ namespace OpenGrade
                     btnDoneDraw.Enabled = false;
                     btnDeleteLastPoint.Enabled = false;
                     btnStartDraw.Enabled = true;
-                    
+
                     btnSaveCut.Enabled = true;
-
-
+                    isCutSaved = false;
 
                     break;
             }
@@ -965,8 +991,8 @@ namespace OpenGrade
         {
             get
             {
-                if (mc.gyroHeading != 9999)
-                    return Math.Round(mc.gyroHeading * 0.0625, 1) + "\u00B0";
+                if (mc.headingIMU != 9999)
+                    return Math.Round(mc.headingIMU, 1) + "\u00B0";
                 else return "-";
             }
         }
@@ -974,11 +1000,21 @@ namespace OpenGrade
         {
             get
             {
-                if (mc.rollRaw != 9999)
-                    return Math.Round(mc.rollRaw * 0.0625, 1) + "\u00B0";
+                if (mc.rollIMU != 9999)
+                    return Math.Round(mc.rollIMU, 1) + "\u00B0";
                 else return "-";
             }
         }
+        public string PitchInDegrees
+        {
+            get
+            {
+                if (mc.pitchIMU != 9999)
+                    return Math.Round(mc.pitchIMU, 1) + "\u00B0";
+                else return "-";
+            }
+        }
+
         public string PureSteerAngle { get { return ((double)(guidanceLineSteerAngle) * 0.1) + "\u00B0"; } }
 
         public string FixHeading { get { return Math.Round(fixHeading, 4).ToString(); } }
@@ -1027,47 +1063,50 @@ namespace OpenGrade
             ScanForNMEA();
             //tmrWatchdog.Enabled = true;
             statusUpdateCounter++;
+            //
+            
 
             if (fiveSecondCounter++ > 100) { fiveSecondCounter = 0; }
 
 
             //every half of a second update all status
-            if (statusUpdateCounter > 4)
+            if (statusUpdateCounter > 2)
             {
                 //reset the counter
                 statusUpdateCounter = 0;
-
+                
                 //counter used for saving field in background
                 saveCounter++;
 
-                if (tabGradeControl.SelectedIndex == 0 && tabGradeControl.Visible)
+                //if (tabGradeControl.SelectedIndex == 0 && tabGradeControl.Visible)
+                //{
+
+                //both
+                lblLatitude.Text = Latitude;
+                lblLongitude.Text = Longitude;
+                lblFixQuality.Text = FixQuality;
+                lblSats.Text = SatsTracked;
+
+                lblRoll.Text = RollInDegrees;
+                lblGyroHeading.Text = GyroInDegrees;
+                lblPitch.Text = PitchInDegrees;
+                lblGPSHeading.Text = GPSHeading;                     
+
+                //up in the menu a few pieces of info
+                if (isJobStarted)
                 {
-
-                    //both
-                    lblLatitude.Text = Latitude;
-                    lblLongitude.Text = Longitude;
-                    lblFixQuality.Text = FixQuality;
-                    lblSats.Text = SatsTracked;
-
-                    lblRoll.Text = RollInDegrees;
-                    lblGyroHeading.Text = GyroInDegrees;
-                    lblGPSHeading.Text = GPSHeading;                     
-
-                    //up in the menu a few pieces of info
-                    if (isJobStarted)
-                    {
-                        lblEasting.Text = "E: " + Math.Round(pn.easting, 1).ToString();
-                        lblNorthing.Text = "N: " + Math.Round(pn.northing, 1).ToString();
-                    }
-                    else
-                    {
-                        lblEasting.Text = "E: " + ((int)pn.actualEasting).ToString();
-                        lblNorthing.Text = "N: " + ((int)pn.actualNorthing).ToString();
-                    }
-
-                    lblZone.Text = pn.zone.ToString();
-                    tboxSentence.Text = recvSentenceSettings;
+                    lblEasting.Text = "E: " + Math.Round(pn.easting, 1).ToString();
+                    lblNorthing.Text = "N: " + Math.Round(pn.northing, 1).ToString();
                 }
+                else
+                {
+                    lblEasting.Text = "E: " + ((int)pn.actualEasting).ToString();
+                    lblNorthing.Text = "N: " + ((int)pn.actualNorthing).ToString();
+                }
+
+                lblZone.Text = pn.zone.ToString();
+                tboxSentence.Text = recvSentenceSettings;
+               // }
 
                 //the main formgps window
                 if (isMetric)  //metric or imperial
@@ -1096,8 +1135,27 @@ namespace OpenGrade
                 btnABLine.Text = PassNumber;
                 sqrCutLine.Text = PureSteerAngle;
                 
-                voltageBar.Value = ((int)(mc.voltage * 100)) + 12; 
-                lblDiagnostics.Text = (mc.voltage).ToString() + "Volts";
+                /*if (mc.gradeControlSettings[mc.gsValveType] == 2)
+                {
+                    voltageBar.Max = 1200;
+                    voltageBar.Value = ((int)((mc.voltage * 2.4) * 100)) + 12;
+                    
+                    lblDiagnostics.Text = (mc.voltage * 2.4).ToString() + "Volts";
+                }
+                else
+                {
+                    voltageBar.Max = 500;
+                    
+
+                }
+                */
+
+                        
+                        
+                 voltageBar.Value = ((int)(mc.voltage * 100)) + 12;                    
+                 lblDiagnostics.Text = (mc.voltage).ToString() + "Volts";       
+                       
+                
 
 
                 if (cutDelta == 9999)
@@ -1107,11 +1165,9 @@ namespace OpenGrade
                     pbarCutAbove.Value = 0;
                     pbarCutBelow.Value = 0;
                     mc.GradeControlData[mc.gcDeltaDir] = 3;
-                    GradeControlDataOutToPort();
+                    
                     //Output to serial for blade control
                 }
-
-
                 else
                 {
                     if (isMetric)  //metric or imperial
@@ -1121,28 +1177,30 @@ namespace OpenGrade
                         byte cut1 = (byte)cut;                        
 
                         mc.GradeControlData[mc.gcCutDelta] = cut1;
+                       
 
                         if (cutDelta > 0)
                         {
                             // Black Ace Industries
                             lblCutDelta.Text = cutDelta.ToString("N1");
                             mc.GradeControlData[mc.gcDeltaDir] = 1;
+                            
                         }
                         else
                         {
                             // Black Ace Industries                           
                             lblCutDelta.Text = cutDelta.ToString("N1");
                             mc.GradeControlData[mc.gcDeltaDir] = 0;
-                        }
-                        
                             
+                        }
                         
                     }
                     else
                     {
                         int cut = Math.Abs((int)cutDelta);
                         if (cut > 255) cut = 255;
-                        byte cut1 = (byte)cut;       
+                        byte cut1 = (byte)cut;
+                        
                         mc.GradeControlData[mc.gcCutDelta] = cut1;
                         if (cut1 == 0) mc.GradeControlData[mc.gcDeltaDir] = 3;
 
@@ -1157,9 +1215,9 @@ namespace OpenGrade
                             lblCutDelta.Text = (0.3937 * cutDelta).ToString("N2");
                             mc.GradeControlData[mc.gcDeltaDir] = 0;
                         }
-                       
+                        
                     }
-                   
+
 
                     lblCutDelta.BackColor = SystemColors.ControlText;
 
@@ -1190,7 +1248,12 @@ namespace OpenGrade
                     tboxSentence.Text = gStr.gsNoSentenceData;
                 }
                 else stripOnlineGPS.Value = 100;
+                
+                GradeControlDataOutToPort();
             }
+            
+
+
             //wait till timer fires again.     
         }
     }

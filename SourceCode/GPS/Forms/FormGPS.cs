@@ -59,7 +59,8 @@ namespace OpenGrade
         public bool isPureDisplayOn = true, isSkyOn = true, isBigAltitudeOn = false;
 
         //bool for whether or not a job is active
-        public bool isJobStarted = false, isAreaOnRight = true, isGradeControlBtnOn = false, isSurfaceModeOn = true, isPipeModeOn = false, isDitchModeOn = false, isLevelOn = false, isFirstPtSet = false;
+        public bool isJobStarted = false, isAreaOnRight = true, isGradeControlBtnOn = false, isSurfaceModeOn = true, isPipeModeOn = false,
+            isDitchModeOn = false, isLevelOn = false, isFirstPtSet = false, isCutSaved = false;
 
         // Manual, 3 states possible
         public enum btnStates { Off, Rec, Work }
@@ -136,6 +137,11 @@ namespace OpenGrade
         /// Resource manager for gloabal strings
         /// </summary>
         public ResourceManager _rm;
+
+        /// <summary>
+        /// Resource manager for gloabal strings
+        /// </summary>
+        public CRemote rem;
 
         #endregion // Class Props and instances
 
@@ -533,6 +539,8 @@ namespace OpenGrade
 
             sim = new CSim(this);
 
+            rem = new CRemote(this);
+
             //start the stopwatch
             swFrame.Start();
 
@@ -550,6 +558,24 @@ namespace OpenGrade
             {
                 btnResetSim.PerformClick();
                 return true;
+            }
+
+            // Increase Elevation
+            if (keyData == (Keys.PageUp))
+            {
+                sim.altitude = (double)nudElevation.Value;
+                sim.altitude = sim.altitude + .005;
+                nudElevation.Value = (decimal)sim.altitude;
+                return true;    // indicate that you handled this keystroke
+            }
+
+            //Decrease Elevation
+            if (keyData == (Keys.PageDown))
+            {
+                sim.altitude = (double)nudElevation.Value;
+                sim.altitude = sim.altitude - .005; ;
+                nudElevation.Value = (decimal)sim.altitude;
+                return true;    // indicate that you handled this keystroke
             }
 
             //speed up
@@ -611,35 +637,60 @@ namespace OpenGrade
                 return true;
             }
 
+            //Open Job
             if (keyData == (Keys.F))
             {
                 JobNewOpenResume();
                 return true;    // indicate that you handled this keystroke
             }
 
-            if (keyData == (Keys.A))
+
+
+            ///
+            /// Remote Keystrokes
+            ///
+
+            
+            // Open to Options
+            if (keyData == (Keys.D0))
+            {
+                JobNewOpenResume();
+                return true;    // indicate that you handled this keystroke
+            }
+
+            // start/Stop Survey
+            if (keyData == (Keys.D1)){
+            
+                btnManualOffOn.PerformClick();   
+            
+                return true;    // indicate that you handled this keystroke
+            }
+
+            // Toggle Auto Cut on/off
+            if (keyData == (Keys.D2))
             {
                 btnGradeControl.PerformClick();
                 return true;    // indicate that you handled this keystroke
             }
-
-            if (keyData == (Keys.PageUp))                
-            {
-                sim.altitude = (double)nudElevation.Value;
-                sim.altitude = sim.altitude + .005;
-                nudElevation.Value = (decimal)sim.altitude;
-                return true;    // indicate that you handled this keystroke
-            }
             
-            if (keyData == (Keys.PageDown))
+            // Reset Blade Offset 
+            if (keyData == (Keys.D3))
             {
-                sim.altitude = (double)nudElevation.Value;
-                sim.altitude = sim.altitude - .005; ;
-                nudElevation.Value = (decimal)sim.altitude;
+                bladeOffset = 0;
+                lblBladeOffset.Text = bladeOffset.ToString();
                 return true;    // indicate that you handled this keystroke
             }
 
-            if (keyData == (Keys.Up))
+            // Show Gps Form
+            if (keyData == (Keys.D4))
+            {
+                Form form = new FormGPSData(this);
+                form.Show();
+                return true;    // indicate that you handled this keystroke
+            }
+
+            // Increase Blade Offset
+            if (keyData == (Keys.Left))
             {                
                 bladeOffset++;
                 if (bladeOffset > 50) bladeOffset = 50;
@@ -647,7 +698,8 @@ namespace OpenGrade
                 return true;    // indicate that you handled this keystroke
             }
 
-            if (keyData == (Keys.Down))
+            // Decrease Blade Offset
+            if (keyData == (Keys.Right))
             {
                 bladeOffset--;
                 if (bladeOffset < -50) bladeOffset = -50;
@@ -655,12 +707,99 @@ namespace OpenGrade
                 return true;    // indicate that you handled this keystroke
             }
 
-            if (keyData == (Keys.Escape))
+            // Open to Options
+            if (keyData == (Keys.Up))
             {
-                bladeOffset = 0;
-                lblBladeOffset.Text = bladeOffset.ToString();
+                int tab = tabGradeControl.SelectedIndex;
+                tab++;
+                if (tab > 1) tab = 0;                
+
+                tabGradeControl.SelectTab(tab);
                 return true;    // indicate that you handled this keystroke
             }
+
+            // Open to Options
+            if (keyData == (Keys.Down))
+            {
+                btnSaveCut.PerformClick();
+                return true;    // indicate that you handled this keystroke
+            }
+            
+            
+            /*
+            if (keyData == (Keys.D0))  // start Btn
+            {
+                rem.DoFunction(rem.startBtn);
+                //rem.DoFunction(Properties.Remote.Default.startBtn);
+                return true;    // indicate that you handled this keystroke
+            }
+
+            // start/Stop Survey
+            if (keyData == (Keys.D1)) // X Btn
+            {                
+                rem.DoFunction(rem.xBtn);
+                //rem.DoFunction(Properties.Remote.Default.xBtn);
+                return true;    // indicate that you handled this keystroke
+            }
+
+            // Toggle Auto Cut on/off
+            if (keyData == (Keys.D2))  //  A Btn
+            {
+                rem.DoFunction(rem.aBtn);
+                //rem.DoFunction(Properties.Remote.Default.aBtn);
+                return true;    // indicate that you handled this keystroke
+            }
+
+            // Reset Blade Offset 
+            if (keyData == (Keys.D3))  // b Btn
+            {
+                rem.DoFunction(rem.bBtn);
+                //rem.DoFunction(Properties.Remote.Default.bBtn);
+                return true;    // indicate that you handled this keystroke
+            }
+
+            // Show Gps Form
+            if (keyData == (Keys.D4))   // Y Btn
+            {
+                rem.DoFunction(rem.yBtn);
+                //rem.DoFunction(Properties.Remote.Default.yBtn);
+                return true;    // indicate that you handled this keystroke
+            }
+
+            // Increase Blade Offset
+            if (keyData == (Keys.Left))  // UP Btn
+            {
+                rem.DoFunction(rem.upBtn);
+                //rem.DoFunction(Properties.Remote.Default.upBtn);
+                return true;    // indicate that you handled this keystroke
+            }
+
+            // Decrease Blade Offset
+            if (keyData == (Keys.Right)) // Down Btn
+            {
+                rem.DoFunction(rem.rightBtn);
+                //rem.DoFunction(Properties.Remote.Default.downBtn);
+                return true;    // indicate that you handled this keystroke
+            }
+
+            // Open to Options
+            if (keyData == (Keys.Up)) // Right Btn
+            {
+                rem.DoFunction(Properties.Remote.Default.rightBtn);
+                return true;    // indicate that you handled this keystroke
+            }
+
+            // Open to Options
+            if (keyData == (Keys.Down))  // Left Btn
+            {
+                rem.DoFunction(rem.downBtn);
+                //rem.DoFunction(Properties.Remote.Default.leftBtn);
+                return true;    // indicate that you handled this keystroke
+            }
+            */
+            
+
+
 
             // Call the base class
             return base.ProcessCmdKey(ref msg, keyData);
@@ -907,14 +1046,28 @@ namespace OpenGrade
         {
 
         }
-       
+
+
+        private void remoteConfigurationToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Form form = new FormRemote(this);
+            form.Show();
+        }
+
+        private void stripMinMax_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void toolStripDropDownBtnFuncs_Click(object sender, EventArgs e)
+        {
+
+        }
+
         private void btnSaveCut_Click_1(object sender, EventArgs e)
         {
 
-            //ask for a directory name
-            //using (var form2 = new FormCutDir(this))
-            //form2.ShowDialog();
-
+            isCutSaved = true;
             ct.SaveToCut();
             btnSaveCut.Enabled = false;
         }
@@ -1307,7 +1460,7 @@ namespace OpenGrade
         }
 
         //bring up field dialog for new/open/resume
-        private void JobNewOpenResume()
+        public void JobNewOpenResume()
         {        
             if (!isJobStarted)
             {

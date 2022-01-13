@@ -10,6 +10,20 @@
 //the value in the cutval digital.write
 //
 //-------------------------------------------------------------------------
+/* Board layout:
+            Front
+         +----------+
+         |         *| RST   PITCH  ROLL  HEADING
+     ADR |*        *| SCL
+     INT |*        *| SDA     ^            /->
+     PS1 |*        *| GND     |            |
+     PS0 |*        *| 3VO     Y    Z-->    \-X
+         |         *| VIN
+         +----------+
+*/
+
+
+
 // Function STUBS for Platform IO
 bool SetupGradeController();
 bool SetAutoState();
@@ -20,6 +34,10 @@ void SetOutput();
 void SetValveLimits();
 
 // configured to Run on Esp 32
+#include <Arduino.h>
+#include <Adafruit_Sensor.h>
+#include <Adafruit_BNO055.h>
+#include <utility/imumaths.h>
 #include "EEPROM.h"
 #include <SPI.h>
 #include <Adafruit_MCP4725.h>

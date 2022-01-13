@@ -98,6 +98,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Classes\CRemote.cs" />
     <Compile Include="Classes\CSim.cs" />
     <Compile Include="Classes\CFlag.cs" />
     <Compile Include="Classes\CABLine.cs" />
@@ -131,6 +132,12 @@
     </Compile>
     <Compile Include="Forms\FormJob.Designer.cs">
       <DependentUpon>FormJob.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\FormRemote.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\FormRemote.Designer.cs">
+      <DependentUpon>FormRemote.cs</DependentUpon>
     </Compile>
     <Compile Include="Forms\FormSaveOrNot.cs">
       <SubType>Form</SubType>
@@ -221,6 +228,11 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Properties\Remote.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+      <DependentUpon>Remote.settings</DependentUpon>
+    </Compile>
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -269,6 +281,9 @@
       <DependentUpon>FormJob.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
+    <EmbeddedResource Include="Forms\FormRemote.resx">
+      <DependentUpon>FormRemote.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Forms\FormSaveOrNot.resx">
       <DependentUpon>FormSaveOrNot.cs</DependentUpon>
       <SubType>Designer</SubType>
@@ -305,6 +320,10 @@
     </EmbeddedResource>
     <None Include="app.config">
       <SubType>Designer</SubType>
+    </None>
+    <None Include="Properties\Remote.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Remote.Designer.cs</LastGenOutput>
     </None>
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
@@ -352,6 +371,7 @@
     <None Include="btnImages\ditchBtn.png" />
     <None Include="btnImages\SurveyStart.png" />
     <None Include="btnImages\SurveyStop.png" />
+    <None Include="btnImages\BTRemote.png" />
     <Content Include="Grade64Icon.ico" />
     <None Include="btnImages\VehicleSettings.jpg" />
     <None Include="btnImages\ToolSettings.jpg" />
