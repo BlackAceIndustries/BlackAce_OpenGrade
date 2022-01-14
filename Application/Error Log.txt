@@ -15777,3 +15777,174 @@ Open GPS Port System.IO.IOException: The port 'COM6' does not exist.
    at System.IO.Ports.SerialPort.Open()
    at OpenGrade.FormGPS.SerialPortOpenGPS() in C:\Users\auzzy\Documents\7.Software Development\OpenGrade\OpenGrade_V3.0.1\BlackAce_OpenGrade\SourceCode\GPS\Forms\SerialComm.Designer.cs:line 366 - 1/13/2022 1:28:50 PM
 
+Opening GradeControl PortSystem.UnauthorizedAccessException: Access to the port 'COM6' is denied.
+   at System.IO.Ports.InternalResources.WinIOError(Int32 errorCode, String str)
+   at System.IO.Ports.SerialStream..ctor(String portName, Int32 baudRate, Parity parity, Int32 dataBits, StopBits stopBits, Int32 readTimeout, Int32 writeTimeout, Handshake handshake, Boolean dtrEnable, Boolean rtsEnable, Boolean discardNull, Byte parityReplace)
+   at System.IO.Ports.SerialPort.Open()
+   at OpenGrade.FormGPS.SerialPortGradeControlOpen() in C:\Users\auzzy\Documents\7.Software Development\OpenGrade\OpenGrade_V3.0.1\BlackAce_OpenGrade\SourceCode\GPS\Forms\SerialComm.Designer.cs:line 272 - 1/13/2022 1:52:45 PM
+
+GPS Data RecvSystem.InvalidOperationException: The port is closed.
+   at System.IO.Ports.SerialPort.ReadExisting()
+   at OpenGrade.FormGPS.sp_DataReceived(Object sender, SerialDataReceivedEventArgs e) in C:\Users\auzzy\Documents\7.Software Development\OpenGrade\OpenGrade_V3.0.1\BlackAce_OpenGrade\SourceCode\GPS\Forms\SerialComm.Designer.cs:line 339 - 1/13/2022 1:52:52 PM
+
+Opening GradeControl PortSystem.UnauthorizedAccessException: Access to the port 'COM6' is denied.
+   at System.IO.Ports.InternalResources.WinIOError(Int32 errorCode, String str)
+   at System.IO.Ports.SerialStream..ctor(String portName, Int32 baudRate, Parity parity, Int32 dataBits, StopBits stopBits, Int32 readTimeout, Int32 writeTimeout, Handshake handshake, Boolean dtrEnable, Boolean rtsEnable, Boolean discardNull, Byte parityReplace)
+   at System.IO.Ports.SerialPort.Open()
+   at OpenGrade.FormGPS.SerialPortGradeControlOpen() in C:\Users\auzzy\Documents\7.Software Development\OpenGrade\OpenGrade_V3.0.1\BlackAce_OpenGrade\SourceCode\GPS\Forms\SerialComm.Designer.cs:line 272 - 1/13/2022 2:56:18 PM
+
+Opening GradeControl PortSystem.UnauthorizedAccessException: Access to the port 'COM6' is denied.
+   at System.IO.Ports.InternalResources.WinIOError(Int32 errorCode, String str)
+   at System.IO.Ports.SerialStream..ctor(String portName, Int32 baudRate, Parity parity, Int32 dataBits, StopBits stopBits, Int32 readTimeout, Int32 writeTimeout, Handshake handshake, Boolean dtrEnable, Boolean rtsEnable, Boolean discardNull, Byte parityReplace)
+   at System.IO.Ports.SerialPort.Open()
+   at OpenGrade.FormGPS.SerialPortGradeControlOpen() in C:\Users\auzzy\Documents\7.Software Development\OpenGrade\OpenGrade_V3.0.1\BlackAce_OpenGrade\SourceCode\GPS\Forms\SerialComm.Designer.cs:line 272 - 1/13/2022 2:56:30 PM
+
+Opening GradeControl PortSystem.UnauthorizedAccessException: Access to the port 'COM6' is denied.
+   at System.IO.Ports.InternalResources.WinIOError(Int32 errorCode, String str)
+   at System.IO.Ports.SerialStream..ctor(String portName, Int32 baudRate, Parity parity, Int32 dataBits, StopBits stopBits, Int32 readTimeout, Int32 writeTimeout, Handshake handshake, Boolean dtrEnable, Boolean rtsEnable, Boolean discardNull, Byte parityReplace)
+   at System.IO.Ports.SerialPort.Open()
+   at OpenGrade.FormGPS.SerialPortGradeControlOpen() in C:\Users\auzzy\Documents\7.Software Development\OpenGrade\OpenGrade_V3.0.1\BlackAce_OpenGrade\SourceCode\GPS\Forms\SerialComm.Designer.cs:line 272 - 1/13/2022 2:56:44 PM
+
+Opening GradeControl PortSystem.UnauthorizedAccessException: Access to the port 'COM6' is denied.
+   at System.IO.Ports.InternalResources.WinIOError(Int32 errorCode, String str)
+   at System.IO.Ports.SerialStream..ctor(String portName, Int32 baudRate, Parity parity, Int32 dataBits, StopBits stopBits, Int32 readTimeout, Int32 writeTimeout, Handshake handshake, Boolean dtrEnable, Boolean rtsEnable, Boolean discardNull, Byte parityReplace)
+   at System.IO.Ports.SerialPort.Open()
+   at OpenGrade.FormGPS.SerialPortGradeControlOpen() in C:\Users\auzzy\Documents\7.Software Development\OpenGrade\OpenGrade_V3.0.1\BlackAce_OpenGrade\SourceCode\GPS\Forms\SerialComm.Designer.cs:line 272 - 1/13/2022 2:56:46 PM
+
+Opening GradeControl PortSystem.UnauthorizedAccessException: Access to the port 'COM6' is denied.
+   at System.IO.Ports.InternalResources.WinIOError(Int32 errorCode, String str)
+   at System.IO.Ports.SerialStream..ctor(String portName, Int32 baudRate, Parity parity, Int32 dataBits, StopBits stopBits, Int32 readTimeout, Int32 writeTimeout, Handshake handshake, Boolean dtrEnable, Boolean rtsEnable, Boolean discardNull, Byte parityReplace)
+   at System.IO.Ports.SerialPort.Open()
+   at OpenGrade.FormGPS.SerialPortGradeControlOpen() in C:\Users\auzzy\Documents\7.Software Development\OpenGrade\OpenGrade_V3.0.1\BlackAce_OpenGrade\SourceCode\GPS\Forms\SerialComm.Designer.cs:line 272 - 1/13/2022 2:56:47 PM
+
+Opening GradeControl PortSystem.UnauthorizedAccessException: Access to the port 'COM6' is denied.
+   at System.IO.Ports.InternalResources.WinIOError(Int32 errorCode, String str)
+   at System.IO.Ports.SerialStream..ctor(String portName, Int32 baudRate, Parity parity, Int32 dataBits, StopBits stopBits, Int32 readTimeout, Int32 writeTimeout, Handshake handshake, Boolean dtrEnable, Boolean rtsEnable, Boolean discardNull, Byte parityReplace)
+   at System.IO.Ports.SerialPort.Open()
+   at OpenGrade.FormGPS.SerialPortGradeControlOpen() in C:\Users\auzzy\Documents\7.Software Development\OpenGrade\OpenGrade_V3.0.1\BlackAce_OpenGrade\SourceCode\GPS\Forms\SerialComm.Designer.cs:line 272 - 1/13/2022 2:56:50 PM
+
+GradeControl Data Recvd System.InvalidOperationException: The port is closed.
+   at System.IO.Ports.SerialPort.ReadTo(String value)
+   at System.IO.Ports.SerialPort.ReadLine()
+   at OpenGrade.FormGPS.sp_DataReceivedGradeControl(Object sender, SerialDataReceivedEventArgs e) in C:\Users\auzzy\Documents\7.Software Development\OpenGrade\OpenGrade_V3.0.1\BlackAce_OpenGrade\SourceCode\GPS\Forms\SerialComm.Designer.cs:line 249 - 1/13/2022 3:07:40 PM
+
+GradeControl Data Recvd System.InvalidOperationException: The port is closed.
+   at System.IO.Ports.SerialPort.ReadTo(String value)
+   at System.IO.Ports.SerialPort.ReadLine()
+   at OpenGrade.FormGPS.sp_DataReceivedGradeControl(Object sender, SerialDataReceivedEventArgs e) in C:\Users\auzzy\Documents\7.Software Development\OpenGrade\OpenGrade_V3.0.1\BlackAce_OpenGrade\SourceCode\GPS\Forms\SerialComm.Designer.cs:line 249 - 1/13/2022 3:09:00 PM
+
+GradeControl Data Recvd System.IO.IOException: The I/O operation has been aborted because of either a thread exit or an application request.
+
+   at System.IO.Ports.InternalResources.WinIOError(Int32 errorCode, String str)
+   at System.IO.Ports.SerialStream.EndRead(IAsyncResult asyncResult)
+   at System.IO.Ports.SerialStream.Read(Byte[] array, Int32 offset, Int32 count, Int32 timeout)
+   at System.IO.Ports.SerialStream.Read(Byte[] array, Int32 offset, Int32 count)
+   at System.IO.Ports.SerialPort.InternalRead(Char[] buffer, Int32 offset, Int32 count, Int32 timeout, Boolean countMultiByteCharsAsOne)
+   at System.IO.Ports.SerialPort.ReadTo(String value)
+   at System.IO.Ports.SerialPort.ReadLine()
+   at OpenGrade.FormGPS.sp_DataReceivedGradeControl(Object sender, SerialDataReceivedEventArgs e) in C:\Users\auzzy\Documents\7.Software Development\OpenGrade\OpenGrade_V3.0.1\BlackAce_OpenGrade\SourceCode\GPS\Forms\SerialComm.Designer.cs:line 249 - 1/13/2022 3:12:02 PM
+
+GradeControl Data Recvd System.InvalidOperationException: The port is closed.
+   at System.IO.Ports.SerialPort.ReadTo(String value)
+   at System.IO.Ports.SerialPort.ReadLine()
+   at OpenGrade.FormGPS.sp_DataReceivedGradeControl(Object sender, SerialDataReceivedEventArgs e) in C:\Users\auzzy\Documents\7.Software Development\OpenGrade\OpenGrade_V3.0.1\BlackAce_OpenGrade\SourceCode\GPS\Forms\SerialComm.Designer.cs:line 249 - 1/13/2022 3:14:41 PM
+
+GradeControl Data Recvd System.InvalidOperationException: The port is closed.
+   at System.IO.Ports.SerialPort.ReadTo(String value)
+   at System.IO.Ports.SerialPort.ReadLine()
+   at OpenGrade.FormGPS.sp_DataReceivedGradeControl(Object sender, SerialDataReceivedEventArgs e) in C:\Users\auzzy\Documents\7.Software Development\OpenGrade\OpenGrade_V3.0.1\BlackAce_OpenGrade\SourceCode\GPS\Forms\SerialComm.Designer.cs:line 249 - 1/13/2022 3:20:05 PM
+
+GradeControl Data Recvd System.InvalidOperationException: The port is closed.
+   at System.IO.Ports.SerialPort.get_BytesToRead()
+   at OpenGrade.FormGPS.sp_DataReceivedGradeControl(Object sender, SerialDataReceivedEventArgs e) in C:\Users\auzzy\Documents\7.Software Development\OpenGrade\OpenGrade_V3.0.1\BlackAce_OpenGrade\SourceCode\GPS\Forms\SerialComm.Designer.cs:line 251 - 1/13/2022 3:26:01 PM
+
+Opening GradeControl PortSystem.UnauthorizedAccessException: Access to the port 'COM6' is denied.
+   at System.IO.Ports.InternalResources.WinIOError(Int32 errorCode, String str)
+   at System.IO.Ports.SerialStream..ctor(String portName, Int32 baudRate, Parity parity, Int32 dataBits, StopBits stopBits, Int32 readTimeout, Int32 writeTimeout, Handshake handshake, Boolean dtrEnable, Boolean rtsEnable, Boolean discardNull, Byte parityReplace)
+   at System.IO.Ports.SerialPort.Open()
+   at OpenGrade.FormGPS.SerialPortGradeControlOpen() in C:\Users\auzzy\Documents\7.Software Development\OpenGrade\OpenGrade_V3.0.1\BlackAce_OpenGrade\SourceCode\GPS\Forms\SerialComm.Designer.cs:line 272 - 1/13/2022 3:29:05 PM
+
+Opening GradeControl PortSystem.UnauthorizedAccessException: Access to the port 'COM6' is denied.
+   at System.IO.Ports.InternalResources.WinIOError(Int32 errorCode, String str)
+   at System.IO.Ports.SerialStream..ctor(String portName, Int32 baudRate, Parity parity, Int32 dataBits, StopBits stopBits, Int32 readTimeout, Int32 writeTimeout, Handshake handshake, Boolean dtrEnable, Boolean rtsEnable, Boolean discardNull, Byte parityReplace)
+   at System.IO.Ports.SerialPort.Open()
+   at OpenGrade.FormGPS.SerialPortGradeControlOpen() in C:\Users\auzzy\Documents\7.Software Development\OpenGrade\OpenGrade_V3.0.1\BlackAce_OpenGrade\SourceCode\GPS\Forms\SerialComm.Designer.cs:line 272 - 1/13/2022 3:29:09 PM
+
+Opening GradeControl PortSystem.UnauthorizedAccessException: Access to the port 'COM6' is denied.
+   at System.IO.Ports.InternalResources.WinIOError(Int32 errorCode, String str)
+   at System.IO.Ports.SerialStream..ctor(String portName, Int32 baudRate, Parity parity, Int32 dataBits, StopBits stopBits, Int32 readTimeout, Int32 writeTimeout, Handshake handshake, Boolean dtrEnable, Boolean rtsEnable, Boolean discardNull, Byte parityReplace)
+   at System.IO.Ports.SerialPort.Open()
+   at OpenGrade.FormGPS.SerialPortGradeControlOpen() in C:\Users\auzzy\Documents\7.Software Development\OpenGrade\OpenGrade_V3.0.1\BlackAce_OpenGrade\SourceCode\GPS\Forms\SerialComm.Designer.cs:line 272 - 1/13/2022 3:29:10 PM
+
+Opening GradeControl PortSystem.UnauthorizedAccessException: Access to the port 'COM6' is denied.
+   at System.IO.Ports.InternalResources.WinIOError(Int32 errorCode, String str)
+   at System.IO.Ports.SerialStream..ctor(String portName, Int32 baudRate, Parity parity, Int32 dataBits, StopBits stopBits, Int32 readTimeout, Int32 writeTimeout, Handshake handshake, Boolean dtrEnable, Boolean rtsEnable, Boolean discardNull, Byte parityReplace)
+   at System.IO.Ports.SerialPort.Open()
+   at OpenGrade.FormGPS.SerialPortGradeControlOpen() in C:\Users\auzzy\Documents\7.Software Development\OpenGrade\OpenGrade_V3.0.1\BlackAce_OpenGrade\SourceCode\GPS\Forms\SerialComm.Designer.cs:line 272 - 1/13/2022 3:29:11 PM
+
+Opening GradeControl PortSystem.UnauthorizedAccessException: Access to the port 'COM6' is denied.
+   at System.IO.Ports.InternalResources.WinIOError(Int32 errorCode, String str)
+   at System.IO.Ports.SerialStream..ctor(String portName, Int32 baudRate, Parity parity, Int32 dataBits, StopBits stopBits, Int32 readTimeout, Int32 writeTimeout, Handshake handshake, Boolean dtrEnable, Boolean rtsEnable, Boolean discardNull, Byte parityReplace)
+   at System.IO.Ports.SerialPort.Open()
+   at OpenGrade.FormGPS.SerialPortGradeControlOpen() in C:\Users\auzzy\Documents\7.Software Development\OpenGrade\OpenGrade_V3.0.1\BlackAce_OpenGrade\SourceCode\GPS\Forms\SerialComm.Designer.cs:line 272 - 1/13/2022 3:29:13 PM
+
+Opening GradeControl PortSystem.UnauthorizedAccessException: Access to the port 'COM6' is denied.
+   at System.IO.Ports.InternalResources.WinIOError(Int32 errorCode, String str)
+   at System.IO.Ports.SerialStream..ctor(String portName, Int32 baudRate, Parity parity, Int32 dataBits, StopBits stopBits, Int32 readTimeout, Int32 writeTimeout, Handshake handshake, Boolean dtrEnable, Boolean rtsEnable, Boolean discardNull, Byte parityReplace)
+   at System.IO.Ports.SerialPort.Open()
+   at OpenGrade.FormGPS.SerialPortGradeControlOpen() in C:\Users\auzzy\Documents\7.Software Development\OpenGrade\OpenGrade_V3.0.1\BlackAce_OpenGrade\SourceCode\GPS\Forms\SerialComm.Designer.cs:line 272 - 1/13/2022 3:29:15 PM
+
+Opening GradeControl PortSystem.UnauthorizedAccessException: Access to the port 'COM6' is denied.
+   at System.IO.Ports.InternalResources.WinIOError(Int32 errorCode, String str)
+   at System.IO.Ports.SerialStream..ctor(String portName, Int32 baudRate, Parity parity, Int32 dataBits, StopBits stopBits, Int32 readTimeout, Int32 writeTimeout, Handshake handshake, Boolean dtrEnable, Boolean rtsEnable, Boolean discardNull, Byte parityReplace)
+   at System.IO.Ports.SerialPort.Open()
+   at OpenGrade.FormGPS.SerialPortGradeControlOpen() in C:\Users\auzzy\Documents\7.Software Development\OpenGrade\OpenGrade_V3.0.1\BlackAce_OpenGrade\SourceCode\GPS\Forms\SerialComm.Designer.cs:line 272 - 1/13/2022 3:29:19 PM
+
+Opening GradeControl PortSystem.UnauthorizedAccessException: Access to the port 'COM6' is denied.
+   at System.IO.Ports.InternalResources.WinIOError(Int32 errorCode, String str)
+   at System.IO.Ports.SerialStream..ctor(String portName, Int32 baudRate, Parity parity, Int32 dataBits, StopBits stopBits, Int32 readTimeout, Int32 writeTimeout, Handshake handshake, Boolean dtrEnable, Boolean rtsEnable, Boolean discardNull, Byte parityReplace)
+   at System.IO.Ports.SerialPort.Open()
+   at OpenGrade.FormGPS.SerialPortGradeControlOpen() in C:\Users\auzzy\Documents\7.Software Development\OpenGrade\OpenGrade_V3.0.1\BlackAce_OpenGrade\SourceCode\GPS\Forms\SerialComm.Designer.cs:line 272 - 1/13/2022 3:29:24 PM
+
+Opening GradeControl PortSystem.UnauthorizedAccessException: Access to the port 'COM6' is denied.
+   at System.IO.Ports.InternalResources.WinIOError(Int32 errorCode, String str)
+   at System.IO.Ports.SerialStream..ctor(String portName, Int32 baudRate, Parity parity, Int32 dataBits, StopBits stopBits, Int32 readTimeout, Int32 writeTimeout, Handshake handshake, Boolean dtrEnable, Boolean rtsEnable, Boolean discardNull, Byte parityReplace)
+   at System.IO.Ports.SerialPort.Open()
+   at OpenGrade.FormGPS.SerialPortGradeControlOpen() in C:\Users\auzzy\Documents\7.Software Development\OpenGrade\OpenGrade_V3.0.1\BlackAce_OpenGrade\SourceCode\GPS\Forms\SerialComm.Designer.cs:line 272 - 1/13/2022 3:29:27 PM
+
+Opening GradeControl PortSystem.UnauthorizedAccessException: Access to the port 'COM6' is denied.
+   at System.IO.Ports.InternalResources.WinIOError(Int32 errorCode, String str)
+   at System.IO.Ports.SerialStream..ctor(String portName, Int32 baudRate, Parity parity, Int32 dataBits, StopBits stopBits, Int32 readTimeout, Int32 writeTimeout, Handshake handshake, Boolean dtrEnable, Boolean rtsEnable, Boolean discardNull, Byte parityReplace)
+   at System.IO.Ports.SerialPort.Open()
+   at OpenGrade.FormGPS.SerialPortGradeControlOpen() in C:\Users\auzzy\Documents\7.Software Development\OpenGrade\OpenGrade_V3.0.1\BlackAce_OpenGrade\SourceCode\GPS\Forms\SerialComm.Designer.cs:line 272 - 1/13/2022 3:29:29 PM
+
+GradeControl Data Recvd System.IO.IOException: The I/O operation has been aborted because of either a thread exit or an application request.
+
+   at System.IO.Ports.InternalResources.WinIOError(Int32 errorCode, String str)
+   at System.IO.Ports.SerialStream.EndRead(IAsyncResult asyncResult)
+   at System.IO.Ports.SerialStream.Read(Byte[] array, Int32 offset, Int32 count, Int32 timeout)
+   at System.IO.Ports.SerialStream.Read(Byte[] array, Int32 offset, Int32 count)
+   at System.IO.Ports.SerialPort.InternalRead(Char[] buffer, Int32 offset, Int32 count, Int32 timeout, Boolean countMultiByteCharsAsOne)
+   at System.IO.Ports.SerialPort.ReadTo(String value)
+   at System.IO.Ports.SerialPort.ReadLine()
+   at OpenGrade.FormGPS.sp_DataReceivedGradeControl(Object sender, SerialDataReceivedEventArgs e) in C:\Users\auzzy\Documents\7.Software Development\OpenGrade\OpenGrade_V3.0.1\BlackAce_OpenGrade\SourceCode\GPS\Forms\SerialComm.Designer.cs:line 249 - 1/13/2022 3:29:34 PM
+
+GradeControl Data Recvd System.InvalidOperationException: The port is closed.
+   at System.IO.Ports.SerialPort.ReadTo(String value)
+   at System.IO.Ports.SerialPort.ReadLine()
+   at OpenGrade.FormGPS.sp_DataReceivedGradeControl(Object sender, SerialDataReceivedEventArgs e) in C:\Users\auzzy\Documents\7.Software Development\OpenGrade\OpenGrade_V3.0.1\BlackAce_OpenGrade\SourceCode\GPS\Forms\SerialComm.Designer.cs:line 249 - 1/13/2022 3:29:44 PM
+
+Opening GradeControl PortSystem.UnauthorizedAccessException: Access to the port 'COM6' is denied.
+   at System.IO.Ports.InternalResources.WinIOError(Int32 errorCode, String str)
+   at System.IO.Ports.SerialStream..ctor(String portName, Int32 baudRate, Parity parity, Int32 dataBits, StopBits stopBits, Int32 readTimeout, Int32 writeTimeout, Handshake handshake, Boolean dtrEnable, Boolean rtsEnable, Boolean discardNull, Byte parityReplace)
+   at System.IO.Ports.SerialPort.Open()
+   at OpenGrade.FormGPS.SerialPortGradeControlOpen() in C:\Users\auzzy\Documents\7.Software Development\OpenGrade\OpenGrade_V3.0.1\BlackAce_OpenGrade\SourceCode\GPS\Forms\SerialComm.Designer.cs:line 272 - 1/13/2022 4:33:11 PM
+
+GPS Data RecvSystem.InvalidOperationException: The port is closed.
+   at System.IO.Ports.SerialPort.ReadExisting()
+   at OpenGrade.FormGPS.sp_DataReceived(Object sender, SerialDataReceivedEventArgs e) in C:\Users\auzzy\Documents\7.Software Development\OpenGrade\OpenGrade_V3.0.1\BlackAce_OpenGrade\SourceCode\GPS\Forms\SerialComm.Designer.cs:line 339 - 1/13/2022 4:34:05 PM
+
+GPS Data RecvSystem.InvalidOperationException: The port is closed.
+   at System.IO.Ports.SerialPort.ReadExisting()
+   at OpenGrade.FormGPS.sp_DataReceived(Object sender, SerialDataReceivedEventArgs e) in C:\Users\auzzy\Documents\7.Software Development\OpenGrade\OpenGrade_V3.0.1\BlackAce_OpenGrade\SourceCode\GPS\Forms\SerialComm.Designer.cs:line 339 - 1/13/2022 5:49:13 PM
+

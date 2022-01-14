@@ -1,9 +1,11 @@
 #include <Arduino.h>
+#include <WiFi.h>
+#include <WiFiUdp.h>
 #include <Adafruit_Sensor.h>
+#include <Adafruit_MCP4725.h>
 #include <Adafruit_BNO055.h>
 #include <utility/imumaths.h>
 #include <SPI.h>
-#include <Adafruit_MCP4725.h>
 #include <Wire.h>
 
 
@@ -19,6 +21,7 @@
          +----------+
 */
 
+
 // Function STUBS for Platform IO
 bool SetAutoState();
 void GetGradeControlData();
@@ -29,9 +32,33 @@ bool SetupGradeController();
 void RecvSerialPortData();
 void SendDataToPort();
 void ClearSerialBuff();
-//IMU
+// IMU
 bool SetupIMU();
 void GetIMUData();
+// UDP
+
+bool SetupUdp();
+bool SendUdpData(char* _data);
+bool RecvUdpData();
+
+
+
+/// UDP Variables
+WiFiUDP Udp;  // Creation of wifi Udp instance
+const char *ssid = "GradeControl";
+
+char packetBuffer[255];
+uint16_t openGradePort = 9999; //OpenGrade Server Port
+uint16_t gradeControlPort = 7777; // GradeControl  Port
+char *dataHeader = "DATA";
+char *gpsHeader = "GPS";
+char *settingsHeader = "SETTINGS";
+
+IPAddress openGradeIP(192,168,0,120);   // Declaration of default IP for server
+IPAddress gradeControlIP(127,0,0,1);   // Different IP than server (Client) this unit
+IPAddress gateway(192,168,4,9);   // what we want the sp 32 IPAddress to be
+IPAddress Subnet(255, 255, 255, 0);
+IPAddress Dns(8,8,8,8);
 
 
 ///////////////////////PINS///////////////////////
@@ -40,13 +67,17 @@ void GetIMUData();
 #define DAC2_ENABLE 5     //  DAC 2 enable/
 #define SCL_PIN 22      // I2C SCL PIN
 #define SDA_PIN 21      // I2C SCL PIN
-#define RXD2 16
-#define TXD2 17
+#define RXD2 16  // Diagnostic RX
+#define TXD2 17 // Diagnostic TX
 #define IMU_ID 1200
 #define CONST_180_DIVIDED_BY_PI 57.2957795130823
 #define BNO055_SAMPLERATE_DELAY_MS (95)
 
-/////////////// Valve Definitions  ////////////////
+#define DATA 10
+#define SETTINGS 20
+//
+
+// Valve Definitions
 #define VALVE_FLOAT 2048
 #define CNH 0
 #define DEERE 1
@@ -65,8 +96,10 @@ float Kd=3100; //Mine was 2800
 float delta_setpoint = 0;  
 
 /////////////IMU///////////////
-uint8_t OG_data[] = {0,0,0,0,0};
+char* OG_data[15];
 int16_t dataSize = sizeof(OG_data);
+
+
 float headingIMU = 0;
 float rollIMU = 0;
 float pitchIMU = 0;
@@ -81,6 +114,7 @@ byte b_retDeadband = 25;
 byte b_extDeadband = 75;
 byte b_valveType = 255;   // 0= CNH    1= Deere     2= Danfoss
 byte b_deadband = 2;
+
 
 ///////////////////PID/////////////////////////
 float PID_p, PID_i, PID_d, PID_total;
@@ -108,7 +142,6 @@ unsigned long lastTime2 = LOOP_TIME2;
 unsigned long lastTime3 = LOOP_TIME3;  
 unsigned long currentTime = 0; 
 
-
 //Comm checks
 byte watchdogTimer = 0;      //make sure we are talking to OpenGrade
 byte serialResetTimer = 0;   //if serial buffer is getting full, empty it
@@ -121,22 +154,23 @@ int header = 0, tempHeader = 0, temp;
 // I2C
 TwoWire esp = TwoWire(5);
 // IMU
-Adafruit_BNO055 bnoIMU = Adafruit_BNO055(IMU_ID, 0x28, &esp);  //
+Adafruit_BNO055 bnoIMU = Adafruit_BNO055(IMU_ID, 0x28, &esp);  
 // DAC's
 Adafruit_MCP4725 Dac1 = Adafruit_MCP4725();
 Adafruit_MCP4725 Dac2 = Adafruit_MCP4725();
 
 
 void setup()
-{
+{  
   esp.begin(SDA_PIN , SCL_PIN);
   SetupGradeController();
-  SetupIMU();  
-  
+  SetupUdp();
+  SetupIMU();
+
   Dac1.setVoltage(VALVE_FLOAT, false);
   Dac2.setVoltage(VALVE_FLOAT, false);
-  
 }
+  
 
 void loop(){  //Loop triggers every 50 msec (20hz) and sends back offsets Pid ect
 
@@ -148,16 +182,18 @@ void loop(){  //Loop triggers every 50 msec (20hz) and sends back offsets Pid ec
   {  
     lastTime = currentTime;
     SendDataToPort();
+    SendUdpData(dataHeader);
                   
   }
   
   if (currentTime - lastTime2 >= LOOP_TIME2){ // Recv Data from OG 
     lastTime2 = currentTime;
     RecvSerialPortData();
+    RecvUdpData();
   }
   
-  if (currentTime - lastTime3 >= LOOP_TIME3){ //Poll Imu for data
-   
+  if (currentTime - lastTime3 >= LOOP_TIME3){ // READ IMU data
+    lastTime3 = currentTime;
     GetIMUData();
   }
 }
@@ -298,7 +334,6 @@ void SendDataToPort(){
 
 void SetOutput()
 {
-
   if (isAutoActive && isCutting){    
     analogOutput1 = VALVE_FLOAT;  
   
@@ -350,8 +385,7 @@ void SetOutput()
     analogOutput1 = VALVE_FLOAT;   
     Dac1.setVoltage(analogOutput1, false);
     voltage = ((double)analogOutput1/4096) * 5.0;                          
-  }
-  
+  }  
     
 }
 
@@ -387,14 +421,107 @@ void SetValveLimits(){
       extMax = (CNH_MAX * 4096);
       
   }
-
-  
-  
 }
 
 void ClearSerialBuff(){
   while (Serial.available() > 0){  /// clean out serial buffer
         Serial.read();
     }
+}
+
+
+///
+/// UDP Stuff
+///
+
+
+bool SetupUdp(){  
+  Serial.println(WiFi.softAPConfig(gradeControlIP, gateway, Subnet));  
+  Serial.println(WiFi.softAP(ssid));
+  Serial.println(WiFi.softAPIP());
+  
+  Udp.begin(openGradeIP, openGradePort);
+  Serial.print(openGradeIP);
+  Serial.print("    ");
+  Serial.println(openGradePort);
+  
+  return true;
+}
+
+bool SendUdpData(char* _data)
+{  
+  //SENDING
+  Udp.beginPacket(openGradeIP,openGradePort);   //Initiate transmission of data
+  Udp.print(_data);
+  Udp.printf(",");
+  Udp.print(b_autoState);
+  Udp.printf(",");    
+  Udp.print(voltage);
+  Udp.print(",");
+  Udp.print(headingIMU);
+  Udp.print(",");
+  Udp.print(pitchIMU);
+  Udp.print(",");
+  Udp.print(rollIMU);      
+  Udp.printf("\r\n");   // End segment    
+  Udp.endPacket();  // Close communication
+
+  return true;
+}
+
+bool RecvUdpData()
+{   
+  char *strings[10];
+  char *ptr = NULL;
+  char *tempHeader = NULL;
+
+  //RECEPTION
+  int packetSize = Udp.parsePacket();   // Size of packet to receive
+
+  if (packetSize) {       // If we received a package
+    
+    int len = Udp.read(packetBuffer, sizeof(packetBuffer));
+    
+    byte index = 0;
+    ptr = strtok(packetBuffer, ",");  // takes a list of delimiters
+    while(ptr != NULL)
+    {
+      strings[index] = ptr;
+      index++;
+      ptr = strtok(NULL, ",");  // takes a list of delimiters
+    }
+    
+    for(int n = 0; n < index; n++)
+    { 
+      OG_data[n] = strings[n];
+    }
+    
+    tempHeader = (OG_data[0]);
+    
+    if (tempHeader == dataHeader){
+
+      b_deltaDir =  u16_t(OG_data[1]);   // Cut Delta Dir
+      b_autoState =  u16_t(OG_data[2]);    // Cut Delta 
+      b_cutDelta =  u16_t(OG_data[3]);   // Auto State
+
+      
+    }
+    else if (tempHeader == settingsHeader){
+      
+      b_Kp = u16_t(OG_data[1]);
+      b_Ki = u16_t(OG_data[2]);
+      b_Kd = u16_t(OG_data[3]);
+      b_retDeadband = u16_t(OG_data[4]);
+      b_extDeadband = u16_t(OG_data[5]);
+      b_valveType = u16_t(OG_data[6]);
+      
+      Kp = double(b_Kp);
+      Ki = double(b_Ki / 100);
+      Kd = double(b_Kp * 100);
+      SetValveLimits();
+    }
+    return true;
+  }
+  return false;
 }
 

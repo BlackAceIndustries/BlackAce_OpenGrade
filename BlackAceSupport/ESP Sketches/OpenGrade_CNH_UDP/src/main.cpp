@@ -39,9 +39,6 @@ IPAddress Dns(8,8,8,8);
 //int16_t dataSize = sizeof(data);
 
 
-///
-/// gradeControl Variables
-///
 ///////////////////////PINS///////////////////////
 #define SERIAL_BAUD 115200
 #define DAC1_ENABLE 4      // DAC 1 enable/
@@ -358,6 +355,11 @@ void ClearSerialBuff(){
         Serial.read();
     }
 }
+
+
+
+
+
 
 
 ///

@@ -874,7 +874,7 @@ namespace OpenGrade
             if (wasAutoSteerConnectedLastRun) SerialPortAutoSteerOpen();
 
             //start udp server
-            //   StartUDPServer();
+            StartUDPServer();
 
             //set the correct zoom and grid
             camera.camSetDistance = zoomValue * zoomValue * -1;

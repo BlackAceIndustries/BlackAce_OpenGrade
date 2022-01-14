@@ -96,11 +96,37 @@ namespace OpenGrade
 
         
         private void UpdateRecvMessage(string recvd)
-        {
-            recvSentenceSettings = recvd;
-            pn.rawBuffer += recvd;
-            //textBox1.Text = pn.rawBuffer;
-            //textBox1.Text = recvd;
+        {     
+            string[] words = recvd.Split(',');
+            if (words.Length == 6)
+            {
+                //first 2 used for display mainly in autosteer window chart as strings
+                //parse the values
+                mc.prevHeadingIMU = mc.headingIMU;
+
+                if (words[0] == "DATA")
+                {
+                    int.TryParse(words[1], out mc.autoState);
+                    double.TryParse(words[2], out mc.voltage);
+                    float.TryParse(words[3], out mc.headingIMU);
+                    float.TryParse(words[4], out mc.pitchIMU);
+                    float.TryParse(words[5], out mc.rollIMU);
+                }
+
+
+            }
+            else if (words.Length < 20)
+            {
+                if (words[0] == "GPS")
+                {
+                    pn.rawBuffer += recvd;
+                    pn.ParseNMEA();
+
+                }
+
+            }
+
+
         }        
 
     }

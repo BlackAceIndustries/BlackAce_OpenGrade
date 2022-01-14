@@ -18,6 +18,7 @@ namespace OpenGrade
         public int gcHeaderHi, gcHeaderLo = 1, gcDeltaDir = 2, gcCutDelta = 3, gcisAutoActive = 4;                                
 
         //info coming from Grade Control Mod
+
         public int autoState = 0, bladeOffset = 0; //public byte autoState = 0;        
         public double voltage = 0;
 
