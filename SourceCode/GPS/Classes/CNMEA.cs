@@ -133,10 +133,12 @@ namespace OpenGrade
                 if (words[0] == "$GPGGA" | words[0] == "$GNGGA") ParseGGA();
                 if (words[0] == "$GPVTG" | words[0] == "$GNVTG") ParseVTG();
             }// while still data
-        }
 
+        }
         public string currentNMEASentenceGGA = "";
         public string currentNMEASentenceVTG = "";
+
+        
 
         // Returns a valid NMEA sentence from the pile from portData
         public string Parse()

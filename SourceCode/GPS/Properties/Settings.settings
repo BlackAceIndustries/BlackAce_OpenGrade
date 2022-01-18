@@ -123,7 +123,7 @@
       <Value Profile="(Default)">8888</Value>
     </Setting>
     <Setting Name="setIP_gradeControlIP" Type="System.String" Scope="User">
-      <Value Profile="(Default)">127.0.0.1</Value>
+      <Value Profile="(Default)">192.168.1.1</Value>
     </Setting>
     <Setting Name="setIP_gradeControlPort" Type="System.Int32" Scope="User">
       <Value Profile="(Default)">7777</Value>

@@ -383,7 +383,7 @@
             this.tboxGradeControlIP.Size = new System.Drawing.Size(167, 30);
             this.tboxGradeControlIP.TabIndex = 85;
             this.tboxGradeControlIP.Text = "192.168.1.255";
-            this.tboxGradeControlIP.TextChanged += new System.EventHandler(this.tboxRateRelayIP_TextChanged);
+            this.tboxAutoSteerIP.Validating += new System.ComponentModel.CancelEventHandler(this.tboxAutoSteerIP_Validating);
             // 
             // groupBox1
             // 

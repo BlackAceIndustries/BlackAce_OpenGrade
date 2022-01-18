@@ -5,6 +5,7 @@ using System.Diagnostics;
 using System.Drawing;
 using System.IO;
 using System.Net;
+using System.Text;
 using System.Net.Sockets;
 using System.Windows.Forms;
 using SharpGL;
@@ -1106,7 +1107,8 @@ namespace OpenGrade
 
                 lblZone.Text = pn.zone.ToString();
                 tboxSentence.Text = recvSentenceSettings;
-               // }
+                //tboxSentence.Text = pn.rawBuffer;
+                // }
 
                 //the main formgps window
                 if (isMetric)  //metric or imperial
@@ -1117,6 +1119,7 @@ namespace OpenGrade
                     //status strip values
                     stripDistance.Text = Convert.ToString((UInt16)(userDistance)) + " m";
                     lblAltitude.Text = Altitude;
+                    lblAltitude2.Text = Altitude;
                     btnZeroAltitude.Text = (pn.altitude - ct.zeroAltitude).ToString("N2");
                 }
                 else  //Imperial Measurements
@@ -1246,10 +1249,16 @@ namespace OpenGrade
                     lblNorthing.Text = gStr.gsNoGPS;
                     lblZone.Text = "-";
                     tboxSentence.Text = gStr.gsNoSentenceData;
+                    //tboxSentence.Text = pn.rawBuffer;
                 }
                 else stripOnlineGPS.Value = 100;
-                
+
                 GradeControlDataOutToPort();
+                //mf.SendUDPMessage(10001);
+
+                SendUDPMessage("10001" + "," + mc.GradeControlData[mc.gcDeltaDir] +","+ mc.GradeControlData[mc.gcisAutoActive]
+                    + "," + Math.Abs(cutDelta) + "\r\n");
+               
             }
             
 

@@ -157,6 +157,8 @@
             this.btnSnap = new System.Windows.Forms.Button();
             this.btnGoogleEarth = new System.Windows.Forms.Button();
             this.GPSPage = new System.Windows.Forms.TabPage();
+            this.alt = new System.Windows.Forms.Label();
+            this.lblAltitude2 = new System.Windows.Forms.Label();
             this.lblPitch = new System.Windows.Forms.Label();
             this.label14 = new System.Windows.Forms.Label();
             this.lblSats = new System.Windows.Forms.Label();
@@ -799,7 +801,7 @@
             this.stripEqWidth.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
             this.stripEqWidth.Margin = new System.Windows.Forms.Padding(0);
             this.stripEqWidth.Name = "stripEqWidth";
-            this.stripEqWidth.Size = new System.Drawing.Size(319, 41);
+            this.stripEqWidth.Size = new System.Drawing.Size(350, 41);
             this.stripEqWidth.Spring = true;
             this.stripEqWidth.Text = "Width";
             // 
@@ -1143,9 +1145,9 @@
             this.lblAltitude.ForeColor = System.Drawing.Color.Green;
             this.lblAltitude.Location = new System.Drawing.Point(719, 2);
             this.lblAltitude.Name = "lblAltitude";
-            this.lblAltitude.Size = new System.Drawing.Size(108, 39);
+            this.lblAltitude.Size = new System.Drawing.Size(147, 39);
             this.lblAltitude.TabIndex = 179;
-            this.lblAltitude.Text = "356m";
+            this.lblAltitude.Text = "900.555";
             // 
             // panelSimControls
             // 
@@ -1172,7 +1174,7 @@
             this.label3.Font = new System.Drawing.Font("Tahoma", 9.75F);
             this.label3.Location = new System.Drawing.Point(304, 14);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(14, 16);
+            this.label3.Size = new System.Drawing.Size(13, 16);
             this.label3.TabIndex = 172;
             this.label3.Text = "L";
             // 
@@ -1222,7 +1224,7 @@
             this.label11.Font = new System.Drawing.Font("Tahoma", 9.75F);
             this.label11.Location = new System.Drawing.Point(4, 20);
             this.label11.Name = "label11";
-            this.label11.Size = new System.Drawing.Size(41, 16);
+            this.label11.Size = new System.Drawing.Size(40, 16);
             this.label11.TabIndex = 170;
             this.label11.Text = "B N M";
             // 
@@ -1233,7 +1235,7 @@
             this.label12.Font = new System.Drawing.Font("Tahoma", 9.75F);
             this.label12.Location = new System.Drawing.Point(367, 23);
             this.label12.Name = "label12";
-            this.label12.Size = new System.Drawing.Size(36, 16);
+            this.label12.Size = new System.Drawing.Size(35, 16);
             this.label12.TabIndex = 171;
             this.label12.Text = "H J K";
             // 
@@ -1754,6 +1756,8 @@
             // GPSPage
             // 
             this.GPSPage.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(30)))), ((int)(((byte)(30)))));
+            this.GPSPage.Controls.Add(this.alt);
+            this.GPSPage.Controls.Add(this.lblAltitude2);
             this.GPSPage.Controls.Add(this.lblPitch);
             this.GPSPage.Controls.Add(this.label14);
             this.GPSPage.Controls.Add(this.lblSats);
@@ -1781,6 +1785,29 @@
             this.GPSPage.Name = "GPSPage";
             this.GPSPage.Size = new System.Drawing.Size(601, 255);
             this.GPSPage.TabIndex = 3;
+            // 
+            // alt
+            // 
+            this.alt.AutoSize = true;
+            this.alt.Font = new System.Drawing.Font("Tahoma", 14.25F);
+            this.alt.ForeColor = System.Drawing.Color.Lime;
+            this.alt.Location = new System.Drawing.Point(23, 76);
+            this.alt.Name = "alt";
+            this.alt.Size = new System.Drawing.Size(38, 23);
+            this.alt.TabIndex = 189;
+            this.alt.Text = "Alt:";
+            this.alt.Click += new System.EventHandler(this.label13_Click_5);
+            // 
+            // lblAltitude2
+            // 
+            this.lblAltitude2.AutoSize = true;
+            this.lblAltitude2.Font = new System.Drawing.Font("Tahoma", 14.25F, System.Drawing.FontStyle.Bold);
+            this.lblAltitude2.ForeColor = System.Drawing.SystemColors.ButtonHighlight;
+            this.lblAltitude2.Location = new System.Drawing.Point(67, 76);
+            this.lblAltitude2.Name = "lblAltitude2";
+            this.lblAltitude2.Size = new System.Drawing.Size(106, 23);
+            this.lblAltitude2.TabIndex = 188;
+            this.lblAltitude2.Text = "------------";
             // 
             // lblPitch
             // 
@@ -2647,6 +2674,8 @@
         private System.Windows.Forms.Label lblPitch;
         private System.Windows.Forms.Label label14;
         private System.Windows.Forms.ToolStripMenuItem remoteConfigurationToolStripMenuItem;
+        private System.Windows.Forms.Label alt;
+        private System.Windows.Forms.Label lblAltitude2;
     }
 }
 

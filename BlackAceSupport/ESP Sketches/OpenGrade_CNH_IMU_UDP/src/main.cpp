@@ -36,27 +36,35 @@ void ClearSerialBuff();
 bool SetupIMU();
 void GetIMUData();
 // UDP
-
+void RecvGPSDAta();
+void SendGPSOverUDP();
 bool SetupUdp();
-bool SendUdpData(char* _data);
+bool SendUdpData(const char *_dataHeader);
 bool RecvUdpData();
-
-
 
 /// UDP Variables
 WiFiUDP Udp;  // Creation of wifi Udp instance
-const char *ssid = "GradeControl";
+const char *ssid = {"GradeControl"};
+
+
+char buff[1025];
+char GNGGA[1000];
+char GNVTG[1000];
+
+
 
 char packetBuffer[255];
 uint16_t openGradePort = 9999; //OpenGrade Server Port
 uint16_t gradeControlPort = 7777; // GradeControl  Port
-char *dataHeader = "DATA";
-char *gpsHeader = "GPS";
-char *settingsHeader = "SETTINGS";
+const char *dataHeader = {"DATA"};
+const char *gpsHeader = {"GPS"};
+const char *settingsHeader = {"SET"};
 
-IPAddress openGradeIP(192,168,0,120);   // Declaration of default IP for server
-IPAddress gradeControlIP(127,0,0,1);   // Different IP than server (Client) this unit
-IPAddress gateway(192,168,4,9);   // what we want the sp 32 IPAddress to be
+
+
+IPAddress openGradeIP(192,168,1,0);   // Declaration of default IP for server 
+IPAddress gradeControlIP(192,168,1,255);   // Different IP than server (Client) this unit
+IPAddress gatewayIP(192,168,1,1);   // what we want the sp 32 IPAddress to be
 IPAddress Subnet(255, 255, 255, 0);
 IPAddress Dns(8,8,8,8);
 
@@ -73,8 +81,11 @@ IPAddress Dns(8,8,8,8);
 #define CONST_180_DIVIDED_BY_PI 57.2957795130823
 #define BNO055_SAMPLERATE_DELAY_MS (95)
 
-#define DATA 10
-#define SETTINGS 20
+#define DATA_HEADER 10001
+#define SETTINGS_HEADER 10002
+#define GPS_HEADER 10003
+#define DEBUG Serial
+#define RTK Serial1
 //
 
 // Valve Definitions
@@ -96,7 +107,7 @@ float Kd=3100; //Mine was 2800
 float delta_setpoint = 0;  
 
 /////////////IMU///////////////
-char* OG_data[15];
+char *OG_data[255];
 int16_t dataSize = sizeof(OG_data);
 
 
@@ -177,24 +188,29 @@ void loop(){  //Loop triggers every 50 msec (20hz) and sends back offsets Pid ec
   currentTime = millis();  // Send GradeControl Data to OG
   SetOutput();
   SetAutoState();
-
+  RecvGPSDAta();
+  RecvUdpData();
+  
+  
   if (currentTime - lastTime >= LOOP_TIME)
   {  
-    lastTime = currentTime;
-    SendDataToPort();
-    SendUdpData(dataHeader);
+    lastTime = currentTime;    
+    SendUdpData(dataHeader);    
                   
   }
   
   if (currentTime - lastTime2 >= LOOP_TIME2){ // Recv Data from OG 
-    lastTime2 = currentTime;
-    RecvSerialPortData();
-    RecvUdpData();
+    lastTime2 = currentTime;    
+    //RecvSerialPortData();   
+
+    
   }
   
   if (currentTime - lastTime3 >= LOOP_TIME3){ // READ IMU data
     lastTime3 = currentTime;
     GetIMUData();
+
+
   }
 }
 
@@ -206,8 +222,8 @@ void loop(){  //Loop triggers every 50 msec (20hz) and sends back offsets Pid ec
 bool SetupGradeController()
 {
   //set the baud rate
-  Serial.begin(SERIAL_BAUD);  
-  Serial1.begin(115200, SERIAL_8N1, RXD2, TXD2); 
+  DEBUG.begin(SERIAL_BAUD);  
+  RTK.begin(115200, SERIAL_8N1, RXD2, TXD2); 
 
   digitalWrite(2, HIGH); delay(500); digitalWrite(2, LOW); delay(500); digitalWrite(2, HIGH); delay(500);
   digitalWrite(2, LOW); delay(500); digitalWrite(2, HIGH); delay(500); digitalWrite(2, LOW); delay(500);
@@ -268,47 +284,47 @@ void GetIMUData()
 
 void RecvSerialPortData(){
   
-  if (Serial.available() > 0 && !isDataFound && !isSettingFound)
+  if (DEBUG.available() > 0 && !isDataFound && !isSettingFound)
   {
     
-    int temp = Serial.read();    
+    int temp = DEBUG.read();    
     header = tempHeader << 8 | temp;                //high,low bytes to make int
     tempHeader = temp;      //save for next time
     if (header == 32762) {//Do we have a match?
       isDataFound = true; 
-      //Serial1.print("Data Recieved   Bytes in Buffer -> ");
-      //Serial1.println(Serial.available());   
+      //DEBUG1.print("Data Recieved   Bytes in Buffer -> ");
+      //DEBUG1.println(DEBUG.available());   
     }    
     if (header == 32760){//Do we have a match?
       isSettingFound = true; 
-      //Serial1.print("Settings Recieved   Bytes in Buffer -> ");
-      //Serial1.println(Serial.available());
+      //DEBUG1.print("Settings Recieved   Bytes in Buffer -> ");
+      //DEBUG1.println(DEBUG.available());
     }       
     
   }
 
   //Data Header has been found, so the next x bytes are the data
-  if (Serial.available() > 2 && isDataFound  && !isSettingFound)   //
+  if (DEBUG.available() > 2 && isDataFound  && !isSettingFound)   //
   {
     isDataFound = false;      
-    b_deltaDir = Serial.read();// Cut Delta Dir         
-    b_cutDelta = Serial.read();// Cut Delta        
-    b_autoState = Serial.read();// Auto State 
+    b_deltaDir = DEBUG.read();// Cut Delta Dir         
+    b_cutDelta = DEBUG.read();// Cut Delta        
+    b_autoState = DEBUG.read();// Auto State 
     
     ClearSerialBuff();
   }
   
   //Setting Header has been found, so the next 8 bytes are the data
-  if (Serial.available() > 6 && isSettingFound && !isDataFound)
+  if (DEBUG.available() > 6 && isSettingFound && !isDataFound)
   {
-    //Serial1.println("Settings Found");
+    //DEBUG1.println("Settings Found");
     isSettingFound = false;
-    b_Kp = Serial.read();
-    b_Ki = Serial.read();
-    b_Kd = Serial.read();
-    b_retDeadband = Serial.read();
-    b_extDeadband = Serial.read();
-    b_valveType = Serial.read();
+    b_Kp = DEBUG.read();
+    b_Ki = DEBUG.read();
+    b_Kd = DEBUG.read();
+    b_retDeadband = DEBUG.read();
+    b_extDeadband = DEBUG.read();
+    b_valveType = DEBUG.read();
     Kp = double(b_Kp);
     Ki = double(b_Ki / 100);
     Kd = double(b_Kp * 100);
@@ -321,15 +337,15 @@ void RecvSerialPortData(){
 
 void SendDataToPort(){
 
-  Serial.print(b_autoState);
-  Serial.print(",");
-  Serial.print(voltage);
-  Serial.print(",");
-  Serial.print((headingIMU));
-  Serial.print(",");
-  Serial.print(pitchIMU);
-  Serial.print(",");
-  Serial.println(rollIMU);
+  DEBUG.print(b_autoState);
+  DEBUG.print(",");
+  DEBUG.print(voltage);
+  DEBUG.print(",");
+  DEBUG.print((headingIMU));
+  DEBUG.print(",");
+  DEBUG.print(pitchIMU);
+  DEBUG.print(",");
+  DEBUG.println(rollIMU);
 }
 
 void SetOutput()
@@ -424,8 +440,8 @@ void SetValveLimits(){
 }
 
 void ClearSerialBuff(){
-  while (Serial.available() > 0){  /// clean out serial buffer
-        Serial.read();
+  while (DEBUG.available() > 0){  /// clean out DEBUG buffer
+        DEBUG.read();
     }
 }
 
@@ -434,28 +450,91 @@ void ClearSerialBuff(){
 /// UDP Stuff
 ///
 
+void RecvGPSDAta(){
+    
+  if(RTK.available()){   
+    
+    int size = RTK.readBytesUntil('\n', buff, sizeof(buff));  
+    for(int h = 0; h < size; h++) 
+    {
+      GNVTG[h] = buff[h];    
+      //Udp.print(buff[i]);
+    }
+    memset(buff, 0, sizeof(buff)); // clear buff   
+    
+    int size2 = RTK.readBytesUntil('\n', buff, sizeof(buff));
+    for(int h = 0; h < size2; h++) 
+    {
+      GNGGA[h] = buff[h];    
+      //Udp.print(buff[i]);
+    }
+    memset(buff, 0, sizeof(buff)); // clear buff 
+
+    //SENDING
+    SendGPSOverUDP();
+    
+  }
+}
+
+
+void SendGPSOverUDP(){
+  
+  Udp.beginPacket(openGradeIP,openGradePort);   //Initiate transmission of data
+  Udp.print(gpsHeader);
+  Udp.print(",");
+  Udp.print(GNGGA);
+  Udp.print(GNVTG);
+  Udp.print("\r\n"); // End segment    
+  Udp.endPacket();  // Close communication
+  
+  //DEBUG.print("GPS,");
+  //DEBUG.println(GNGGA);
+  //DEBUG.println(GNVTG);
+
+  memset(buff, 0, sizeof(buff));
+  memset(GNGGA, 0, sizeof(GNGGA));
+  memset(GNGGA, 0, sizeof(GNGGA)); // clear buff
+
+}
 
 bool SetupUdp(){  
-  Serial.println(WiFi.softAPConfig(gradeControlIP, gateway, Subnet));  
-  Serial.println(WiFi.softAP(ssid));
-  Serial.println(WiFi.softAPIP());
   
-  Udp.begin(openGradeIP, openGradePort);
-  Serial.print(openGradeIP);
-  Serial.print("    ");
-  Serial.println(openGradePort);
+  
+  WiFi.mode(WIFI_AP);
+  WiFi.softAP(ssid);
+  delay(100);
+  
+  WiFi.softAPConfig(gradeControlIP, gatewayIP, Subnet);  
+
+  DEBUG.println(ssid);
+  DEBUG.println(WiFi.softAPIP());
+  
+  Udp.begin(gradeControlIP, gradeControlPort);
+  
+  DEBUG.print(openGradeIP);
+  DEBUG.print(" PORT->");
+  DEBUG.println(openGradePort);
+
+  DEBUG.print(gradeControlIP);
+  DEBUG.print(" PORT->");
+  DEBUG.println(gradeControlPort);
+
+  // DEBUG.print(gradeControlIP);
+  // DEBUG.print(" PORT->");
+  // DEBUG.println(gradeControlPort);
+
   
   return true;
 }
 
-bool SendUdpData(char* _data)
+bool SendUdpData(const char * _dataType)
 {  
   //SENDING
   Udp.beginPacket(openGradeIP,openGradePort);   //Initiate transmission of data
-  Udp.print(_data);
-  Udp.printf(",");
+  Udp.print(_dataType);
+  Udp.print(",");
   Udp.print(b_autoState);
-  Udp.printf(",");    
+  Udp.print(",");    
   Udp.print(voltage);
   Udp.print(",");
   Udp.print(headingIMU);
@@ -463,65 +542,143 @@ bool SendUdpData(char* _data)
   Udp.print(pitchIMU);
   Udp.print(",");
   Udp.print(rollIMU);      
-  Udp.printf("\r\n");   // End segment    
+  Udp.print("\r\n");   // End segment    
   Udp.endPacket();  // Close communication
 
   return true;
 }
 
 bool RecvUdpData()
-{   
-  char *strings[10];
-  char *ptr = NULL;
-  char *tempHeader = NULL;
+{ 
+  //DEBUG.print("RECV Func Called-> ");
+  char *strings[20];
+  char *ptr = NULL;  
 
   //RECEPTION
   int packetSize = Udp.parsePacket();   // Size of packet to receive
+  
+  //if (!packetSize) DEBUG.println("Nothing Recieved");
+
+  // senderIP = WiFiUDP.remoteIP();  Sent from IP
+  // senderPort = WiFiUDP.remotePort();  Sent from IP
 
   if (packetSize) {       // If we received a package
+    //DEBUG.print("UDP Message Recieved Bytes to Read->");
+    Udp.read(packetBuffer, sizeof(packetBuffer));  
     
-    int len = Udp.read(packetBuffer, sizeof(packetBuffer));
-    
+    //DEBUG.println(packetBuffer);
+
     byte index = 0;
-    ptr = strtok(packetBuffer, ",");  // takes a list of delimiters
+    ptr = strtok(packetBuffer, ",");  // takes a list of delimiters    
+    
     while(ptr != NULL)
     {
-      strings[index] = ptr;
+      strings[index] = ptr;      
       index++;
       ptr = strtok(NULL, ",");  // takes a list of delimiters
     }
     
     for(int n = 0; n < index; n++)
     { 
-      OG_data[n] = strings[n];
+      OG_data[n] = strings[n];        
     }
     
-    tempHeader = (OG_data[0]);
+    // convert to int to read couldnt read PTR fro some rsn   
+    header = atoi(OG_data[0]);         
+      
+    switch (header)
+    {
+      case DATA_HEADER:
+        DEBUG.println("DATA");
+        b_deltaDir =  atoi(OG_data[1]);   // Cut Delta Dir
+        b_autoState =  atoi(OG_data[2]);    // Cut Delta 
+        b_cutDelta =  atoi(OG_data[3]);   // Auto State
+        return true;
+      break;
+
+
+      case SETTINGS_HEADER:
+        DEBUG.println("SETTINGS FOUND!");      
+        b_Kp = atoi(OG_data[1]);
+        b_Ki = atoi(OG_data[2]);
+        b_Kd = atoi(OG_data[3]);
+        b_retDeadband = atoi(OG_data[4]);
+        b_extDeadband = atoi(OG_data[5]);
+        b_valveType = atoi(OG_data[6]);
+        Kp = double(b_Kp);
+        Ki = double(b_Ki / 100);
+        Kd = double(b_Kp * 100);  
+        SetValveLimits();
+        return true;
+      break;
+
+      default:
+      break;
+      
+
+
+
+    }
+  
+  
     
-    if (tempHeader == dataHeader){
+    // for (int ss = 0; ss < sizeof(OG_data); ss++)
+    // {
+    //   OG_data[ss] = terminator;
+    // }
 
-      b_deltaDir =  u16_t(OG_data[1]);   // Cut Delta Dir
-      b_autoState =  u16_t(OG_data[2]);    // Cut Delta 
-      b_cutDelta =  u16_t(OG_data[3]);   // Auto State
 
-      
-    }
-    else if (tempHeader == settingsHeader){
-      
-      b_Kp = u16_t(OG_data[1]);
-      b_Ki = u16_t(OG_data[2]);
-      b_Kd = u16_t(OG_data[3]);
-      b_retDeadband = u16_t(OG_data[4]);
-      b_extDeadband = u16_t(OG_data[5]);
-      b_valveType = u16_t(OG_data[6]);
-      
-      Kp = double(b_Kp);
-      Ki = double(b_Ki / 100);
-      Kd = double(b_Kp * 100);
-      SetValveLimits();
-    }
     return true;
   }
   return false;
 }
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+ /*
+      DEBUG.print(b_Kp);
+      DEBUG.print(",");
+      DEBUG.print(b_Ki);
+      DEBUG.print(",");
+      DEBUG.print(b_Kd);
+      DEBUG.print(",");
+      DEBUG.print(b_retDeadband);
+      DEBUG.print(",");
+      DEBUG.print(b_extDeadband);
+      DEBUG.print(",");
+      DEBUG.println(b_valveType);
+      */

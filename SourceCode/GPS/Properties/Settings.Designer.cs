@@ -505,7 +505,7 @@ namespace OpenGrade.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("127.0.0.1")]
+        [global::System.Configuration.DefaultSettingValueAttribute("192.168.1.1")]
         public string setIP_gradeControlIP {
             get {
                 return ((string)(this["setIP_gradeControlIP"]));

@@ -80,17 +80,17 @@ namespace OpenGrade
         {
             if (!CheckIPValid(tboxAutoSteerIP.Text))
             {
-                tboxAutoSteerIP.Text = "127.0.0.1";
+                tboxAutoSteerIP.Text = Properties.Settings.Default.setIP_autoSteerIP;
                 tboxAutoSteerIP.Focus();
                 mf.TimedMessageBox(3000, "Invalid IP Address", "Set to Default Local 127.0.0.1");
             }
         }
 
-        private void tboxRateRelayIP_TextChanged(object sender, EventArgs e)
+        private void tboxGradeControlIP_Validating(object sender, CancelEventArgs e)
         {
             if (!CheckIPValid(tboxGradeControlIP.Text))
             {
-                tboxGradeControlIP.Text = "127.0.0.1";
+                tboxGradeControlIP.Text = Properties.Settings.Default.setIP_gradeControlIP;
                 tboxGradeControlIP.Focus();
                 mf.TimedMessageBox(3000, "Invalid IP Address", "Set to Default Local 127.0.0.1");
             }

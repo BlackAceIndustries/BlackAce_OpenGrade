@@ -1059,6 +1059,11 @@ namespace OpenGrade
 
         }
 
+        private void label13_Click_5(object sender, EventArgs e)
+        {
+
+        }
+
         private void toolStripDropDownBtnFuncs_Click(object sender, EventArgs e)
         {
 
@@ -1292,8 +1297,11 @@ namespace OpenGrade
                 sendSocket = new Socket(AddressFamily.InterNetwork, SocketType.Dgram, ProtocolType.Udp);
                 recvSocket = new Socket(AddressFamily.InterNetwork, SocketType.Dgram, ProtocolType.Udp);
 
+                
                 // Initialise the IPEndPoint for the server and listen on port 9999
+                //IPEndPoint recv = new IPEndPoint(new IPAddress(ipAddress), Properties.Settings.Default.setIP_thisPort);
                 IPEndPoint recv = new IPEndPoint(IPAddress.Any, Properties.Settings.Default.setIP_thisPort);
+
 
                 // Associate the socket with this IP address and port
                 recvSocket.Bind(recv);

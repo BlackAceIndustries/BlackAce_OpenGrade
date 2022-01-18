@@ -181,10 +181,12 @@ namespace OpenGrade
 
             Properties.Settings.Default.Save();
             Properties.Vehicle.Default.Save();
+            
+            mf.GradeControlSettingsOutToPort();
 
-            mf.GradeControlDataOutToPort();
-           
-           
+           // mf.SendUDPMessage(10002);
+            mf.SendUDPMessage("10002" + "," + mf.mc.gradeControlSettings[mf.mc.gsKpGain] + "," + mf.mc.gradeControlSettings[mf.mc.gsKiGain] + "," + mf.mc.gradeControlSettings[mf.mc.gsKdGain]
+            + "," + mf.mc.gradeControlSettings[mf.mc.gsRetDeadband] + "," + mf.mc.gradeControlSettings[mf.mc.gsExtDeadband] + "," + mf.mc.gradeControlSettings[mf.mc.gsValveType] + "\r\n");
 
             //back to FormGPS
             DialogResult = DialogResult.OK;
@@ -243,7 +245,7 @@ namespace OpenGrade
                 valveType = mf.mc.gradeControlSettings[mf.mc.gsValveType];
                 Properties.Settings.Default.set_ValveName = valveSelectChoice.Text;
                 Properties.Settings.Default.Save();
-                mf.GradeControlSettingsOutToPort();
+                
 
             }
             if (valveSelectChoice.Text == "DEERE")
@@ -253,7 +255,8 @@ namespace OpenGrade
                 valveType = mf.mc.gradeControlSettings[mf.mc.gsValveType];
                 Properties.Settings.Default.set_ValveName = valveSelectChoice.Text;
                 Properties.Settings.Default.Save();
-                mf.GradeControlSettingsOutToPort();
+               
+
             }
             if (valveSelectChoice.Text == "DANFOSS")
             {
@@ -262,7 +265,7 @@ namespace OpenGrade
                 valveType = mf.mc.gradeControlSettings[mf.mc.gsValveType];
                 Properties.Settings.Default.set_ValveName = valveSelectChoice.Text;
                 Properties.Settings.Default.Save();
-                mf.GradeControlSettingsOutToPort();
+                
             }
             else 
             {
@@ -271,7 +274,7 @@ namespace OpenGrade
                 valveType = mf.mc.gradeControlSettings[mf.mc.gsValveType];
                 Properties.Settings.Default.set_ValveName = valveSelectChoice.Text;
                 Properties.Settings.Default.Save();
-                mf.GradeControlSettingsOutToPort();
+                
             }
         }
 
@@ -287,7 +290,7 @@ namespace OpenGrade
             Properties.Settings.Default.set_KdGain = KdGain;
             KpGain = Properties.Settings.Default.set_KpGain;
             Properties.Settings.Default.Save();
-            mf.GradeControlSettingsOutToPort();
+            
         }
 
         private void nudKi_ValueChanged_1(object sender, EventArgs e)
@@ -297,7 +300,7 @@ namespace OpenGrade
             Properties.Settings.Default.set_KiGain = KiGain;
             KiGain = Properties.Settings.Default.set_KiGain; /// 10
             Properties.Settings.Default.Save();
-            mf.GradeControlSettingsOutToPort();
+            
 
         }
 
@@ -308,8 +311,8 @@ namespace OpenGrade
             Properties.Settings.Default.set_KdGain = KdGain;
             KdGain = Properties.Settings.Default.set_KdGain;
             Properties.Settings.Default.Save();
-            mf.GradeControlSettingsOutToPort();
             
+
         }
 
         private void label10_Click(object sender, EventArgs e)
@@ -334,7 +337,7 @@ namespace OpenGrade
             Properties.Settings.Default.set_ExtDeadband = extDeadband;            
             extDeadband = Properties.Settings.Default.set_ExtDeadband;
             Properties.Settings.Default.Save();
-            mf.GradeControlSettingsOutToPort();
+            
 
         }
 
@@ -344,8 +347,8 @@ namespace OpenGrade
             mf.mc.gradeControlSettings[mf.mc.gsRetDeadband] = retDeadband;
             Properties.Settings.Default.set_RetDeadband = retDeadband;
             Properties.Settings.Default.Save();
-            mf.GradeControlSettingsOutToPort();
-            
+           
+
         }
 
 
@@ -372,29 +375,29 @@ namespace OpenGrade
         private void nudKp_ValueChanged(object sender, EventArgs e)
         {
             KpGain = (byte)nudKp.Value;
-            mf.GradeControlSettingsOutToPort();
+            
         }
         private void nudKi_ValueChanged(object sender, EventArgs e)
         {
             KiGain = (byte)nudKi.Value;
             mf.GradeControlSettingsOutToPort();
+            
         }
         private void nudKd_ValueChanged(object sender, EventArgs e)
         {
             KdGain = (byte)nudKd.Value;
-            mf.GradeControlSettingsOutToPort();
+            
         }
 
         private void nudRetDeadband_ValueChanged(object sender, EventArgs e)
         {
             retDeadband = (byte)nudRetDeadband.Value;
-            mf.GradeControlSettingsOutToPort();
+            
         }
       
         private void nudExtDeadband_ValueChanged(object sender, EventArgs e)
         {
-            extDeadband = (byte)nudExtDeadband.Value;
-            mf.GradeControlSettingsOutToPort();
+            extDeadband = (byte)nudExtDeadband.Value;            
         }
         
         private void nudMinSlope_ValueChanged(object sender, EventArgs e)

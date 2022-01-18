@@ -78,6 +78,9 @@ namespace OpenGrade
             GradeControlData[gcCutDelta] = 0;
             GradeControlData[gcisAutoActive] = 0;                       
             mf.GradeControlDataOutToPort();
+            //mf.SendUDPMessage(10001);
+            mf.SendUDPMessage("10001" + "," + GradeControlData[gcDeltaDir] + "," +
+                GradeControlData[gcCutDelta] + "," + GradeControlData[gcCutDelta] + "\r\n");
 
             gradeControlSettings[gsHeaderHi] = 127; // PGN - 32762
             gradeControlSettings[gsHeaderLo] = 248;
@@ -88,6 +91,9 @@ namespace OpenGrade
             gradeControlSettings[gsExtDeadband] = Properties.Settings.Default.set_ExtDeadband;
             gradeControlSettings[gsValveType] = Properties.Settings.Default.set_ValveType;
             mf.GradeControlSettingsOutToPort();
+            //mf.SendUDPMessage(10002);
+            mf.SendUDPMessage("10002" + "," + gradeControlSettings[gsKpGain] + "," + gradeControlSettings[gsKiGain] + "," + gradeControlSettings[gsKdGain]
+                        + "," + gradeControlSettings[gsRetDeadband] + "," + gradeControlSettings[gsExtDeadband] + "," + gradeControlSettings[gsValveType] + "\r\n");
 
             autoSteerData[sdHeaderHi] = 127; // PGN - 32766
             autoSteerData[sdHeaderLo] = 254;
